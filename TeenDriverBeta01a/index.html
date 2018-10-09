@@ -411,7 +411,12 @@
 }
 #dialog {
 	overflow-y: scroll;
-	height: 400px;
+	height: 300px;
+}
+
+#inputArea {
+	height: 50px;
+	background-color: deepskyblue;
 }
 </style>
 
@@ -431,6 +436,24 @@
 		</div>
     	<div class="col-sm-6" id="dialog"></div>
 	</div>
+	<div class="row">
+		<div class="col-sm-6">
+
+		</div>
+		<div class="col-sm-6">
+			<div id="inputArea">
+				<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
+
+				<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">
+					<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>
+					<button id="submit_button" type="submit" class="hidden"></button>
+				</form>
+
+				<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>
+			</div>
+		</div>
+
+	</div>
 
 <!--     <div id="video-controls">
         <button class="btn btn-primary" type="button" id="btnPlayPause">Play</button>
@@ -439,14 +462,14 @@
 
 	<hr>
 
-	<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
+	<!--<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>-->
 
-	<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">
-		<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>
-	    <button id="submit_button" type="submit" class="hidden"></button>
-	</form>
+	<!--<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">-->
+		<!--<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>-->
+	    <!--<button id="submit_button" type="submit" class="hidden"></button>-->
+	<!--</form>-->
 
-	<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>
+	<!--<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>-->
 
 	<br><br>
 
