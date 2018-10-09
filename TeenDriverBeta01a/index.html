@@ -411,12 +411,15 @@
 }
 #dialog {
 	overflow-y: scroll;
-	height: 300px;
+	height: 360px;
 }
 
 #inputArea {
 	height: 50px;
 	background-color: deepskyblue;
+	position: relative;
+	bottom: 200px;
+	left: 5%;
 }
 </style>
 
@@ -434,14 +437,14 @@
 				</div>
      		</div>
 		</div>
-    	<div class="col-sm-6" id="dialog"></div>
+    	<div class="col-sm-6" id="dialog">
+		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-6">
+			<div class="col-sm-6">
 
-		</div>
-		<div class="col-sm-6">
-			<div id="inputArea">
+			</div>
+			<div class="col-sm-6" id="inputArea">
 				<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
 
 				<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">
@@ -451,9 +454,9 @@
 
 				<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>
 			</div>
-		</div>
-
 	</div>
+
+
 
 <!--     <div id="video-controls">
         <button class="btn btn-primary" type="button" id="btnPlayPause">Play</button>
