@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.js"></script>
+
+	<style type="text/css">
+		.speech-bubble-me {
+			position:     relative;
+			background:     indigo;
+			border-radius:    .4em;
+		}
+		.speech-bubble-me:after {
+			content: '';
+			position: absolute;
+			left:     0;
+			top:    50%;
+			width:    0;
+			height:   0;
+			border:  11px solid transparent;
+			border-right-color: indigo;
+			border-left:     0;
+			margin-top:  -11px;
+			margin-left: -11px;
+		}
+		.speech-bubble-aunt {
+			position:     relative;
+			background:      brown;
+			border-radius:    .4em;
+		}
+		.speech-bubble-aunt:after {
+			content: '';
+			position: absolute;
+			left:     0;
+			top:    50%;
+			width:    0;
+			height:   0;
+			border:  11px solid transparent;
+			border-right-color: brown;
+			border-left:     0;
+			margin-top:  -11px;
+			margin-left: -11px;
+		}
+		#dialog {
+			background-color: hsl(0,20%,70%);
+		}
+		button {
+			background-color: indigo;
+			color:             white;
+		}
+	</style>
+
+	<script>
+	var baseUrl        = "https://api.dialogflow.com/v1/";        // developer access
+	var baseUrl2       = "https://dialogflow.googleapis.com/v2/";
+    var accessToken    = "", developerToken = "", intentID = "", projectID = "";
+
+	// function changeAgent(name) {
+	// 	if (name=="Siyao") {
+	// 		accessToken    = "39e963ea263e46faaa8e716e95be575f";      // client access (read-only tasks)
+	// 		developerToken = "3808b587e8ad4964a1e2e8d8e99ecd3d";      // get API keys  (edits/updates/deletes)
+
+	// 		intentID       = "d7517099-76fa-4f12-9971-553e74492b2f";  // get from webpage address, this is the agent ID
+	// 		projectID      = "teendrivingtest";
+	// 	} else if (name=="Tak") {
+			accessToken    = "e7fa3324d4cb4f69a19b4330f1da9f54";      // client access
+			accessToken    = "cc3176f18cbb4b56bc9f23b4d3d37e91";
+			accessToken    = "c8e8b58b4cf444e399efb3be934d9be2";      // TeenDriverBeta01
+			accessToken    = "932b3df3678943c18b215b237bfd3610";      // TeenDriverBeta01a
+
+			developerToken = "cd520a508824440d9641a2d4c5a9edc8";      // get API keys
+			developerToken = "c06e74fdd02744e0b39b9846b101f940";
+			developerToken = "cb65e2aae2964f3e81a03befda2442ec";      // TeenDriverBeta01
+			developerToken = "99e082a99f354572a4a29364c210bdc7";      // TeenDriverBeta01a
+
+			intentID       = "06cd8abb-1ed9-44c9-9922-6f59717ac6fe";  // get from webpage address, this is the agent ID
+			intentID       = "3b01b82b-ac67-4f20-9388-e4b494fcae1e";
+			projectID      = "myplanbeta2";
+	// 	}
+	// }
+
+    var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
+    var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:white;"';
+	var mediaLeftAunt  = mediaStart + '30px"><img src="Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
+	var mediaLeftMe    = mediaStart + ' 0px"><img src= "Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
+	var chatBreak      = "</div></div><hr>";
+
+	function clickMe(element) {
+		$("#input").val(element.value);
+		send();
+	}
+
+	var pointsMyths    = 0;
+	var pointsMythsTot = 0;
+
+	function clickMyths(reply,answer,showPoints = false) {
+		let afterResponse  = '';
+		let beforeResponse = '';
+		$("#input").val(reply);
+
+		if (showPoints) {
+			beforeResponse = 'You got ' + pointsMyths + ' out of ' + pointsMythsTot + '.<br><br>';
+		} else {
+			pointsMythsTot += 1;
+			if (reply == answer) {
+				pointsMyths += 1;
+				beforeResponse = 'Correct!';
+			} else {
+				beforeResponse = "Here's the answer:";
+			}			
+		};
+		send(beforeResponse,afterResponse);
+	}
+
+	var speechObj;
+	var clickAreaResponse = '';
+	var pauseVideoTime = 0.;
+
+	function send(beforeResponse = '',afterResponse = '') {
+		var text_in = $("#input").val();                          // get input text
+		var dialog  = $("#dialog").html();                        // get dialog text
+		$.ajax({
+			type:        "POST",
+			url:          baseUrl + "query/",
+			contentType: "application/json; charset=utf-8",
+			dataType:    "json",
+			headers: {
+				         "Authorization": "Bearer " + accessToken,
+			},
+			data:         JSON.stringify({
+				query:    text_in,
+				lang:    "en",
+				contexts:[
+				],
+				sessionId: "0123456789",
+			}),
+
+			success: function(data) {
+		 		let data_speech = data.result.speech;
+				var speechSplit = splitStr(data_speech);
+				var speech = speechSplit.text.replace(/yyy/g,"{").replace(/zzz/g,"}");
+				var input = "";
+				var speechJSON = speechSplit.JSON.replace(/yyy/g,"{").replace(/zzz/g,"}");
+				if (speechJSON.length>0) {
+					try {
+						speechObj = JSON.parse(speechJSON);
+						console.log(speechObj);
+						let tasks = speechObj.tasks;
+						console.log(tasks);
+						for (i=0; i<tasks.length; i++) {
+							let task = tasks[i];
+							console.log(task);
+							let taskType = Object.getOwnPropertyNames(task)[0];
+							console.log('taskType: ' + taskType);
+							if (taskType=='callFunction') {
+								let functionName = task.callFunction.functionName;
+								let parameters = task.callFunction.functionParameters;
+								console.log('functionName: ' + functionName);
+								console.log(parameters);
+								if (functionName=='loadVideo') {
+									console.log('videoNumber: ' + parameters.videoNumber);
+									document.getElementById('videoSource').setAttribute('src',parameters.videoNumber + '.ogg');
+								    document.getElementById("video").load();
+								    document.getElementById("inputHeader").innerHTML = "Input:";
+								} else if (functionName=='addVideoArea') {
+									addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.clickResponse);
+									input = clickAreaResponse;
+								} else if (functionName=='clearVideoAreas') {
+									$('#clickAreas').empty();
+								} else if (functionName=='playVideoUntil') {
+									if (parameters.startTime===undefined) {	
+										video.currentTime = 0.;
+									} else {
+										video.currentTime = parameters.startTime;
+									}
+						 			pauseVideoTime = parameters.pauseTime;
+									video.play();
+									video.addEventListener("timeupdate", pausing_function);
+									document.getElementById("response").value = "";
+								}
+							}
+						}
+					}
+					catch(err) {
+						console.log(speech);
+						console.log(err);
+					}
+				}
+		 		if (beforeResponse !== '') {
+		 			speech      = beforeResponse + ' ' + speech;
+		 		}
+		 		if (afterResponse !== '') {
+		 			speech      = speech + ' ' + afterResponse;
+		 		}
+		 		let response    = mediaLeftMe + text_in + chatBreak + mediaLeftAunt + speech + chatBreak;
+		 		setResponse(JSON.stringify(data, undefined, 2));
+		 		$("#dialog").html(dialog + response);
+		 		$("#dialog").scrollTop($("#dialog")[0].scrollHeight);
+				$("#input").val(input);
+
+				let dialogWidth = parseInt($("#dialog")[0].clientWidth,10);
+				let bubbles     = document.getElementsByClassName('speech-bubble-me');
+				bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';
+				bubbles         = document.getElementsByClassName('speech-bubble-aunt');
+				bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';
+			},
+			error: function(jqXHR) {
+  				setResponse(JSON.stringify(jqXHR, undefined, 2));
+			}
+		});
+  		setResponse("Loading...");
+	}
+
+	function sendIntent() {
+		var xhttp      = new XMLHttpRequest();
+		var intentJSON = $("#response").val();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+		 		$("#serverResponse").val(this.status);
+			}
+		};
+		xhttp.open("GET","save_intent.php?q=" + intentJSON,true);
+		xhttp.send();
+	}
+
+	function getIntentInfo() {
+		var xhttp = new XMLHttpRequest();
+  	    var	url   = baseUrl + "intents/" + intentID + "?v=20150910";
+//		var	url   = baseUrl2 + "projects/" + projectID + "/agents/intents/" + intentID;
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+		 		setResponse(this.responseText);
+			}
+		};
+		xhttp.open("GET",url,true);
+		xhttp.setRequestHeader("Content-Type","application/json; charset=utf-8");
+        xhttp.setRequestHeader("Authorization","Bearer " + developerToken);
+//		xhttp.setRequestHeader("Authorization","Bearer $(gcloud auth application-default print-access-token)");
+		xhttp.send();
+	}
+
+	function getIntentSummaries() {
+		$.ajax({
+			type:        "GET",
+//			url:         baseUrl + "intents/" + intentID + "?v=20150910",  // get specific intent
+			url:         baseUrl + "intents?v=20150910",
+			contentType: "application/json; charset=utf-8",
+			dataType:    "json",
+			headers: {
+				         "Authorization": "Bearer " + developerToken
+			},
+
+			success: function(data) {
+		 		setResponse(JSON.stringify(data, undefined, 2));
+			},
+			error: function(jqXHR) {
+  				setResponse(JSON.stringify(jqXHR, undefined, 2));
+			}
+		});
+  		setResponse("Loading...");
+	}
+
+	function setResponse(val) {                                // generic function to set the response
+		// $("#response").text(val);                           // doesn't work when using sendIntent
+		document.getElementById("response").value = val;
+	}
+
+	function ajaxit() {
+	    var iFrameWindow = document.getElementById("the_iframe").contentWindow;
+	    iFrameWindow.document.body.appendChild( document.getElementById("myForm").cloneNode(true));   
+	    var frameForm = iFrameWindow.document.getElementById("myForm");
+	    frameForm.onsubmit = null;
+	    frameForm.submit();
+	    return false;
+	}
+
+	var pausing_function = function(){
+        console.log(this.currentTime);
+	    if(this.currentTime > 10.) {
+	        this.pause();
+	        // remove the event listener after you paused the playback
+	        this.removeEventListener("timeupdate",pausing_function);
+	    }
+	};
+
+	function splitStr(string) {
+	    var object = string.split("#####");
+	    var text = object[0];
+	    var JSON = "";
+	    if (object.length>1) {
+		    JSON = object[1];
+		};
+	    return {text: text, JSON: JSON};
+	}
+
+	var pausing_function = function(){
+	    if(this.currentTime > pauseVideoTime) {
+	        this.pause();
+	        // remove the event listener after you paused the playback
+	        this.removeEventListener("timeupdate",pausing_function);
+	    }
+	};
+
+	function addVideoArea(upperLeftCoords,lowerRightCoords,clickResponse) {
+		// video_box
+		//   video
+		//     source
+		//   div#clickAreas
+		//     div.content#contentn
+		//       a
+		//         div.clickArea#clickArean
+		var n = document.getElementsByClassName('clickArea').length;
+		var div = document.createElement('div');
+		div.setAttribute('id','content' + n);
+		div.setAttribute('class','content');
+		var a = document.createElement('a');
+		a.setAttribute('href','#');
+		a.onclick = function () {
+			$("input").val(clickResponse);
+			send();
+		};
+		var divBox = document.createElement('div');
+		divBox.setAttribute("id","clickArea" + n);
+		divBox.setAttribute("class","clickArea");
+		divBox.setAttribute("position","absolute");
+		div.style["left"] = upperLeftCoords[0] + 'px';
+		div.style["top"] = upperLeftCoords[1] + 'px';
+		divBox.style.width = (lowerRightCoords[0] - upperLeftCoords[0]) + 'px';
+		divBox.style.height = (lowerRightCoords[1] - upperLeftCoords[1]) + 'px';
+		a.appendChild(divBox);
+		div.appendChild(a);
+		document.getElementById('clickAreas').appendChild(div);	
+	}
+
+	function showArea(alpha) {
+		var x = document.getElementsByClassName("clickArea");
+		for (i=0; i<x.length; i++) {
+			x[i].style.background = "rgba(0,0,0," + alpha + ")";
+			x[i].style.color = "#f1f1f1";
+		};
+		setTimeout(hideArea,1000);
+	}
+
+	function hideArea() {
+		var x = document.getElementsByClassName("clickArea");
+		for (i=0; i<x.length; i++) {
+			x[i].style.background = "rgba(0,0,0,0)";
+			x[i].style.color = "#f1f1f1";
+		};
+	}
+
+	$(document).ready(function() {
+	    var video = document.getElementById("video");
+		// var playButton = document.getElementById("btnPlayPause");
+		$("#input").keypress(function(event) {
+			if (event.which == 13) {
+		    	$('#submit_button').click(); 
+				event.preventDefault();
+				send();
+			}
+		});
+		// $("#btnRewind").click(function () {
+		// 	video.currentTime = 0.;
+		// });
+		// $("#btnPlayPause").click(function() {
+		// 	if (video.paused == true) {
+		// 	    // Play the video
+		// 	    video.play();
+		// 	    // Update the button text to 'Pause'
+		// 	    playButton.innerHTML = "Pause";
+		// 	} else {
+		// 	    // Pause the video
+		// 	    video.pause();
+		// 	    // Update the button text to 'Play'
+		// 	    playButton.innerHTML = "Play";
+		// 	}
+		// });
+	});
+	</script>
+</head>
+
+<style>
+.container-fluid {
+	padding-left: 0;
+	position: absolute;
+}
+.container {
+	position: absolute;
+}
+.container video {
+    position: absolute;
+    left: 0;
+    top: 0;
+/*    min-width: 50%; 
+    min-height: 50%;*/
+}
+.content {
+    position: absolute;
+    top: 0;
+    /*background: rgba(0, 0, 0, 0.5);*/
+    color: #f1f1f1;
+/*    width: 50%;
+    padding: 20px;*/
+}
+#dialog {
+	overflow-y: scroll;
+	height: 400px;
+}
+</style>
+
+<body>
+    <h4 class="modal-title">Chat Room</h4>
+
+    <div class="row">
+    	<div class="col-sm-6">
+    		<div id="video_box" class="container-fluid">
+				<video id="video">
+			    	<source type="video/ogg" id="videoSource">
+					Your browser does not support the video tag.
+				</video> 
+				<div id="clickAreas">
+				</div>
+     		</div>
+		</div>
+    	<div class="col-sm-6" id="dialog"></div>
+	</div>
+
+<!--     <div id="video-controls">
+        <button class="btn btn-primary" type="button" id="btnPlayPause">Play</button>
+        <button class="btn btn-primary" type="button" id="btnRewind">Rewind</button>
+    </div> -->
+
+	<hr>
+
+	<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
+
+	<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">
+		<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>
+	    <button id="submit_button" type="submit" class="hidden"></button>
+	</form>
+
+	<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>
+
+	<br><br>
+
+	<p><hr>Response from Dialogflow (ignore this technical form of chatbot dialog):</p>
+	<textarea class="form-control" rows="20" style="width:100%" id="response"></textarea>
+</body>
+</html>
