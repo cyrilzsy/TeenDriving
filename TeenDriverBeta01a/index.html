@@ -123,6 +123,13 @@
 	var clickAreaResponse = '';
 	var pauseVideoTime = 0.;
 
+
+	function hideInputBox(){
+		document.getElementById('inputArea').innerHTML= "";
+		document.getElementById('inputArea').outerHTML= "";
+	}
+
+
 	function send(beforeResponse = '',afterResponse = '') {
 		var text_in = $("#input").val();                          // get input text
 		var dialog  = $("#dialog").html();                        // get dialog text
@@ -148,6 +155,16 @@
 				var speech = speechSplit.text.replace(/yyy/g,"{").replace(/zzz/g,"}");
 				var input = "";
 				var speechJSON = speechSplit.JSON.replace(/yyy/g,"{").replace(/zzz/g,"}");
+				var inputbox = '<div id="inputArea">'+
+								'<div id ="inputArea1">'+
+									'<p id="inputHeader">Input</p>' +
+									'<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">' +
+										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>' +
+										'<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>' +
+									'</form>' +
+									'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>' +
+								'</div>'+
+								'</div>';
 				if (speechJSON.length>0) {
 					try {
 						speechObj = JSON.parse(speechJSON);
@@ -184,6 +201,8 @@
 									video.play();
 									video.addEventListener("timeupdate", pausing_function);
 									document.getElementById("response").value = "";
+								} else if (functionName=='hideInputBox'){
+									$('#inputArea').empty();
 								}
 							}
 						}
@@ -199,9 +218,10 @@
 		 		if (afterResponse !== '') {
 		 			speech      = speech + ' ' + afterResponse;
 		 		}
-		 		let response    = mediaLeftMe + text_in + chatBreak + mediaLeftAunt + speech + chatBreak;
+		 		let response    = mediaLeftMe + text_in + chatBreak + mediaLeftAunt + speech + chatBreak + mediaLeftMe + inputbox + chatBreak;
 		 		setResponse(JSON.stringify(data, undefined, 2));
-		 		$("#dialog").html(dialog + response);
+//		 		$("#dialog").html(dialog + response);
+				$("#dialog").html(response);
 		 		$("#dialog").scrollTop($("#dialog")[0].scrollHeight);
 				$("#input").val(input);
 
@@ -417,9 +437,7 @@
 #inputArea {
 	height: 50px;
 	background-color: deepskyblue;
-	position: relative;
-	bottom: 200px;
-	left: 5%;
+
 }
 </style>
 
@@ -445,14 +463,16 @@
 
 			</div>
 			<div class="col-sm-6" id="inputArea">
+				<div id="inputArea1">
 				<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
 
 				<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">
 					<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>
-					<button id="submit_button" type="submit" class="hidden"></button>
+					<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>
 				</form>
 
 				<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>
+				</div>
 			</div>
 	</div>
 
