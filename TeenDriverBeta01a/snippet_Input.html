@@ -36,7 +36,28 @@
 			overflow-y: scroll;
 			height: 360px;
 		}
+		#button {
+			position: absolute;
+			left: 10%;
+		}
 	</style>
+
+	<script>
+		function switchToInput() {
+			var inputBox = '<div id="inputArea">'+
+								'<div id ="inputArea1">'+
+									'<p id="inputHeader">Input</p>' +
+									'<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">' +
+										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>' +
+										'<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>' +
+									'</form>' +
+									'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>' +
+								'</div>'+
+								'</div>';
+			list = document.getElementsByClassName("media-body")[0];
+			list.getElementsByClassName('speech-bubble-me')[0].innerHTML = inputBox;
+		}
+	</script>
 </head>
 
 <body>
@@ -48,6 +69,9 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
+		<button id="button" onclick="switchToInput()">Click here to get text input box</button>
 	</div>
 </body>
 
