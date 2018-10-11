@@ -43,19 +43,38 @@
 	</style>
 
 	<script>
+		var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
+    	var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:white;"';
+		var chatBreak      = "</div></div><hr>";
+		var mediaLeftMe    = mediaStart + ' 0px"><img src= "Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
+
+		function hideInputBox(){
+		document.getElementById('inputArea').innerHTML= "";
+//		document.getElementById('inputArea').outerHTML= "";
+	}
+
 		function switchToInput() {
 			var inputBox = '<div id="inputArea">'+
 								'<div id ="inputArea1">'+
 									'<p id="inputHeader">Input</p>' +
 									'<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">' +
 										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>' +
-										'<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>' +
+										'<button id="submit_button" type="submit" class="hidden" onclick="showText();hideInputBox();"></button>' +
 									'</form>' +
 									'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>' +
 								'</div>'+
 								'</div>';
 			list = document.getElementsByClassName("media-body")[0];
 			list.getElementsByClassName('speech-bubble-me')[0].innerHTML = inputBox;
+		}
+
+		function showText() {
+			var text_in = $("#input").val();
+			var dialog  = $("#dialog").html();
+			let response    = mediaLeftMe + text_in + chatBreak;
+			$("#dialog").html(response);
+			$("#dialog").scrollTop($("#dialog")[0].scrollHeight);
+			$("#input").val(input);
 		}
 	</script>
 </head>
