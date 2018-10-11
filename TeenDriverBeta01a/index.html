@@ -14,7 +14,7 @@
 	<style type="text/css">
 		.speech-bubble-me {
 			position:     relative;
-			background:     indigo;
+			background:     wheat;
 			border-radius:    .4em;
 		}
 		.speech-bubble-me:after {
@@ -25,7 +25,7 @@
 			width:    0;
 			height:   0;
 			border:  11px solid transparent;
-			border-right-color: indigo;
+			border-right-color: wheat;
 			border-left:     0;
 			margin-top:  -11px;
 			margin-left: -11px;
@@ -55,6 +55,7 @@
 			background-color: indigo;
 			color:             white;
 		}
+
 	</style>
 
 	<script>
@@ -87,7 +88,7 @@
 	// }
 
     var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
-    var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:white;"';
+    var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:black;"';
 	var mediaLeftAunt  = mediaStart + '30px"><img src="Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
 	var mediaLeftMe    = mediaStart + ' 0px"><img src= "Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
 	var chatBreak      = "</div></div><hr>";
@@ -156,14 +157,12 @@
 				var input = "";
 				var speechJSON = speechSplit.JSON.replace(/yyy/g,"{").replace(/zzz/g,"}");
 				var inputbox = '<div id="inputArea">'+
-								'<div id ="inputArea1">'+
 									'<p id="inputHeader">Input</p>' +
 									'<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">' +
-										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>' +
+										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on">' +
 										'<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>' +
 									'</form>' +
 									'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>' +
-								'</div>'+
 								'</div>';
 				if (speechJSON.length>0) {
 					try {
@@ -463,16 +462,14 @@
 
 			</div>
 			<div class="col-sm-6" id="inputArea">
-				<div id="inputArea1">
 				<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
 
+
 				<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">
-					<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>
+					<input type="text" style="width:100%" id="input" name="input" autocomplete="on">
 					<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>
 				</form>
-
 				<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>
-				</div>
 			</div>
 	</div>
 

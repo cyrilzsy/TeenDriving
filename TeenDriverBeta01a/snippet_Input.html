@@ -13,7 +13,7 @@
 	<style>
 		.speech-bubble-me {
 			position:     relative;
-			background:     indigo;
+			background:     wheat;
 			border-radius:    .4em;
 		}
 		.speech-bubble-me:after {
@@ -24,7 +24,7 @@
 			width:    0;
 			height:   0;
 			border:  11px solid transparent;
-			border-right-color: indigo;
+			border-right-color: wheat;
 			border-left:     0;
 			margin-top:  -11px;
 			margin-left: -11px;
@@ -40,6 +40,10 @@
 			position: absolute;
 			left: 10%;
 		}
+		/*#input {*/
+			/*position: inherit;*/
+			/*z-index: -2;*/
+		/*}*/
 	</style>
 
 	<script>
@@ -55,14 +59,12 @@
 
 		function switchToInput() {
 			var inputBox = '<div id="inputArea">'+
-								'<div id ="inputArea1">'+
 									'<p id="inputHeader">Input</p>' +
 									'<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">' +
-										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>' +
+										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on">' +
 										'<button id="submit_button" type="submit" class="hidden" onclick="showText();hideInputBox();"></button>' +
 									'</form>' +
 									'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>' +
-								'</div>'+
 								'</div>';
 			list = document.getElementsByClassName("media-body")[0];
 			list.getElementsByClassName('speech-bubble-me')[0].innerHTML = inputBox;
@@ -74,7 +76,7 @@
 			let response    = mediaLeftMe + text_in + chatBreak;
 			$("#dialog").html(response);
 			$("#dialog").scrollTop($("#dialog")[0].scrollHeight);
-			$("#input").val(input);
+//			$("#input").val(input);
 		}
 	</script>
 </head>
@@ -83,7 +85,7 @@
     <div class="row">
 		<div class="col-sm-6" id="dialog">
 			<div class="media-body" style="padding-left:20px">
-				<div style="padding: 15px; color: white; width: 811px;" class="speech-bubble-me">
+				<div style="padding: 15px; color: black; width: 811px;" class="speech-bubble-me">
 					Yes, let's start
 				</div>
 			</div>
