@@ -34,16 +34,35 @@
 		}
 		#dialog {
 			overflow-y: scroll;
-			height: 360px;
+			/*height: 360px;*/
 		}
 		#button {
 			position: absolute;
 			left: 10%;
 		}
-		/*#input {*/
-			/*position: inherit;*/
-			/*z-index: -2;*/
-		/*}*/
+		* {
+		box-sizing: border-box;
+		}
+
+		.col-container {
+			display: table;
+			width: 100%;
+			padding: 0;
+		}
+		.col {
+			display: table-cell;
+			padding: 0;
+		}
+
+		@media only screen and (max-width: 600px) {
+			.col {
+				display: block;
+				width: 100%;
+			}
+		}
+		.media-body {
+			width: auto;
+		}
 	</style>
 
 	<script>
@@ -82,16 +101,26 @@
 </head>
 
 <body>
-    <div class="row">
-		<div class="col-sm-6" id="dialog">
+    <div class="col-container">
+    	<div class="col">
+    		<div id="video_box" class="container-fluid">
+				<video id="video" width="100%">
+			    	<source type="video/ogg" id="videoSource" src="28560.ogg">
+					Your browser does not support the video tag.
+				</video>
+				<div id="clickAreas">
+				</div>
+     		</div>
+		</div>
+    	<div class="col" id="dialog">
 			<div class="media-body" style="padding-left:20px">
-				<div style="padding: 15px; color: black; width: 811px;" class="speech-bubble-me">
+				<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me">
 					Yes, let's start
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	<div class="col-container">
 		<button id="button" onclick="switchToInput()">Click here to get text input box</button>
 	</div>
 </body>

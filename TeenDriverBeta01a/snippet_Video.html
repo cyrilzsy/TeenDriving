@@ -16,8 +16,57 @@
 		}
 		#dialog {
 			overflow-y: scroll;
-			height: 360px;
+			/*height: 500px;*/
+			/*outline-style: double;*/
+			width: auto;
 		}
+		/*#video_box {*/
+			/*height: auto;*/
+		/*}*/
+		/*.container-fluid {*/
+			/*position:absolute;*/
+			/*height:auto;*/
+			/*width:100%;*/
+			/*overflow: hidden;*/
+		/*}*/
+		/*.container-fluid video{*/
+			/*min-width: 100%;*/
+			/*min-height: 100%;*/
+		/*}*/
+		/*#video, #dialog{*/
+  			/*object-fit: cover;*/
+			/*display: table-cell;*/
+		/*}*/
+		/*.col-sm-6 {*/
+			/*margin: 0;*/
+			/*border: 0;*/
+			/*padding: 0;*/
+		/*}*/
+		* {
+		box-sizing: border-box;
+		}
+
+		.col-container {
+			display: table;
+			width: 100%;
+			padding: 0;
+		}
+		.col {
+			display: table-cell;
+			padding: 0;
+		}
+
+		@media only screen and (max-width: 600px) {
+			.col {
+				display: block;
+				width: 100%;
+			}
+		}
+		.media-body {
+			width: auto;
+		}
+
+
 	</style>
 
 	<script>
@@ -25,18 +74,23 @@
 </head>
 
 <body>
-    <div class="row">
-    	<div class="col-sm-6">
+    <div class="col-container">
+    	<div class="col">
     		<div id="video_box" class="container-fluid">
-				<video id="video">
+				<video id="video" width="100%">
 			    	<source type="video/ogg" id="videoSource" src="28560.ogg">
 					Your browser does not support the video tag.
-				</video> 
+				</video>
 				<div id="clickAreas">
 				</div>
      		</div>
 		</div>
-    	<div class="col-sm-6" id="dialog">
+    	<div class="col" id="dialog">
+			<div class="media-body" style="padding-left:20px">
+				<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me">
+					Yes, let's start
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
