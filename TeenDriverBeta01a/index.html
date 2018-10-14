@@ -157,14 +157,12 @@
 				var speech = speechSplit.text.replace(/yyy/g,"{").replace(/zzz/g,"}");
 				var input = "";
 				var speechJSON = speechSplit.JSON.replace(/yyy/g,"{").replace(/zzz/g,"}");
-				var inputbox = '<div id="inputArea">'+
-									'<p id="inputHeader">Input</p>' +
+				var inputbox = '<p id="inputHeader">Input</p>' +
 									'<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">' +
 										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on">' +
-										'<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>' +
+										'<input id="submit_button" type="submit" onclick="send();hideInputBox();" value="Submit">' +
 									'</form>' +
-									'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>' +
-								'</div>';
+									'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>';
 				if (speechJSON.length>0) {
 					try {
 						speechObj = JSON.parse(speechJSON);
@@ -444,8 +442,8 @@
 	height: 400px;
 }
 
-#inputArea {
-	height: 50px;
+#inputHeader {
+	/*height: 50px;*/
 	background-color: deepskyblue;
 }
 
@@ -497,15 +495,15 @@
 		<div class="col" id="dialog">
 			<div class="media-body" style="padding-left:20px">
 				<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me">
-					<div id="inputArea">
+					<!--<div id="inputArea">-->
 				<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
 
 				<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">
 					<input type="text" style="width:100%" id="input" name="input" autocomplete="on">
-					<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>
+					<input id="submit_button" type="submit" onclick="send();hideInputBox();" value="Submit">
 				</form>
 				<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>
-			</div>
+			<!--</div>-->
 				</div>
 			</div>
 		</div>
