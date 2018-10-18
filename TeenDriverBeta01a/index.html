@@ -131,6 +131,14 @@
 	}
 
 
+	function RandomNumber() {
+	    var a = Math.floor(Math.random() * 10);
+	    var str = "Next coures please!";
+	    $("#input").val(str + a);
+	    send();
+	}
+
+
 	function send(beforeResponse = '',afterResponse = '') {
 		var text_in = $("#input").val();                          // get input text
 		var dialog  = $("#dialog").html();                        // get dialog text
@@ -199,8 +207,19 @@
 									video.play();
 									video.addEventListener("timeupdate", pausing_function);
 									document.getElementById("response").value = "";
-								} else if (functionName=='hideInputBox'){
-									$('#inputArea').empty();
+								} else if (functionName=='playAndCountTime'){
+									countResponseTime(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime);
+									input = clickAreaResponse;
+								    if (parameters.startTime===undefined) {
+										video.currentTime = 0.;
+									} else {
+										video.currentTime = parameters.startTime;
+									}
+						 			pauseVideoTime = parameters.pauseTime;
+									video.play();
+									startTimer();
+									video.addEventListener("timeupdate", pausing_function);
+									document.getElementById("response").value = "";
 								}
 							}
 						}
@@ -359,6 +378,46 @@
 		div.appendChild(a);
 		document.getElementById('clickAreas').appendChild(div);	
 	}
+
+	function countResponseTime(upperLeftCoords,lowerRightCoords,clickResponseFast,clickResponseSlow,expertTime) {
+		var n = document.getElementsByClassName('clickArea').length;
+		var div = document.createElement('div');
+		div.setAttribute('id','content' + n);
+		div.setAttribute('class','content');
+		var a = document.createElement('a');
+		a.setAttribute('href','#');
+		var startTime;
+		var diff;
+		startTimer = function() {
+			startTime = new Date();
+		};
+		reportTime = function() {
+			endTime = new Date();
+			diff = endTime - startTime;
+		};
+		a.onclick = function () {
+			reportTime();
+			if (diff <= expertTime) {
+			    $("input").val(clickResponseFast);
+				send();
+			}else if (diff > expertTime) {
+			    $("input").val(clickResponseSlow);
+				send();
+			}
+		};
+		var divBox = document.createElement('div');
+		divBox.setAttribute("id","clickArea" + n);
+		divBox.setAttribute("class","clickArea");
+		divBox.setAttribute("position","absolute");
+//		divBox.setAttribute("z-index","+1");
+		div.style["left"] = upperLeftCoords[0] + 'px';
+		div.style["top"] = upperLeftCoords[1] + 'px';
+		divBox.style.width = (lowerRightCoords[0] - upperLeftCoords[0]) + 'px';
+		divBox.style.height = (lowerRightCoords[1] - upperLeftCoords[1]) + 'px';
+		a.appendChild(divBox);
+		div.appendChild(a);
+		document.getElementById('clickAreas').appendChild(div);
+    }
 
 	function showArea(alpha) {
 		var x = document.getElementsByClassName("clickArea");
