@@ -24,8 +24,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="56" selection-end-column="9" />
+            <state relative-caret-position="500">
+              <caret line="366" column="10" selection-start-line="366" selection-start-column="10" selection-end-line="366" selection-end-column="10" />
               <folding>
                 <marker date="1539984393767" expanded="true" signature="3313:3330" ph="..." />
                 <marker date="1539984393767" expanded="true" signature="3344:3370" ph="..." />
@@ -38,8 +38,8 @@
       <file leaf-file-name="snippet_Video.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/snippet_Video.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2250">
-              <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+            <state relative-caret-position="761">
+              <caret line="179" column="84" selection-start-line="179" selection-start-column="84" selection-end-line="179" selection-end-column="84" />
               <folding />
             </state>
           </provider>
@@ -192,8 +192,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="56" selection-end-column="9" />
+        <state relative-caret-position="500">
+          <caret line="366" column="10" selection-start-line="366" selection-start-column="10" selection-end-line="366" selection-end-column="10" />
           <folding>
             <marker date="1539984393767" expanded="true" signature="3313:3330" ph="..." />
             <marker date="1539984393767" expanded="true" signature="3344:3370" ph="..." />
@@ -204,8 +204,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/snippet_Video.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2250">
-          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+        <state relative-caret-position="761">
+          <caret line="179" column="84" selection-start-line="179" selection-start-column="84" selection-end-line="179" selection-end-column="84" />
           <folding />
         </state>
       </provider>

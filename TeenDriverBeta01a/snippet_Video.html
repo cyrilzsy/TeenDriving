@@ -126,6 +126,37 @@
 	</style>
 
 	<script>
+		function addVideoArea(upperLeftCoords,lowerRightCoords,clickResponse) {
+		// video_box
+		//   video
+		//     source
+		//   div#clickAreas
+		//     div.content#contentn
+		//       a
+		//         div.clickArea#clickArean
+		var n = document.getElementsByClassName('clickArea').length;
+		var div = document.createElement('div');
+		div.setAttribute('id','content' + n);
+		div.setAttribute('class','content');
+		var a = document.createElement('a');
+		a.setAttribute('href','#');
+		a.onclick = function () {
+			$("input").val(clickResponse);
+			send();
+		};
+		var divBox = document.createElement('div');
+		divBox.setAttribute("id","clickArea" + n);
+		divBox.setAttribute("class","clickArea");
+		divBox.setAttribute("position","absolute");
+//		divBox.setAttribute("z-index","+1");
+		div.style["left"] = upperLeftCoords[0] + 'px';
+		div.style["top"] = upperLeftCoords[1] + 'px';
+		divBox.style.width = (lowerRightCoords[0] - upperLeftCoords[0]) + 'px';
+		divBox.style.height = (lowerRightCoords[1] - upperLeftCoords[1]) + 'px';
+		a.appendChild(divBox);
+		div.appendChild(a);
+		document.getElementById('clickAreas').appendChild(div);
+	}
 	</script>
 </head>
 
@@ -138,6 +169,7 @@
 					Your browser does not support the video tag.
 				</video>
 				<div id="clickAreas">
+
 				</div>
      		</div>
 		</div>
@@ -145,6 +177,7 @@
 			<div class="media-body" style="padding-left:20px">
 				<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me">
 					Yes, let's start
+					<button onclick="addVideoArea([0,0],[480,320],'!')">AddClickArea</button>
 				</div>
 			</div>
 		</div>
