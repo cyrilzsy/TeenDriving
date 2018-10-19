@@ -11,41 +11,48 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.js"></script>
 	<style>
-		#dialog {
-			background-color: hsl(0,20%,70%);
+		.container-fluid {
+			padding-left: 0;
+			position: static;
 		}
-		#dialog {
+		.container {
+			position: absolute;
+		}
+		.container video {
+			position: absolute;
+			left: 0;
+			top: 0;
+		/*    min-width: 50%;
+			min-height: 50%;*/
+}
+		.content {
+			position: absolute;
+			top: 0;
+			/*background: rgba(0, 0, 0, 0.5);*/
+			color: #f1f1f1;
+			z-index: +1;
+		/*    width: 50%;
+			padding: 20px;*/
+		}
+		#dialog, #history {
 			overflow-y: scroll;
-			/*height: 500px;*/
-			/*outline-style: double;*/
+			/*height: 360px;*/
 			width: auto;
 		}
-		/*#video_box {*/
-			/*height: auto;*/
-		/*}*/
-		/*.container-fluid {*/
-			/*position:absolute;*/
-			/*height:auto;*/
-			/*width:100%;*/
-			/*overflow: hidden;*/
-		/*}*/
-		/*.container-fluid video{*/
-			/*min-width: 100%;*/
-			/*min-height: 100%;*/
-		/*}*/
-		/*#video, #dialog{*/
-  			/*object-fit: cover;*/
-			/*display: table-cell;*/
-		/*}*/
-		/*.col-sm-6 {*/
-			/*margin: 0;*/
-			/*border: 0;*/
-			/*padding: 0;*/
-		/*}*/
-		* {
-		box-sizing: border-box;
+
+		#history {
+			width: 100%;
+			height: 400px;
 		}
 
+		#inputHeader {
+			/*height: 50px;*/
+			background-color: deepskyblue;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
 		.col-container {
 			display: table;
 			width: 100%;
@@ -54,7 +61,11 @@
 		.col {
 			display: table-cell;
 			padding: 0;
+			min-width: 480px;
+			width: 50%;
 		}
+
+
 
 		@media only screen and (max-width: 600px) {
 			.col {
@@ -64,7 +75,52 @@
 		}
 		.media-body {
 			width: auto;
+}
+
+		.speech-bubble-me {
+			position:     relative;
+			background:     wheat;
+			border-radius:    .4em;
 		}
+		.speech-bubble-me:after {
+			content: '';
+			position: absolute;
+			left:     0;
+			top:    50%;
+			width:    0;
+			height:   0;
+			border:  11px solid transparent;
+			border-right-color: wheat;
+			border-left:     0;
+			margin-top:  -11px;
+			margin-left: -11px;
+		}
+		.speech-bubble-aunt {
+			position:     relative;
+			background:      brown;
+			border-radius:    .4em;
+		}
+		.speech-bubble-aunt:after {
+			content: '';
+			position: absolute;
+			left:     0;
+			top:    50%;
+			width:    0;
+			height:   0;
+			border:  11px solid transparent;
+			border-right-color: brown;
+			border-left:     0;
+			margin-top:  -11px;
+			margin-left: -11px;
+		}
+		#dialog, #history {
+			background-color: hsl(0,20%,70%);
+		}
+		button {
+			background-color: indigo;
+			color:             white;
+		}
+
 
 
 	</style>

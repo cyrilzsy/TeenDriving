@@ -4,6 +4,7 @@
     <list default="true" id="0983d7e9-f3c5-48b7-8158-9dfdeac101c3" name="Default" comment="" />
     <ignored path="TeenDriving.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,16 +21,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="185" column="82" selection-start-line="185" selection-start-column="82" selection-end-line="185" selection-end-column="82" />
+            <state relative-caret-position="225">
+              <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="56" selection-end-column="9" />
               <folding>
                 <marker date="1539984393767" expanded="true" signature="3313:3330" ph="..." />
                 <marker date="1539984393767" expanded="true" signature="3344:3370" ph="..." />
                 <marker date="1539984393767" expanded="true" signature="5727:5737" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="snippet_Video.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/snippet_Video.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2250">
+              <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -43,6 +54,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/TeenDriverBeta01a/index.html" />
+        <option value="$PROJECT_DIR$/TeenDriverBeta01a/snippet_Video.html" />
       </list>
     </option>
   </component>
@@ -180,13 +192,21 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="185" column="82" selection-start-line="185" selection-start-column="82" selection-end-line="185" selection-end-column="82" />
+        <state relative-caret-position="225">
+          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="56" selection-end-column="9" />
           <folding>
             <marker date="1539984393767" expanded="true" signature="3313:3330" ph="..." />
             <marker date="1539984393767" expanded="true" signature="3344:3370" ph="..." />
             <marker date="1539984393767" expanded="true" signature="5727:5737" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/snippet_Video.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2250">
+          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
