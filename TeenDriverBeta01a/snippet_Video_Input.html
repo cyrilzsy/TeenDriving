@@ -146,23 +146,52 @@
 		};
 	}
 
-	function getwh() {
-		w = $('#video').width();
-		h = $('#video').height();		
-		$('#dialog').height(h);
-	}
+		function getwh() {
+			w = $('#video').width();
+			h = $('#video').height();
+			$('#dialog').height(h);
+		}
 
-	$(window).resize(function () {
-		getwh();
-	})
-
-	$(document).ready(function() {
-		$('#video').on("loadeddata", function () {
+		$(window).resize(function () {
 			getwh();
-			console.log('loadeddata');
-		});
-		getwh();
-	})
+		})
+
+		$(document).ready(function() {
+			$('#video').on("loadeddata", function () {
+				getwh();
+				console.log('loadeddata');
+			});
+			getwh();
+		})
+
+
+		var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
+		var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:black;"';
+		var mediaLeftAunt  = mediaStart + '30px"><img src="Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
+		var mediaLeftMe    = mediaStart + ' 0px"><img src= "Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
+		var chatBreak      = "</div></div><hr>";
+		function talking(){
+			var text_in = $("#input").val();                          // get input text
+			var dialog  = $("#dialog").html();                        // get dialog text
+			var form_text = $("#myForm").val();
+		    var inputbox = '<p id="inputHeader">Input</p>' +
+									'<form autocomplete="on" id="myForm">' +
+										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on">' +
+										'<button id="submit_button" onclick="talking();hideInputBox();">Submit</button>' +
+									'</form>';
+		    let response  = mediaLeftMe + text_in + chatBreak + mediaLeftAunt + "Input more please" + chatBreak + mediaLeftMe + inputbox + chatBreak;
+
+		    $("#dialog").html(dialog + response);
+
+		}
+
+			function hideInputBox(){
+				document.getElementById('inputHeader').innerHTML= "";
+				document.getElementById('inputHeader').outerHTML= "";
+				document.getElementById('myForm').innerHTML= "";
+				document.getElementById('myForm').outerHTML= "";
+			}
+
 
 	</script>
 </head>
@@ -183,12 +212,17 @@
 		    	<div class="col" id="dialog">
 					<div class="media-body" style="padding-left:20px" width="100%">
 						<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me">
-							Yes, let's start
-							<button onclick="addVideoArea([10,20],[50,60],'!')">AddClickArea</button>
+							<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
+
+							<form autocomplete="on" id="myForm">
+								<input type="text" style="width:100%" id="input" name="input" autocomplete="on">
+								<button id="submit_button" onclick="talking();hideInputBox();">Submit</button>
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
+			<button onclick="addVideoArea([10,20],[50,60],'!')">AddClickArea</button>
 		</div>
 	</div>
 <!--     <div class="col-container">
