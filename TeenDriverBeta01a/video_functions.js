@@ -6,22 +6,13 @@ function getwh() {
 	$('#dialog').height(videoHeight);
 }
 
-var pausing_function = function(){
+var pausing_function = function() {
     if(this.currentTime > pauseVideoTime) {
         this.pause();
         // remove the event listener after you paused the playback
         this.removeEventListener("timeupdate",pausing_function);
     }
 };
-
-// var pausing_function = function(){
-//     console.log(this.currentTime);
-//     if(this.currentTime > 10.) {
-//         this.pause();
-//         // remove the event listener after you paused the playback
-//         this.removeEventListener("timeupdate",pausing_function);
-//     }
-// };
 
 function addVideoArea(upperLeftCoords,lowerRightCoords,fn) {
 // video_div
