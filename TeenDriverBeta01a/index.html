@@ -1,135 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.css">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.js"></script>
+<script src="video_functions.js"></script>
+<script src="tokens_and_IDs.js"></script>
+<script src="callFunction.js"></script>
 
-	<style type="text/css">
-		.speech-bubble-me {
-			position:     relative;
-			background:     wheat;
-			border-radius:    .4em;
-		}
-		.speech-bubble-me:after {
-			content: '';
-			position: absolute;
-			left:     0;
-			top:    50%;
-			width:    0;
-			height:   0;
-			border:  11px solid transparent;
-			border-right-color: wheat;
-			border-left:     0;
-			margin-top:  -11px;
-			margin-left: -11px;
-		}
-		.speech-bubble-aunt {
-			position:     relative;
-			background:      brown;
-			border-radius:    .4em;
-		}
-		.speech-bubble-aunt:after {
-			content: '';
-			position: absolute;
-			left:     0;
-			top:    50%;
-			width:    0;
-			height:   0;
-			border:  11px solid transparent;
-			border-right-color: brown;
-			border-left:     0;
-			margin-top:  -11px;
-			margin-left: -11px;
-		}
-		#dialog, #history {
-			background-color: hsl(0,20%,70%);
-		}
-		button {
-			background-color: indigo;
-			color:             white;
-		}
+<link rel="stylesheet" href="styles.css">
 
-	</style>
-
-	<script>
-	var baseUrl        = "https://api.dialogflow.com/v1/";        // developer access
-	var baseUrl2       = "https://dialogflow.googleapis.com/v2/";
-    var accessToken    = "", developerToken = "", intentID = "", projectID = "";
-
-	// function changeAgent(name) {
-	// 	if (name=="Siyao") {
-	// 		accessToken    = "39e963ea263e46faaa8e716e95be575f";      // client access (read-only tasks)
-	// 		developerToken = "3808b587e8ad4964a1e2e8d8e99ecd3d";      // get API keys  (edits/updates/deletes)
-
-	// 		intentID       = "d7517099-76fa-4f12-9971-553e74492b2f";  // get from webpage address, this is the agent ID
-	// 		projectID      = "teendrivingtest";
-	// 	} else if (name=="Tak") {
-			accessToken    = "e7fa3324d4cb4f69a19b4330f1da9f54";      // client access
-			accessToken    = "cc3176f18cbb4b56bc9f23b4d3d37e91";
-			accessToken    = "c8e8b58b4cf444e399efb3be934d9be2";      // TeenDriverBeta01
-			accessToken    = "932b3df3678943c18b215b237bfd3610";      // TeenDriverBeta01a
-
-			developerToken = "cd520a508824440d9641a2d4c5a9edc8";      // get API keys
-			developerToken = "c06e74fdd02744e0b39b9846b101f940";
-			developerToken = "cb65e2aae2964f3e81a03befda2442ec";      // TeenDriverBeta01
-			developerToken = "99e082a99f354572a4a29364c210bdc7";      // TeenDriverBeta01a
-
-			intentID       = "06cd8abb-1ed9-44c9-9922-6f59717ac6fe";  // get from webpage address, this is the agent ID
-			intentID       = "3b01b82b-ac67-4f20-9388-e4b494fcae1e";
-			projectID      = "myplanbeta2";
-	// 	}
-	// }
-
-    var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
-    var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:black;"';
+<script>
+	var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
+	var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:black;"';
+	var mediaEndForm   = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px" id="media-end-form"><div style="padding:15px; color:black;"';
 	var mediaLeftAunt  = mediaStart + '30px"><img src="Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
 	var mediaLeftMe    = mediaStart + ' 0px"><img src= "Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
 	var chatBreak      = "</div></div><hr>";
+	var mediaLeftForm  = mediaStart + ' 0px"><img src="Girl image.png" id="image-form"' + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
+	var speechObj = "";
 
 	function clickMe(element) {
 		$("#input").val(element.value);
 		send();
 	}
-
-	var pointsMyths    = 0;
-	var pointsMythsTot = 0;
-
-	function clickMyths(reply,answer,showPoints = false) {
-		let afterResponse  = '';
-		let beforeResponse = '';
-		$("#input").val(reply);
-
-		if (showPoints) {
-			beforeResponse = 'You got ' + pointsMyths + ' out of ' + pointsMythsTot + '.<br><br>';
-		} else {
-			pointsMythsTot += 1;
-			if (reply == answer) {
-				pointsMyths += 1;
-				beforeResponse = 'Correct!';
-			} else {
-				beforeResponse = "Here's the answer:";
-			}			
-		};
-		send(beforeResponse,afterResponse);
-	}
-
-	var speechObj;
-	var clickAreaResponse = '';
-	var pauseVideoTime = 0.;
-
-
-	function hideInputBox(){
-		document.getElementById('inputArea').innerHTML= "";
-		document.getElementById('inputArea').outerHTML= "";
-	}
-
 
 	function RandomNumber() {
 	    var a = Math.floor(Math.random() * 10);
@@ -138,11 +38,19 @@
 	    send();
 	}
 
+    var inputbox0 = '<form autocomplete="on" id="myForm" onsubmit="send()">' +
+			'<input type="text" style="width:100%" id="input" name="input" autocomplete="on" autofocus>' +
+		'</form>';
+	// var inputbox0 = '<p id="inputHeader">Input</p>' +
+	// 					'<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">' +
+	// 						'<input type="text" style="width:100%" id="input" name="input" autocomplete="on">' +
+	// 						'<input id="submit_button" type="submit" onclick="send();hideInputBox();" value="Submit">' +
+	// 					'</form>' +
+	// 					'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>';
 
-	function send(beforeResponse = '',afterResponse = '') {
-		var text_in = $("#input").val();                          // get input text
-		var dialog  = $("#dialog").html();                        // get dialog text
-		var history = $("#history").html();						//get history text
+	function sendToDialogFlow(text_in) {
+		var input = "";
+		var clickAreaResponse = '';
 		$.ajax({
 			type:        "POST",
 			url:          baseUrl + "query/",
@@ -156,71 +64,28 @@
 				lang:    "en",
 				contexts:[
 				],
-				sessionId: "0123456789",
+				sessionId: "0123456789ti",
 			}),
 
 			success: function(data) {
 		 		let data_speech = data.result.speech;
 				var speechSplit = splitStr(data_speech);
 				var speech = speechSplit.text.replace(/yyy/g,"{").replace(/zzz/g,"}");
-				var input = "";
 				var speechJSON = speechSplit.JSON.replace(/yyy/g,"{").replace(/zzz/g,"}");
-				var inputbox = '<p id="inputHeader">Input</p>' +
-									'<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">' +
-										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on">' +
-										'<input id="submit_button" type="submit" onclick="send();hideInputBox();" value="Submit">' +
-									'</form>' +
-									'<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>';
 				if (speechJSON.length>0) {
 					try {
 						speechObj = JSON.parse(speechJSON);
 						console.log(speechObj);
 						let tasks = speechObj.tasks;
 						console.log(tasks);
-						for (i=0; i<tasks.length; i++) {
-							let task = tasks[i];
+						for (iTask=0; iTask<tasks.length; iTask++) {
+							let task = tasks[iTask];
+							console.log('task ' + iTask + ' of ' + tasks.length);
 							console.log(task);
 							let taskType = Object.getOwnPropertyNames(task)[0];
 							console.log('taskType: ' + taskType);
 							if (taskType=='callFunction') {
-								let functionName = task.callFunction.functionName;
-								let parameters = task.callFunction.functionParameters;
-								console.log('functionName: ' + functionName);
-								console.log(parameters);
-								if (functionName=='loadVideo') {
-									console.log('videoNumber: ' + parameters.videoNumber);
-									document.getElementById('videoSource').setAttribute('src',parameters.videoNumber + '.mp4');
-								    document.getElementById("video").load();
-								    document.getElementById("inputHeader").innerHTML = "Input:";
-								} else if (functionName=='addVideoArea') {
-									addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.clickResponse);
-									input = clickAreaResponse;
-								} else if (functionName=='clearVideoAreas') {
-									$('#clickAreas').empty();
-								} else if (functionName=='playVideoUntil') {
-									if (parameters.startTime===undefined) {	
-										video.currentTime = 0.;
-									} else {
-										video.currentTime = parameters.startTime;
-									}
-						 			pauseVideoTime = parameters.pauseTime;
-									video.play();
-									video.addEventListener("timeupdate", pausing_function);
-									document.getElementById("response").value = "";
-								} else if (functionName=='playAndCountTime'){
-									countResponseTime(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime);
-									input = clickAreaResponse;
-								    if (parameters.startTime===undefined) {
-										video.currentTime = 0.;
-									} else {
-										video.currentTime = parameters.startTime;
-									}
-						 			pauseVideoTime = parameters.pauseTime;
-									video.play();
-									startTimer();
-									video.addEventListener("timeupdate", pausing_function);
-									document.getElementById("response").value = "";
-								}
+								input = callFunction(task,clickAreaResponse);
 							}
 						}
 					}
@@ -229,105 +94,52 @@
 						console.log(err);
 					}
 				}
-		 		if (beforeResponse !== '') {
-		 			speech      = beforeResponse + ' ' + speech;
-		 		}
-		 		if (afterResponse !== '') {
-		 			speech      = speech + ' ' + afterResponse;
-		 		}
-		 		let response    = mediaLeftMe + text_in + chatBreak + mediaLeftAunt + speech + chatBreak + mediaLeftMe + inputbox + chatBreak;
-				let histresponse = mediaLeftMe + text_in + chatBreak + mediaLeftAunt + speech + chatBreak;
-		 		setResponse(JSON.stringify(data, undefined, 2));
-//		 		$("#dialog").html(dialog + response);
-				$("#dialog").html(response);
-				$("#history").html(history + histresponse);
-		 		$("#dialog").scrollTop($("#dialog")[0].scrollHeight);
-				$("#input").val(input);
-
-				let dialogWidth = parseInt($("#dialog")[0].clientWidth,10);
-				let bubbles     = document.getElementsByClassName('speech-bubble-me');
-				bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';
-				bubbles         = document.getElementsByClassName('speech-bubble-aunt');
-				bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';
-			},
-			error: function(jqXHR) {
-  				setResponse(JSON.stringify(jqXHR, undefined, 2));
-			}
-		});
-  		setResponse("Loading...");
-	}
-
-	function sendIntent() {
-		var xhttp      = new XMLHttpRequest();
-		var intentJSON = $("#response").val();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-		 		$("#serverResponse").val(this.status);
-			}
-		};
-		xhttp.open("GET","save_intent.php?q=" + intentJSON,true);
-		xhttp.send();
-	}
-
-	function getIntentInfo() {
-		var xhttp = new XMLHttpRequest();
-  	    var	url   = baseUrl + "intents/" + intentID + "?v=20150910";
-//		var	url   = baseUrl2 + "projects/" + projectID + "/agents/intents/" + intentID;
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-		 		setResponse(this.responseText);
-			}
-		};
-		xhttp.open("GET",url,true);
-		xhttp.setRequestHeader("Content-Type","application/json; charset=utf-8");
-        xhttp.setRequestHeader("Authorization","Bearer " + developerToken);
-//		xhttp.setRequestHeader("Authorization","Bearer $(gcloud auth application-default print-access-token)");
-		xhttp.send();
-	}
-
-	function getIntentSummaries() {
-		$.ajax({
-			type:        "GET",
-//			url:         baseUrl + "intents/" + intentID + "?v=20150910",  // get specific intent
-			url:         baseUrl + "intents?v=20150910",
-			contentType: "application/json; charset=utf-8",
-			dataType:    "json",
-			headers: {
-				         "Authorization": "Bearer " + developerToken
-			},
-
-			success: function(data) {
+				setDialogBox(false,speech,text_in,input);
 		 		setResponse(JSON.stringify(data, undefined, 2));
 			},
 			error: function(jqXHR) {
   				setResponse(JSON.stringify(jqXHR, undefined, 2));
 			}
 		});
-  		setResponse("Loading...");
+  		setResponse("Loading...");	
+	}
+
+	function send(text="",start=false) {
+		if (start) {
+			let inputbox = '<p id="inputHeader">' + text + '</p>' + inputbox0;
+			setDialogBox(start,'','','begin',inputbox);
+		} else {
+			var text_in = $("#input").val(); // get input text
+		    $('#speech-form').remove(); // get rid of the old form and other HTML elements
+		    $('#image-form').remove();
+		    $('#media-end-form').remove();
+		    sendToDialogFlow(text_in);
+		}
+	}
+
+	function setDialogBox(start,speech,text_in,input,inputbox=inputbox0) {
+	    let response  = mediaLeftForm + inputbox;
+	    if (!start) {
+	    	response += chatBreak + mediaLeftAunt + speech + chatBreak + mediaLeftMe + text_in;
+		} else {
+		}
+		response += "</div></div>";
+	    $('#dialog').prepend(response);
+		$("#input").val(input);
+		$('#input').focus();
+ 		$("#dialog").scrollTop(0);
+
+		let dialogWidth = parseInt($("#dialog")[0].clientWidth,10);
+		let bubbles     = document.getElementsByClassName('speech-bubble-me');
+		bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';
+		bubbles         = document.getElementsByClassName('speech-bubble-aunt');
+		bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';		
 	}
 
 	function setResponse(val) {                                // generic function to set the response
 		// $("#response").text(val);                           // doesn't work when using sendIntent
 		document.getElementById("response").value = val;
 	}
-
-	function ajaxit() {
-	    var iFrameWindow = document.getElementById("the_iframe").contentWindow;
-	    iFrameWindow.document.body.appendChild( document.getElementById("myForm").cloneNode(true));   
-	    var frameForm = iFrameWindow.document.getElementById("myForm");
-	    frameForm.onsubmit = null;
-	    frameForm.submit();
-	    return false;
-	}
-
-	var pausing_function = function(){
-        console.log(this.currentTime);
-	    if(this.currentTime > 10.) {
-	        this.pause();
-	        // remove the event listener after you paused the playback
-	        this.removeEventListener("timeupdate",pausing_function);
-	    }
-	};
 
 	function splitStr(string) {
 	    var object = string.split("#####");
@@ -339,106 +151,19 @@
 	    return {text: text, JSON: JSON};
 	}
 
-	var pausing_function = function(){
-	    if(this.currentTime > pauseVideoTime) {
-	        this.pause();
-	        // remove the event listener after you paused the playback
-	        this.removeEventListener("timeupdate",pausing_function);
-	    }
-	};
-
-	function addVideoArea(upperLeftCoords,lowerRightCoords,clickResponse) {
-		// video_box
-		//   video
-		//     source
-		//   div#clickAreas
-		//     div.content#contentn
-		//       a
-		//         div.clickArea#clickArean
-		var n = document.getElementsByClassName('clickArea').length;
-		var div = document.createElement('div');
-		div.setAttribute('id','content' + n);
-		div.setAttribute('class','content');
-		var a = document.createElement('a');
-		a.setAttribute('href','#');
-		a.onclick = function () {
-			$("input").val(clickResponse);
-			send();
-		};
-		var divBox = document.createElement('div');
-		divBox.setAttribute("id","clickArea" + n);
-		divBox.setAttribute("class","clickArea");
-		divBox.setAttribute("position","absolute");
-//		divBox.setAttribute("z-index","+1");
-		div.style["left"] = upperLeftCoords[0] + 'px';
-		div.style["top"] = upperLeftCoords[1] + 'px';
-		divBox.style.width = (lowerRightCoords[0] - upperLeftCoords[0]) + 'px';
-		divBox.style.height = (lowerRightCoords[1] - upperLeftCoords[1]) + 'px';
-		a.appendChild(divBox);
-		div.appendChild(a);
-		document.getElementById('clickAreas').appendChild(div);	
-	}
-
-	function countResponseTime(upperLeftCoords,lowerRightCoords,clickResponseFast,clickResponseSlow,expertTime) {
-		var n = document.getElementsByClassName('clickArea').length;
-		var div = document.createElement('div');
-		div.setAttribute('id','content' + n);
-		div.setAttribute('class','content');
-		var a = document.createElement('a');
-		a.setAttribute('href','#');
-		var startTime;
-		var diff;
-		startTimer = function() {
-			startTime = new Date();
-		};
-		reportTime = function() {
-			endTime = new Date();
-			diff = endTime - startTime;
-		};
-		a.onclick = function () {
-			reportTime();
-			if (diff <= expertTime) {
-			    $("input").val(clickResponseFast);
-				send();
-			}else if (diff > expertTime) {
-			    $("input").val(clickResponseSlow);
-				send();
-			}
-		};
-		var divBox = document.createElement('div');
-		divBox.setAttribute("id","clickArea" + n);
-		divBox.setAttribute("class","clickArea");
-		divBox.setAttribute("position","absolute");
-//		divBox.setAttribute("z-index","+1");
-		div.style["left"] = upperLeftCoords[0] + 'px';
-		div.style["top"] = upperLeftCoords[1] + 'px';
-		divBox.style.width = (lowerRightCoords[0] - upperLeftCoords[0]) + 'px';
-		divBox.style.height = (lowerRightCoords[1] - upperLeftCoords[1]) + 'px';
-		a.appendChild(divBox);
-		div.appendChild(a);
-		document.getElementById('clickAreas').appendChild(div);
-    }
-
-	function showArea(alpha) {
-		var x = document.getElementsByClassName("clickArea");
-		for (i=0; i<x.length; i++) {
-			x[i].style.background = "rgba(0,0,0," + alpha + ")";
-			x[i].style.color = "#f1f1f1";
-		};
-		setTimeout(hideArea,1000);
-	}
-
-	function hideArea() {
-		var x = document.getElementsByClassName("clickArea");
-		for (i=0; i<x.length; i++) {
-			x[i].style.background = "rgba(0,0,0,0)";
-			x[i].style.color = "#f1f1f1";
-		};
-	}
+	$(window).resize(function () {
+		getwh();
+	})
 
 	$(document).ready(function() {
 	    var video = document.getElementById("video");
-		// var playButton = document.getElementById("btnPlayPause");
+		$('#video').on("loadeddata", function () {
+			getwh();
+			console.log('loadeddata');
+		});
+		getwh();
+		send("Type begin:",true);
+		$('#input').focus();
 		$("#input").keypress(function(event) {
 			if (event.which == 13) {
 		    	$('#submit_button').click(); 
@@ -446,154 +171,36 @@
 				send();
 			}
 		});
-		// $("#btnRewind").click(function () {
-		// 	video.currentTime = 0.;
-		// });
-		// $("#btnPlayPause").click(function() {
-		// 	if (video.paused == true) {
-		// 	    // Play the video
-		// 	    video.play();
-		// 	    // Update the button text to 'Pause'
-		// 	    playButton.innerHTML = "Pause";
-		// 	} else {
-		// 	    // Pause the video
-		// 	    video.pause();
-		// 	    // Update the button text to 'Play'
-		// 	    playButton.innerHTML = "Play";
-		// 	}
-		// });
 	});
-	</script>
+</script>
 </head>
 
-<style>
-.container-fluid {
-	padding-left: 0;
-	position: static;
-}
-.container {
-	position: absolute;
-}
-.container video {
-    position: absolute;
-    left: 0;
-    top: 0;
-/*    min-width: 50%; 
-    min-height: 50%;*/
-}
-.content {
-    position: absolute;
-    top: 0;
-    /*background: rgba(0, 0, 0, 0.5);*/
-    color: #f1f1f1;
-	z-index: +1;
-/*    width: 50%;
-    padding: 20px;*/
-}
-#dialog, #history {
-	overflow-y: scroll;
-	/*height: 360px;*/
-	width: auto;
-}
-
-#history {
-	width: 100%;
-	height: 400px;
-}
-
-#inputHeader {
-	/*height: 50px;*/
-	background-color: deepskyblue;
-}
-
-* {
-	box-sizing: border-box;
-}
-.col-container {
-	display: table;
-	width: 100%;
-	padding: 0;
-}
-.col {
-	display: table-cell;
-	padding: 0;
-	min-width: 480px;
-	width: 50%;
-}
-
-
-
-@media only screen and (max-width: 600px) {
-	.col {
-		display: block;
-		width: 100%;
-	}
-}
-.media-body {
-	width: auto;
-}
-
-</style>
-
 <body>
-    <!--<h4 class="modal-title">Chat Room</h4>-->
-
-    <div class="col-container">
-    	<div class="col">
-    		<div id="video_box" class="container-fluid">
-				<div id="clickAreas">
-				</div>
+    <div class="container-fluid">
+    	<div class="row">
+	    	<div class="col-sm-6" style="padding: 0px" id="video_div">
 				<video id="video" width="100%">
-			    	<source type="video/ogg" id="videoSource">
-					Your browser does not support the video tag.
-				</video> 
-				<!--<div id="clickAreas">-->
-				<!--</div>-->
-     		</div>
-		</div>
-		<div class="col" id="dialog">
-			<div class="media-body" style="padding-left:20px">
-				<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me">
-					<!--<div id="inputArea">-->
-				<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
-
-				<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">
-					<input type="text" style="width:100%" id="input" name="input" autocomplete="on">
-					<input id="submit_button" type="submit" onclick="send();hideInputBox();" value="Submit">
-				</form>
-				<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>
-			<!--</div>-->
+			    	<source type="video/webm" src="28560.webm" id="videoSource">
+			    	<source type="video/ogg" src="28560.ogg">
+					Your browser does not support HTML video.
+				</video>
+				<div id="clickAreas" style="position: absolute; left:0px; top:0px">
+				</div>
+			</div>
+			<div class="col-sm-6" style="padding: 0px">
+		    	<div class="col" id="dialog">
+<!-- 					<div class="media-body" style="padding-left:20px" id="media-end-form">
+						<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me" id="speech-form">
+							<p id="inputHeader">Enter begin to start:</p>
+							<form id="myForm" autcomplete onsubmit="send()">
+								<input type="text" style="width:100%" id="input" name="input" autocomplete="on">
+							</form>
+						</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
-    	<!--<div class="col-sm-6" id="dialog">-->
-			<!--<div id="inputArea">-->
-				<!--<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>-->
-
-				<!--<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">-->
-					<!--<input type="text" style="width:100%" id="input" name="input" autocomplete="on">-->
-					<!--<button id="submit_button" type="submit" class="hidden" onclick="send();hideInputBox();"></button>-->
-				<!--</form>-->
-				<!--<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>-->
-			<!--</div>-->
-		<!--</div>-->
 	</div>
-	<div class="row">
-			<div class="col-sm-6">
-				<div class="container">
-					<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#history">Show/Hide Chatting History</button>
-					<div id="history" class="collapse">
-					</div>
-				</div>
-			</div>
-	</div>
-
-
-
-<!--     <div id="video-controls">
-        <button class="btn btn-primary" type="button" id="btnPlayPause">Play</button>
-        <button class="btn btn-primary" type="button" id="btnRewind">Rewind</button>
-    </div> -->
 
 	<hr>
 

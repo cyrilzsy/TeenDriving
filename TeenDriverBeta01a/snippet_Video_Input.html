@@ -10,43 +10,17 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.js"></script>
+	<script src="video_functions.js"></script>
+	<script src="callFunction.js"></script>
 
 	<style>
-/*		.container-fluid {
-			padding-left: 0;
-			position: static;
-		}
-		.container {
-			position: absolute;
-		}
-		.container video {
-			position: absolute;
-			left: 0;
-			top: 0;
-		}
-		.content {
-			position: absolute;
-			top: 0;
-			color: #f1f1f1;
-			z-index: +1;
-		}
-		.col-container {
-			display: table;
-			width: 100%;
-			padding: 0;
-		}
-		.col {
-			display: table-cell;
-			width: 100%;
-			padding: 0;
-		}*/
 		#inputHeader {
 			background-color: deepskyblue;
 		}
 		* {
 			box-sizing: border-box;
 		}
-		#dialog, #history {
+		#dialog {
 			background-color: hsl(0,20%,70%);
 			overflow-y: scroll;
 			width: auto;
@@ -78,7 +52,7 @@
 		}
 		.speech-bubble-aunt {
 			position:     relative;
-			background:      brown;
+			background:      lightcyan;
 			border-radius:    .4em;
 		}
 		.speech-bubble-aunt:after {
@@ -89,7 +63,7 @@
 			width:    0;
 			height:   0;
 			border:  11px solid transparent;
-			border-right-color: brown;
+			border-right-color: lightcyan;
 			border-left:     0;
 			margin-top:  -11px;
 			margin-left: -11px;
@@ -97,60 +71,8 @@
 	</style>
 
 	<script>
-		var w = 0, h = 0;
+		var videoWidth = 0, videoHeight = 0; // width and height of the video
 
-		function addVideoArea(upperLeftCoords,lowerRightCoords,clickResponse) {
-		// video_div
-		//   video
-		//     source
-		//   div#clickAreas
-		//     div.content#content0
-		//       a
-		//         div.clickArea#clickArea0
-		//     div.content#content1
-		//       a
-		//         div.clickArea#clickArea1
-
-		let x = document.getElementsByClassName("clickArea");
-		let n = x.length; // number of areas
-
-		let div = document.createElement('div'); // new div.content
-		let a = document.createElement('a'); // new link
-		let divBox = document.createElement('div'); // new div.clickArea
-		a.appendChild(divBox);
-		div.appendChild(a);
-		$('#clickAreas').append(div); // use jQuery append() instead of HTML DOM appendChild()
-
-		div.setAttribute('class','content');
-		div.setAttribute('id','content' + n);
-
-		a.setAttribute('href','#');
-		a.onclick = function () {
-			$("input").val(clickResponse); // #input is a form in #dialog; it is filled by clickResponse 
-			send(); // then clickResponse is sent to DialogFlow
-		};
-
-		divBox.setAttribute("class","clickArea");
-		divBox.setAttribute("id","clickArea" + n);
-		divBox.setAttribute("position","absolute");
-		divBox.setAttribute("z-index","+1");
-
-		$("#clickArea" + n).offset({top:upperLeftCoords[1]*h/100,left:upperLeftCoords[0]*w/100});
-		$("#clickArea" + n).height((lowerRightCoords[1] - upperLeftCoords[1])*h/100);
-		$("#clickArea" + n).width((lowerRightCoords[0] - upperLeftCoords[0])*w/100);
-
-		let alpha = 0.5;
-		for (i=0; i<x.length; i++) {
-			x[i].style.background = "rgba(0,0,0," + alpha + ")";
-			x[i].style.color = "#f1f1f1";
-		};
-	}
-
-		function getwh() {
-			w = $('#video').width();
-			h = $('#video').height();
-			$('#dialog').height(h);
-		}
 
 		$(window).resize(function () {
 			getwh();
@@ -162,37 +84,44 @@
 				console.log('loadeddata');
 			});
 			getwh();
+			talking('Type begin:',true);
+			$('#input').focus();
 		})
+	</script>
 
-
+	<script>
 		var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
 		var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:black;"';
+		var mediaEndForm   = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px" id="media-end-form"><div style="padding:15px; color:black;"';
 		var mediaLeftAunt  = mediaStart + '30px"><img src="Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
 		var mediaLeftMe    = mediaStart + ' 0px"><img src= "Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
 		var chatBreak      = "</div></div><hr>";
-		function talking(){
-			var text_in = $("#input").val();                          // get input text
-			var dialog  = $("#dialog").html();                        // get dialog text
-			var form_text = $("#myForm").val();
-		    var inputbox = '<p id="inputHeader">Input</p>' +
-									'<form autocomplete="on" id="myForm">' +
-										'<input type="text" style="width:100%" id="input" name="input" autocomplete="on">' +
-										'<button id="submit_button" onclick="talking();hideInputBox();">Submit</button>' +
-									'</form>';
-		    let response  = mediaLeftMe + text_in + chatBreak + mediaLeftAunt + "Input more please" + chatBreak + mediaLeftMe + inputbox + chatBreak;
+		var mediaLeftForm  = mediaStart + ' 0px"><img src="Girl image.png" id="image-form"' + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
 
-		    $("#dialog").html(dialog + response);
-
-		}
-
-			function hideInputBox(){
-				document.getElementById('inputHeader').innerHTML= "";
-				document.getElementById('inputHeader').outerHTML= "";
-				document.getElementById('myForm').innerHTML= "";
-				document.getElementById('myForm').outerHTML= "";
+		function talking(text,start=false) {
+		// text is inserted in the speech bubble
+		// start default value is false, set it to true to begin the dialog
+		    var inputbox = '<form autocomplete="on" id="myForm" onsubmit="talking()">' +
+					'<input type="text" style="width:100%" id="input" name="input" autocomplete="on" autofocus>' +
+				'</form>';
+			var text_in = $("#input").val(); // get input text
+			if (!(text===undefined || text==='')) {
+				inputbox = '<p id="inputHeader">' + text + '</p>' + inputbox;
 			}
+		    $('#speech-form').remove(); // get rid of the old form and other HTML elements
+		    $('#image-form').remove();
+		    $('#media-end-form').remove();
 
+		    let response  = mediaLeftForm + inputbox;
+		    if (!start) {
+		    	response += chatBreak + mediaLeftAunt + "I don't understand " + text_in + chatBreak + mediaLeftMe + text_in;
+		    } else {
+			}
+			response += "</div></div>";
 
+		    $('#dialog').prepend(response);
+			$('#input').focus();
+		}
 	</script>
 </head>
 
@@ -201,51 +130,26 @@
     	<div class="row">
 	    	<div class="col-sm-6" style="padding: 0px" id="video_div">
 				<video id="video" width="100%">
-			    	<source type="video/ogg" id="videoSource" src="28560.ogg">
-					Your browser does not support the video tag.
+			    	<source type="video/webm" src="28560.webm">
+			    	<source type="video/ogg" src="28560.ogg">
+					Your browser does not support HTML video.
 				</video>
 				<div id="clickAreas" style="position: absolute; left:0px; top:0px">
-
 				</div>
 			</div>
 			<div class="col-sm-6" style="padding: 0px">
 		    	<div class="col" id="dialog">
-					<div class="media-body" style="padding-left:20px" width="100%">
-						<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me">
-							<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>
-
-							<form autocomplete="on" id="myForm">
-								<input type="text" style="width:100%" id="input" name="input" autocomplete="on">
-								<button id="submit_button" onclick="talking();hideInputBox();">Submit</button>
-							</form>
-						</div>
-					</div>
 				</div>
 			</div>
-			<button onclick="addVideoArea([10,20],[50,60],'!')">AddClickArea</button>
 		</div>
 	</div>
-<!--     <div class="col-container">
-    	<div class="col">
-    		<div id="video_box" class="container-fluid">
-				<video id="video" width="100%">
-			    	<source type="video/ogg" id="videoSource" src="28560.ogg">
-					Your browser does not support the video tag.
-				</video>
-				<div id="clickAreas">
 
-				</div>
-     		</div>
-		</div>
-    	<div class="col" id="dialog">
-			<div class="media-body" style="padding-left:20px">
-				<div style="padding: 15px; color: black; width: auto" class="speech-bubble-me">
-					Yes, let's start
-					<button onclick="addVideoArea([0,0],[480,320],'!')">AddClickArea</button>
-				</div>
-			</div>
-		</div>
-	</div> -->
+	<div>
+		<button type="button" onclick="document.getElementById('video').play()">Play video</button>
+	</div>
+	<div>
+		<button onclick="addVideoArea([10,20],[50,60],function () {clickResponse('area was clicked')})">AddClickArea</button>
+	</div>
 </body>
 
 </html>
