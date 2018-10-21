@@ -1,3 +1,5 @@
+var pauseVideoTime = 0.;
+
 function callFunction(task,clickAreaResponse) {
 	let functionName = task.callFunction.functionName;
 	let parameters = task.callFunction.functionParameters;
