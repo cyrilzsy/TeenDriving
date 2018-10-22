@@ -7,7 +7,8 @@ function callFunction(task,clickAreaResponse) {
 
 	if (functionName=='loadVideo') {
 		console.log('videoNumber: ' + parameters.videoNumber);
-		document.getElementById('videoSource').setAttribute('src',parameters.videoNumber + '.webm');
+		document.getElementById('videoSourceWebm').setAttribute('src',parameters.videoNumber + '.webm');
+		document.getElementById('videoSourceOgg').setAttribute('src',parameters.videoNumber + '.ogg');
 	    document.getElementById("video").load();
 	    document.getElementById("inputHeader").innerHTML = "Input:";
 	} else if (functionName=='addVideoArea') {
