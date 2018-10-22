@@ -100,10 +100,21 @@ function clickMe(element) {
 }
 
 function RandomNumber() {
-    var str = "Next course please!";
-    // var a = Math.floor(Math.random() * 10);
+    var str = "";
+    var a = Math.floor(Math.random() * (5 - 1 + 1) ) + 1;
     // $("#input").val(str + a);
-    $("#input").val(str + 1);
+	if (a==1) {
+		str = "What happen next?";
+	}else if (a==2) {
+		str = "Look for hidden road users";
+	}else if (a==3) {
+		str = "Check response time";
+	}else if (a==4) {
+		str = "Commentary Drive";
+	}else if (a==5) {
+		str = "Analyze the crashes";
+	}
+    $("#input").val(str);
     send();
 }
 
