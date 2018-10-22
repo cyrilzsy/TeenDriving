@@ -24,6 +24,8 @@ function callFunction(task,clickAreaResponse) {
 		areasList.push(parameters.numArea);
 		numAreas += 1;
 		input = 'Found 0 out of ' + numAreas;
+		console.log('areasList:');
+		console.log(areasList);
 	}
 
 	if (functionName=='playVideoUntil' || functionName=='playAndCountTime') {
@@ -65,9 +67,14 @@ function clickResponse(clickResponse) {
 }
 
 function countAreas(numArea) {
-	if (areasList.includes(numArea)) {
-		areasList = areasList.slice(areasList.indexOf(numArea) + 1);
+	let index = areasList.indexOf(numArea);
+	console.log('countAreas, numArea: '+ numArea + ', index: ' + index + ', areasList:');
+	console.log(areasList);
+	if (index>=0) {
+		areasList.splice(index,1);
 	}
+	console.log('countAreas, areasList:');
+	console.log(areasList);
 	$("input").val('Found ' + (numAreas - areasList.length) + ' out of ' + numAreas);
 }
 
@@ -92,9 +99,10 @@ function clickMe(element) {
 }
 
 function RandomNumber() {
-    var a = Math.floor(Math.random() * 10);
     var str = "Next course please!";
-    $("#input").val(str + a);
+    // var a = Math.floor(Math.random() * 10);
+    // $("#input").val(str + a);
+    $("#input").val(str + 1);
     send();
 }
 
