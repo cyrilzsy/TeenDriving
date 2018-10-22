@@ -43,7 +43,6 @@ function callFunction(task,clickAreaResponse) {
 	return input;
 }
 
-
 function startTimer() {
 	startTime = new Date();		
 }
@@ -84,7 +83,11 @@ function countFound() {
 }
 
 function clickMe(element) {
-	$("#input").val(element.value);
+	if (!!element.value) {
+		$("#input").val(element.value);
+	} else if (!!element.text) {
+		$("#input").val(element.text);
+	}
 	send();
 }
 

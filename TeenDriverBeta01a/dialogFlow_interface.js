@@ -53,6 +53,7 @@ function sendToDialogFlow(text_in) {
 			var speechSplit = splitStr(data_speech);
 			var speech = speechSplit.text.replace(/yyy/g,"{").replace(/zzz/g,"}");
 			var speechJSON = speechSplit.JSON.replace(/yyy/g,"{").replace(/zzz/g,"}");
+			speech = makeList(speech);
 			if (speechJSON.length>0) {
 				try {
 					speechObj = JSON.parse(speechJSON);
@@ -133,4 +134,18 @@ function splitStr(string) {
 	    JSON = object[1];
 	};
     return {text: text, JSON: JSON};
+}
+
+function makeList(string) {
+	var object = string.split("-----");
+	var text = object[0];
+	if (object.length>1) {
+		text += '<div class="dropdown"><button class="dropdown-toggle" data-toggle="dropdown">' +
+			'Select response<span class="caret"></span></button><ul class="dropdown-menu">';
+		for (i=1; i<object.length; i++) {
+			text += '<li><a onclick="clickMe(this)" value="' + object[i] + '">' + object[i] + '</a></li>';
+		}
+		text += '</ul>'; // not closing with </div> can be good!
+	}
+	return text;
 }
