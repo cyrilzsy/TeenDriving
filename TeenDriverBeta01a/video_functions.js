@@ -75,8 +75,3 @@ function hideArea() {
 	};
 }
 
-function hideInputBox(){
-	document.getElementById('inputArea').innerHTML= "";
-	document.getElementById('inputArea').outerHTML= "";
-}
-

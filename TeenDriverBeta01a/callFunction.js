@@ -11,6 +11,7 @@ function callFunction(task,clickAreaResponse) {
 		document.getElementById('videoSourceOgg').setAttribute('src',parameters.videoNumber + '.ogg');
 	    document.getElementById("video").load();
 	    document.getElementById("inputHeader").innerHTML = "Input:";
+		$('#clickAreas').empty();
 	} else if (functionName=='addVideoArea') {
 		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,function () {clickResponse(parameters.clickResponse)});
 		input = clickAreaResponse;
@@ -77,6 +78,7 @@ function countAreas(numArea) {
 	console.log('countAreas, areasList:');
 	console.log(areasList);
 	$("#input").val('Found ' + (numAreas - areasList.length) + ' out of ' + numAreas);
+	$('#clickAreas').empty();
 }
 
 function countFound() {
@@ -101,8 +103,7 @@ function clickMe(element) {
 
 function RandomNumber() {
     var str = "";
-    var a = Math.floor(Math.random() * (5 - 1 + 1) ) + 1;
-    // $("#input").val(str + a);
+    var a = Math.floor(Math.random() * 3 ) + 1;
 	if (a==1) {
 		str = "What happen next?";
 	}else if (a==2) {
