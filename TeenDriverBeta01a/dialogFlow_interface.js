@@ -92,7 +92,7 @@ function sendToDialogFlow(text_in) {
 function send(text="",start=false) {
 	if (start) {
 		let inputbox = '<p id="inputHeader">' + text + '</p>' + inputbox0;
-		setDialogBox(start,'','','begin',inputbox);
+		setDialogBox(start,'','','',inputbox);
 	} else {
 		var text_in = $("#input").val(); // get input text
 	    $('#speech-form').remove(); // get rid of the old form and other HTML elements

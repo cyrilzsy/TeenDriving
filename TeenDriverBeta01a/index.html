@@ -30,8 +30,8 @@
 		});
 		getwh();
 
-		let initialMessage = 'Select <button onClick="clickMe(this)" value="Begin">Begin</button> or <button onClick="clickMe(this)" value="Fair">Fair</button>';
-		
+		// let initialMessage = 'Select <button onClick="clickMe(this)" value="Begin">Begin</button> or <button onClick="clickMe(this)" value="Fair">Fair</button>';
+		let initialMessage = "";
 		send(initialMessage,true);
 		
 		$('#input').focus();
@@ -42,7 +42,16 @@
 				send();
 			}
 		});
+		document.getElementById('sliderLevel').value = 0.5;
 	});
+
+	function sendLevel() {
+		let sliderLevel = document.getElementById("sliderLevel");
+		let level = Math.round(sliderLevel.value);
+		let levelText = ['Poor','Fair','Good'];
+		$('#input').val(levelText[level]);
+		send();
+	}
 </script>
 </head>
 
@@ -66,10 +75,16 @@
 		<div class="row">
 			<div class = "col-sm-6" style="padding: 0px">
 			</div>
-			<div class="col-sm-6">
-				<button onClick="clickMe(this)" value="Poor">Poor</button>
-				<button onClick="clickMe(this)" value="Fair">Fair</button>
-				<button onClick="clickMe(this)" value="Good">Good</button>
+			<div class="col-sm-6" style="padding: 0px">
+				<div>
+					<span>Select level with slider, then click:</span>
+					<button type="button" onClick="sendLevel()">Begin</button>
+				</div>
+				<div>
+					<span>Simple &nbsp&nbsp</span>
+					<input type="range" min="0" max="2" style="width:100px; display:inline; color:black" id="sliderLevel">
+					<span>&nbsp&nbsp Hard</span>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -54,16 +54,16 @@ function countResponseTime(clickResponseFast,clickResponseSlow,expertTime) {
 	let endTime = new Date();
 	let diff = endTime - startTime;
 	if (diff <= expertTime) {
-	    $("input").val(clickResponseFast);
+	    $("#input").val(clickResponseFast);
 	} else {
-	    $("input").val(clickResponseSlow);
+	    $("#input").val(clickResponseSlow);
 	}
 	console.log('diff = ' + diff);
 	send();
 }
 
 function clickResponse(clickResponse) {
-	$("input").val(clickResponse);
+	$("#input").val(clickResponse);
 	send();		
 }
 
@@ -76,7 +76,7 @@ function countAreas(numArea) {
 	}
 	console.log('countAreas, areasList:');
 	console.log(areasList);
-	$("input").val('Found ' + (numAreas - areasList.length) + ' out of ' + numAreas);
+	$("#input").val('Found ' + (numAreas - areasList.length) + ' out of ' + numAreas);
 }
 
 function countFound() {
