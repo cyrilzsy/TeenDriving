@@ -50,9 +50,11 @@ function sendToDialogFlow(text_in) {
 
 		success: function(data) {
 	 		let data_speech = data.result.speech;
+	 		let intentName = data.result.metadata.intentName;
 			var speechSplit = splitStr(data_speech);
 			var speech = speechSplit.text.replace(/yyy/g,"{").replace(/zzz/g,"}");
 			var speechJSON = speechSplit.JSON.replace(/yyy/g,"{").replace(/zzz/g,"}");
+			document.getElementById('intentName').innerHTML = '<b>' + intentName + '</b>';
 			speech = makeList(speech);
 			if (speechJSON.length>0) {
 				try {
@@ -112,7 +114,7 @@ function setDialogBox(start,speech,text_in,input,inputbox=inputbox0) {
     $('#dialog').prepend(response);
 	$("#input").val(input);
 	$('#input').focus();
-		$("#dialog").scrollTop(0);
+	$("#dialog").scrollTop(0);
 
 	let dialogWidth = parseInt($("#dialog")[0].clientWidth,10);
 	let bubbles     = document.getElementsByClassName('speech-bubble-me');
