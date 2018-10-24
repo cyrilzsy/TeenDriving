@@ -59,6 +59,10 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,numArea,fn) {
 	$(divBoxId).height((lowerRightCoords[1] - upperLeftCoords[1])*videoHeight/100);
 	$(divBoxId).width((lowerRightCoords[0] - upperLeftCoords[0])*videoWidth/100);
 
+	hintLevelChange();
+}
+
+function hintLevelChange() {
 	let x = document.getElementsByClassName("clickArea");
 	let hintLevel = document.getElementById("hintLevel").value;
 	let alpha = 0.5*hintLevel/10;

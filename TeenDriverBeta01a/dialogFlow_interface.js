@@ -117,10 +117,15 @@ function setDialogBox(start,speech,text_in,input,inputbox=inputbox0) {
 	$("#dialog").scrollTop(0);
 
 	let dialogWidth = parseInt($("#dialog")[0].clientWidth,10);
-	let bubbles     = document.getElementsByClassName('speech-bubble-me');
-	bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';
-	bubbles         = document.getElementsByClassName('speech-bubble-aunt');
-	bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';		
+	let bubbles = [];
+	bubbles = document.getElementsByClassName('speech-bubble-me');
+	if (bubbles.length>0) {
+		bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';
+	}
+	bubbles = document.getElementsByClassName('speech-bubble-aunt');
+	if (bubbles.length>0) {
+		bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';		
+	}
 }
 
 function setResponse(fullIntent,speechText='',speechJSON='') { // generic function to set the response

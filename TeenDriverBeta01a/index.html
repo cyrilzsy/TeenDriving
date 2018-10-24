@@ -34,7 +34,7 @@
 		let initialMessage = "";
 		send(initialMessage,true);
 		
-		$('#input').focus();
+		// $('#input').focus();
 		$("#input").keypress(function(event) {
 			if (event.which == 13) {
 		    	$('#submit_button').click(); 
@@ -42,7 +42,7 @@
 				send();
 			}
 		});
-		document.getElementById('sliderLevel').value = 0.5;
+		$('#hintLevel').val(0);
 	});
 
 	function sendLevel() {
@@ -82,7 +82,7 @@
 				</div>
 				<div>
 					<span>Simple &nbsp&nbsp</span>
-					<input type="range" min="0" max="2" style="width:100px; display:inline; color:black" id="sliderLevel">
+					<input type="range" min="0" max="2" value="0" style="width:100px; display:inline; color:black" id="sliderLevel">
 					<span>&nbsp&nbsp Hard</span>
 				</div>
 				<div>
@@ -91,7 +91,7 @@
 					<span>If you need hints in finding the important areas, move the slider to the right:</span>
 				</div>
 					<span>Invisible &nbsp&nbsp</span>
-					<input type="range" min="0" max="10" value="0" style="width:100px; display:inline; color:black" id="hintLevel">
+					<input type="range" min="0" max="10" value="0" style="width:100px; display:inline; color:black" id="hintLevel" onChange="hintLevelChange()">
 					<span>&nbsp&nbsp Clearly visible</span>
 				</div>
 			</div>
