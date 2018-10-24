@@ -98,7 +98,8 @@
 		</div>
 	</div>
 
-	<hr>
+	<hr><br>
+	<p>Response from Dialogflow (you can ignore this technical chatter):</p>
 
 	<!--<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>-->
 
@@ -109,9 +110,19 @@
 
 	<!--<iframe id="the_iframe" name="the_iframe" src="javascript:false" class="hidden"></iframe>-->
 
-	<br><br>
-
-	<p><hr>Response from Dialogflow (ignore this technical form of the chatbot):</p>
+    <div class="container-fluid">
+    	<div class="row">
+			<div class = "col-sm-6" style="padding: 0px">
+				<p>Speech text:</p>
+				<textarea class="form-control" rows="6" style="width:100%" id="responseSpeechText"></textarea>
+			</div>
+			<div class = "col-sm-6" style="padding: 0px">
+				<p>Speech JSON:</p>
+				<textarea class="form-control" rows="6" style="width:100%" id="responseSpeechJSON"></textarea>
+			</div>
+		</div>
+	</div>
+    <br><p>Full JSON:</p>
 	<textarea class="form-control" rows="20" style="width:100%" id="response"></textarea>
 </body>
 </html>

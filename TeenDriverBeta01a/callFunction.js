@@ -2,6 +2,7 @@ function callFunction(task,clickAreaResponse) {
 	let functionName = task.callFunction.functionName;
 	let parameters = task.callFunction.functionParameters;
 	let input = "";
+	let divBoxId = "";
 	console.log('functionName: ' + functionName);
 	console.log(parameters);
 
@@ -54,13 +55,14 @@ function startTimer() {
 function countResponseTime(clickResponseFast,clickResponseSlow,expertTime) {
 	let endTime = new Date();
 	let diff = endTime - startTime;
-	if (diff <= expertTime) {
-	    $("#input").val(clickResponseFast);
-	} else {
-	    $("#input").val(clickResponseSlow);
+	if (diff > expertTime*0.8) {
+		if (diff <= expertTime) {
+		    $("#input").val(clickResponseFast);
+		} else {
+		    $("#input").val(clickResponseSlow);
+		}
+		send();
 	}
-	console.log('diff = ' + diff);
-	send();
 }
 
 function clickResponse(clickResponse) {

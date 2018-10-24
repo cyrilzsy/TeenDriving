@@ -80,7 +80,7 @@ function sendToDialogFlow(text_in) {
 				}
 			}
 			setDialogBox(false,speech,text_in,input);
-	 		setResponse(JSON.stringify(data, undefined, 2));
+	 		setResponse(JSON.stringify(data, undefined, 2),speech,speechJSON);
 		},
 		error: function(jqXHR) {
 				setResponse(JSON.stringify(jqXHR, undefined, 2));
@@ -121,9 +121,11 @@ function setDialogBox(start,speech,text_in,input,inputbox=inputbox0) {
 	bubbles[bubbles.length - 1].style.width = dialogWidth - 120 + 'px';		
 }
 
-function setResponse(val) {                                // generic function to set the response
+function setResponse(fullIntent,speechText='',speechJSON='') { // generic function to set the response
 	// $("#response").text(val);                           // doesn't work when using sendIntent
-	document.getElementById("response").value = val;
+	document.getElementById("response").value = fullIntent;
+	document.getElementById("responseSpeechText").value = speechText;
+	document.getElementById("responseSpeechJSON").value = speechJSON;
 }
 
 function splitStr(string) {

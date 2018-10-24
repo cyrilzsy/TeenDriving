@@ -19,39 +19,41 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,numArea,fn) {
 //   video
 //     source
 //   div#clickAreas
-//     div.content#content0
-//       a
-//         div.clickArea#clickArea0
-//     div.content#content1
-//       a
-//         div.clickArea#clickArea1
+//     div.clickArea#clickArea0
+//     div.clickArea#clickArea1
+// [don't use <a> because you can see the link]
 
 	let n = document.getElementsByClassName("clickArea").length; // number of areas
 
-	let div = document.createElement('div'); // new div.content
-	let a = document.createElement('a'); // new link
+	// let div = document.createElement('div'); // new div.content
+	// let a = document.createElement('a'); // new link
 	let divBox = document.createElement('div'); // new div.clickArea
-	a.appendChild(divBox);
-	div.appendChild(a);
-	$('#clickAreas').append(div); // use jQuery append() instead of HTML DOM appendChild()
+	// a.appendChild(divBox);
+	// div.appendChild(a);
+	// $('#clickAreas').append(div); // use jQuery append() instead of HTML DOM appendChild()
 
-	div.setAttribute('class','content');
-	div.setAttribute('id','content' + n);
+	// div.setAttribute('class','content');
+	// div.setAttribute('id','content' + n);
+	// div.setAttribute('style','width:0px');
+	// div.setAttribute('style','height:0px');
 
-	a.setAttribute('href','#');
-	a.onclick = fn;
+	// a.setAttribute('href','#');
+	// a.onclick = fn;
 
 	divBox.setAttribute("class","clickArea");
 	divBox.setAttribute("position","absolute");
 	divBox.setAttribute("z-index","+1");
-	let divBoxId = 'clickArea';
+	divBox.onclick = fn;
+
+	let divBoxId0 = 'clickArea';
 	if (!!numArea) {
-		divBoxId += numArea;
+		divBoxId0 += numArea;
 	} else {
-		divBoxId += n;
+		divBoxId0 += n;
 	}
-	divBox.setAttribute("id",divBoxId);
-	divBoxId = '#' + divBoxId;
+	divBox.setAttribute("id",divBoxId0);
+	let divBoxId = '#' + divBoxId0;
+	$('#clickAreas').append(divBox); // use jQuery append() instead of HTML DOM appendChild()
 
 	$(divBoxId).offset({top:upperLeftCoords[1]*videoHeight/100,left:upperLeftCoords[0]*videoWidth/100});
 	$(divBoxId).height((lowerRightCoords[1] - upperLeftCoords[1])*videoHeight/100);
