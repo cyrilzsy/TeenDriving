@@ -59,6 +59,7 @@ function sendToDialogFlow(text_in) {
 			if (speechJSON.length>0) {
 				try {
 					speechObj = JSON.parse(speechJSON);
+					speechJSON = JSON.stringify(speechObj, null, 2);
 					console.log(speechObj);
 					let tasks = speechObj.tasks;
 					console.log(tasks);
