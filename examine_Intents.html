@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script src="lib/filesaver.js"></script>
+
+	<script>
+		var fileList = [];
+		function listFiles() {
+			fileList = document.getElementById('myFile').files;
+			for (i=0; i<fileList.length; i++) {
+				console.log(fileList[i].name);
+			}
+		}
+
+		function readFile(index) {
+		  var reader = new FileReader();
+		  // Read file into memory as UTF-16
+		  reader.readAsText(fileList[index], "UTF-8");
+		  // Handle progress, success, and errors
+		  reader.onload = (function(evt) {
+		  	loaded(evt,index);
+		  });
+		  reader.onerror = errorHandler;
+		}
+
+		var fileStringArray = [];
+		var fileObjectArray = [];
+		var fileString = "";
+
+		function loaded(evt,index) {
+		  // Obtain the read file data
+		  fileString = evt.target.result;
+		  // Handle UTF-16 file dump
+		  // xhr.send(fileString)
+		  console.log(fileString);
+		  $('#JSONtext').val(fileString);
+		  fileStringArray[index] = fileString;
+		  let fileObject = JSON.parse(fileString);
+		  if (Array.isArray(fileObject)) {
+		  	fileObjectArray[index] = {
+		  		name: fileList[index],
+		  		array: fileObject,
+		  	}
+		  } else {
+			fileObjectArray[index] = fileObject;
+		  }
+		}
+
+		function errorHandler(evt) {
+		  if(evt.target.error.name == "NotReadableError") {
+		    // The file could not be read
+		  }
+		}
+
+		function saveFile() {
+			let textString = $('#JSONtext').val();
+			var blob = new Blob([textString],{type: "text/plain;charset=utf-8"});
+			saveAs(blob,"test.json");
+		}
+
+		function readConvertFiles() {
+			for (i=0; i<fileList.length; i++) {
+				console.log(fileList[i].name);
+				readFile(i);
+			}			
+		}
+	</script>
+
+	<style>
+		textarea {
+		    display: block;
+		    font-family: 'Lucida Console';
+		    white-space: pre;
+		    margin: 1em 0;
+		} 
+	</style>
+</head>
+
+<body>
+	<div>
+		<h2>Input controls</h2>
+		<input type="file" id="myFile" multiple>
+		<button type="button" onClick="listFiles()">List Files</button>
+		<button type="button" onClick="readFile(0)">Read a file</button>
+		<button type="button" onClick="saveFile()">Save a file</button>
+		<button type="button" onClick="readConvertFiles()">Read all files and convert</button>
+	</div>
+	<div>
+		<textarea rows="20" cols="100" id="JSONtext">
+			a bc
+			d
+		</textarea>
+	</div>
+</body>
+</html>
