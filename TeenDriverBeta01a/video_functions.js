@@ -14,7 +14,7 @@ var pausing_function = function() {
     }
 };
 
-function addVideoArea(upperLeftCoords,lowerRightCoords,fn) {
+function addVideoArea(upperLeftCoords,lowerRightCoords,numArea,fn) {
 // video_div
 //   video
 //     source
@@ -42,16 +42,24 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,fn) {
 	a.onclick = fn;
 
 	divBox.setAttribute("class","clickArea");
-	divBox.setAttribute("id","clickArea" + n);
 	divBox.setAttribute("position","absolute");
 	divBox.setAttribute("z-index","+1");
+	let divBoxId = 'clickArea';
+	if (!!numArea) {
+		divBoxId += numArea;
+	} else {
+		divBoxId += n;
+	}
+	divBox.setAttribute("id",divBoxId);
+	divBoxId = '#' + divBoxId;
 
-	$("#clickArea" + n).offset({top:upperLeftCoords[1]*videoHeight/100,left:upperLeftCoords[0]*videoWidth/100});
-	$("#clickArea" + n).height((lowerRightCoords[1] - upperLeftCoords[1])*videoHeight/100);
-	$("#clickArea" + n).width((lowerRightCoords[0] - upperLeftCoords[0])*videoWidth/100);
+	$(divBoxId).offset({top:upperLeftCoords[1]*videoHeight/100,left:upperLeftCoords[0]*videoWidth/100});
+	$(divBoxId).height((lowerRightCoords[1] - upperLeftCoords[1])*videoHeight/100);
+	$(divBoxId).width((lowerRightCoords[0] - upperLeftCoords[0])*videoWidth/100);
 
 	let x = document.getElementsByClassName("clickArea");
-	let alpha = 0.5;
+	let hintLevel = document.getElementById("hintLevel").value;
+	let alpha = 0.5*hintLevel/10;
 	for (i=0; i<x.length; i++) {
 		x[i].style.background = "rgba(0,0,0," + alpha + ")";
 		x[i].style.color = "#f1f1f1";

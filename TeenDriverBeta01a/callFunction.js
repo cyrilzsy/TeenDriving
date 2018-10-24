@@ -13,16 +13,16 @@ function callFunction(task,clickAreaResponse) {
 	    document.getElementById("inputHeader").innerHTML = "Input:";
 		$('#clickAreas').empty();
 	} else if (functionName=='addVideoArea') {
-		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,function () {clickResponse(parameters.clickResponse)});
+		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea,function () {clickResponse(parameters.clickResponse)});
 		input = clickAreaResponse;
 	} else if (functionName=='clearVideoAreas') {
 		$('#clickAreas').empty();
 	} else if (functionName=='playVideoUntil') {
 	} else if (functionName=='playAndCountTime') {
-		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,function () {countResponseTime(parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
+		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function () {countResponseTime(parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
 		input = clickAreaResponse;
 	} else if (functionName=='countAreas') {
-		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,function () {countAreas(parameters.numArea)});
+		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function () {countAreas(parameters.numArea)});
 		areasList.push(parameters.numArea);
 		numAreas += 1;
 		input = 'Found 0 out of ' + numAreas;
@@ -78,7 +78,7 @@ function countAreas(numArea) {
 	console.log('countAreas, areasList:');
 	console.log(areasList);
 	$("#input").val('Found ' + (numAreas - areasList.length) + ' out of ' + numAreas);
-	$('#clickAreas').empty();
+	$('#clickArea' + numArea).click(function() {});
 }
 
 function countFound() {
