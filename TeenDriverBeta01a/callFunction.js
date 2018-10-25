@@ -8,8 +8,8 @@ function callFunction(task,clickAreaResponse) {
 
 	if (functionName=='loadVideo') {
 		console.log('videoNumber: ' + parameters.videoNumber);
-		document.getElementById('videoSourceWebm').setAttribute('src',parameters.videoNumber + '.webm');
-		document.getElementById('videoSourceOgg').setAttribute('src',parameters.videoNumber + '.ogg');
+		document.getElementById('videoSourceWebm').setAttribute('src','videos/' + parameters.videoNumber + '.webm');
+		document.getElementById('videoSourceOgg').setAttribute('src','videos/' + parameters.videoNumber + '.ogg');
 	    document.getElementById("video").load();
 	    document.getElementById("inputHeader").innerHTML = "Input:";
 		$('#clickAreas').empty();

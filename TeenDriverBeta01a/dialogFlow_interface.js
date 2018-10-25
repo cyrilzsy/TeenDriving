@@ -1,10 +1,10 @@
 var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
 var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:black;"';
 var mediaEndForm   = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px" id="media-end-form"><div style="padding:15px; color:black;"';
-var mediaLeftAunt  = mediaStart + '30px"><img src="Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
-var mediaLeftMe    = mediaStart + ' 0px"><img src= "Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
+var mediaLeftAunt  = mediaStart + '30px"><img src="images/Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
+var mediaLeftMe    = mediaStart + ' 0px"><img src= "images/Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
 var chatBreak      = "</div></div><hr>";
-var mediaLeftForm  = mediaStart + ' 0px"><img src="Girl image.png" id="image-form"' + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
+var mediaLeftForm  = mediaStart + ' 0px"><img src="images/Girl image.png" id="image-form"' + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
 var speechObj = "";
 
 var inputbox0 = '<form autocomplete="on" id="myForm" onsubmit="send()">' +
