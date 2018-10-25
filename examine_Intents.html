@@ -85,7 +85,7 @@
 					name += '.json'; // if not array, then need to add file suffix
 				}
 				var blob = new Blob([textString],{type: "text/plain;charset=utf-8"});
-				saveAs(blob,name);
+				saveAs(blob,'intents/' + name);
 				console.log('Saved file: ' + name);
 			}
 		}
