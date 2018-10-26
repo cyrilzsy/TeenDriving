@@ -30,7 +30,6 @@
 		});
 		getwh();
 
-		// let initialMessage = 'Select <button onClick="clickMe(this)" value="Begin">Begin</button> or <button onClick="clickMe(this)" value="Fair">Fair</button>';
 		let initialMessage = "";
 		send(initialMessage,true);
 		
@@ -86,12 +85,11 @@
 					<span>&nbsp&nbsp Advanced</span>
 				</div>
 				<div>
-				<div>
 					<br>
 					<span>If you need hints in finding the important areas, move the slider to the right:</span>
 				</div>
 					<span>Invisible &nbsp&nbsp</span>
-					<input type="range" min="0" max="10" value="0" style="width:100px; display:inline; color:black" id="hintLevel" onChange="hintLevelChange()">
+					<input type="range" min="0" max="10" value="0" style="width:100px; display:inline; color:black" id="hintLevel" oninput="hintLevelChange()">
 					<span>&nbsp&nbsp Clearly visible</span>
 				</div>
 			</div>
@@ -100,8 +98,6 @@
 
 	<hr><br>
 	<p>Response from Dialogflow (you can ignore this technical chatter): <span id="intentName"><b>Intent Name</b></span></p>
-
-	<!--<p id="inputHeader">Input (enter "begin" below to start or restart this mini-draft-chatbot):</p>-->
 
 	<!--<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">-->
 		<!--<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>-->

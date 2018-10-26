@@ -8,11 +8,7 @@ function callFunction(task,clickAreaResponse) {
 
 	if (functionName=='loadVideo') {
 		console.log('videoNumber: ' + parameters.videoNumber);
-		document.getElementById('videoSourceWebm').setAttribute('src','videos/' + parameters.videoNumber + '.webm');
-		document.getElementById('videoSourceOgg').setAttribute('src','videos/' + parameters.videoNumber + '.ogg');
-	    document.getElementById("video").load();
-	    document.getElementById("inputHeader").innerHTML = "Input:";
-		$('#clickAreas').empty();
+		loadVideo(parameters.videoNumber);
 	} else if (functionName=='addVideoArea') {
 		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea,function () {clickResponse(parameters.clickResponse)});
 		input = clickAreaResponse;
@@ -37,7 +33,7 @@ function callFunction(task,clickAreaResponse) {
 		} else {
 			video.currentTime = parameters.startTime;
 		}
-			pauseVideoTime = parameters.pauseTime;
+		pauseVideoTime = parameters.pauseTime;
 		video.play();
 		if (functionName=='playAndCountTime') {
 			startTimer();

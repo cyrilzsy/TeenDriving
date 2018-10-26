@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.js"></script>
+<script src="video_functions.js"></script>
+
+<script>
+    var video;
+    var upperLeft = [], lowerRight = [];
+
+    function create_rectangle(event) {
+		let divBox = document.createElement('div'); // new div.clickArea
+		divBox.setAttribute("class","clickArea");
+		divBox.setAttribute("position","absolute");
+		divBox.setAttribute("z-index","+1");
+
+		let divBoxId0 = 'clickArea0';
+		divBox.setAttribute("id",divBoxId0);
+		let divBoxId = '#' + divBoxId0;
+		$('#clickAreas').append(divBox); // use jQuery append() instead of HTML DOM appendChild()
+
+		var x = event.clientX;
+		var y = event.clientY;
+
+		upperLeft = [Math.round(x/videoWidth*100),Math.round(y/videoHeight*100)];
+		lowerRight = [100,100];
+
+		$(divBoxId).offset({top:upperLeft[1]*videoHeight/100,left:upperLeft[0]*videoWidth/100});
+		$(divBoxId).height((lowerRight[1] - upperLeft[1])*videoHeight/100);
+		$(divBoxId).width((lowerRight[0] - upperLeft[0])*videoWidth/100);
+
+		hintLevelChange();
+
+		divBox.onclick = (function (evt) {finish_rectangle(evt,divBoxId,upperLeft)});
+	}
+
+	function finish_rectangle(event,divBoxId,upperLeft) {
+		var x = event.clientX;
+		var y = event.clientY;
+
+		lowerRight = [Math.round(x/videoWidth*100),Math.round(y/videoHeight*100)];
+
+		$(divBoxId).offset({top:upperLeft[1]*videoHeight/100,left:upperLeft[0]*videoWidth/100});
+		$(divBoxId).height((lowerRight[1] - upperLeft[1])*videoHeight/100);
+		$(divBoxId).width((lowerRight[0] - upperLeft[0])*videoWidth/100);
+	}
+
+	function save_area() {
+		var areaObj = {
+			time: video.currentTime,
+			upperLeftCoordinates: upperLeft,
+			lowerRightCoordinates: lowerRight,
+		};
+		var areaJSON = JSON.stringify(areaObj,null,2);
+		$('#textDialogFlow').val(areaJSON);
+	}
+
+	function video_play() {
+		let btn = document.getElementById('video_play');
+		if (btn.innerText=='Play') {
+			video.play();
+			btn.innerText = 'Pause';
+		} else {
+			video.pause();
+			btn.innerText = 'Play';			
+		}
+	}
+
+	function video_load() {
+		loadVideo($('#video_file').val());
+	}
+
+	$(window).resize(function () {
+		getwh();
+	})
+
+	$(document).ready(function() {
+		video = document.getElementById("video");
+		$('#video').on("loadeddata", function () {
+			getwh();
+			console.log('loadeddata');
+		});
+		getwh();
+
+		$('#hintLevel').val(4);
+	});
+</script>
+</head>
+
+<body>
+    <div class="container-fluid">
+    	<div class="row">
+	    	<div class="col-sm-6" style="padding: 0px" id="video_div">
+				<video id="video" width="100%" onclick="create_rectangle(event)">
+			    	<source type="video/webm" src="videos/28560.webm" id="videoSourceWebm">
+			    	<source type="video/ogg" src="videos/28560.ogg" id="videoSourceOgg">
+					Your browser does not support HTML video.
+				</video>
+				<div id="clickAreas" style="position: absolute; left:0px; top:0px">
+				</div>
+			</div>
+			<div class="col-sm-6" style="padding: 0px">
+		    	<div class="col" id="dialog">
+					<p>Text for DialogFlow:</p>
+					<textarea class="form-control" rows="20" style="width:100%" id="textDialogFlow"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class = "col-sm-6" style="padding: 0px">
+				<div>
+					<button type="button" class="btn btn-primary" onclick="video_play()" id="video_play">Play</button>
+					<button type="button" class="btn btn-primary" onclick="$('#clickAreas').empty()">Clear area</button>
+					<button type="button" class="btn btn-primary" onclick="save_area()">Save area information</button>
+				</div>
+				<div>
+					<p>Input video number:</p>
+					<input type="text" id="video_file" value="28560">
+					<button type="button" class="btn btn-primary" onclick="video_load()" id="video_load">Load</button>
+				</div>
+			</div>
+			<div class="col-sm-6" style="padding: 0px">
+				<div>
+					<br>
+					<span>If you need hints in finding the important areas, move the slider to the right:</span>
+				</div>
+					<span>Invisible &nbsp&nbsp</span>
+					<input type="range" min="0" max="10" value="0" style="width:100px; display:inline; color:black" id="hintLevel" oninput="hintLevelChange()">
+					<span>&nbsp&nbsp Clearly visible</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

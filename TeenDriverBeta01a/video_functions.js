@@ -25,21 +25,7 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,numArea,fn) {
 
 	let n = document.getElementsByClassName("clickArea").length; // number of areas
 
-	// let div = document.createElement('div'); // new div.content
-	// let a = document.createElement('a'); // new link
 	let divBox = document.createElement('div'); // new div.clickArea
-	// a.appendChild(divBox);
-	// div.appendChild(a);
-	// $('#clickAreas').append(div); // use jQuery append() instead of HTML DOM appendChild()
-
-	// div.setAttribute('class','content');
-	// div.setAttribute('id','content' + n);
-	// div.setAttribute('style','width:0px');
-	// div.setAttribute('style','height:0px');
-
-	// a.setAttribute('href','#');
-	// a.onclick = fn;
-
 	divBox.setAttribute("class","clickArea");
 	divBox.setAttribute("position","absolute");
 	divBox.setAttribute("z-index","+1");
@@ -89,3 +75,9 @@ function hideArea() {
 	};
 }
 
+function loadVideo(videoNumber)	{
+	document.getElementById('videoSourceWebm').setAttribute('src','videos/' + videoNumber + '.webm');
+	document.getElementById('videoSourceOgg').setAttribute('src','videos/' + videoNumber + '.ogg');
+    document.getElementById("video").load();
+	$('#clickAreas').empty();
+}
