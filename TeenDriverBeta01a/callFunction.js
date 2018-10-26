@@ -17,7 +17,10 @@ function callFunction(task,clickAreaResponse) {
 	} else if (functionName=='playVideoUntil') {
 	} else if (functionName=='playAndCountTime') {
 		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function () {countResponseTime(parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
-		input = clickAreaResponse;
+		input = clickAreaResponse; 
+	} else if (functionName=='countTime') {
+		addMovingArea(parameters.movingAreas, function () {countResponseTime(parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
+		input = clickAreaResponse; 		
 	} else if (functionName=='countAreas') {
 		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function () {countAreas(parameters.numArea)});
 		areasList.push(parameters.numArea);
@@ -35,30 +38,21 @@ function callFunction(task,clickAreaResponse) {
 		}
 		pauseVideoTime = parameters.pauseTime;
 		video.play();
-		if (functionName=='playAndCountTime') {
-			startTimer();
-		}
 		video.addEventListener("timeupdate", pausing_function);
 		document.getElementById("response").value = "";	
 	}
 	return input;
 }
 
-function startTimer() {
-	startTime = new Date();		
-}
-
 function countResponseTime(clickResponseFast,clickResponseSlow,expertTime) {
-	let endTime = new Date();
-	let diff = endTime - startTime;
-	if (diff > expertTime*0.8) {
-		if (diff <= expertTime) {
-		    $("#input").val(clickResponseFast);
-		} else {
-		    $("#input").val(clickResponseSlow);
-		}
-		send();
+	var diff = video.currentTime;
+	console.log('countResponseTime, expert = ' + expertTime + ', user = ' + diff);
+	if (diff <= expertTime) {
+	    $("#input").val(clickResponseFast);
+	} else {
+	    $("#input").val(clickResponseSlow);
 	}
+	send();
 }
 
 function clickResponse(clickResponse) {
