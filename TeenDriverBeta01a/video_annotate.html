@@ -24,19 +24,7 @@
 		upperLeft = [Math.round(x/videoWidth*100),Math.round(y/videoHeight*100)];
 		lowerRight = [100,100];
 
-		addVideoArea(upperLeft,lowerRight,0,function(evt) {finish_rectangle(evt,'#clickArea0',upperLeft)});    	
-		// let divBox = document.createElement('div'); // new div.clickArea
-		// divBox.setAttribute("class","clickArea");
-		// divBox.setAttribute("position","absolute");
-		// divBox.setAttribute("z-index","+1");
-
-		// let divBoxId0 = 'clickArea0';
-		// divBox.setAttribute("id",divBoxId0);
-		// let divBoxId = '#' + divBoxId0;
-		// $('#clickAreas').append(divBox); // use jQuery append() instead of HTML DOM appendChild()
-
-		// show_box(divBoxId,upperLeft,lowerRight);
-		// divBox.onclick = (function (evt) {finish_rectangle(evt,divBoxId,upperLeft)});
+		addVideoArea(upperLeft,lowerRight,0,function(evt) {finish_rectangle(evt,'#clickArea0',upperLeft)});
 	}
 
 	function finish_rectangle(event,divBoxId,upperLeft) {
@@ -101,8 +89,8 @@
 	}
 
 	function temp_function(time) {
-		video_play();
-		alert('clicked at time ' + time + ', click again to continue');
+		// video_play();
+		$('#clickMessage').html('Time of click: ' + time);
 	}
 
 	function video_play() {
@@ -160,6 +148,7 @@
 		</div>
 		<div class="row">
 			<div class = "col-sm-6" style="padding: 0px">
+				<h2 id='clickMessage'></h2>
 				<div>
 					<button type="button" class="btn btn-primary" onclick="video_play()" id="video_play">Play</button>
 					<button type="button" class="btn btn-primary" onclick="video.currentTime=0">Rewind</button>
@@ -171,6 +160,7 @@
 					<button type="button" class="btn btn-primary" onclick="play_area()">Show moving areas</button>
 					<button type="button" class="btn btn-primary" onclick="$('#textDialogFlow').val('')">Clear JSON</button>
 				</div>
+				<br>
 				<div>
 					<p>Input video number:</p>
 					<input type="text" id="video_file" value="28560">
