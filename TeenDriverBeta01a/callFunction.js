@@ -10,7 +10,7 @@ function callFunction(task,clickAreaResponse) {
 		console.log('videoNumber: ' + parameters.videoNumber);
 		loadVideo(parameters.videoNumber);
 	} else if (functionName=='addVideoArea') {
-		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea,function () {clickResponse(parameters.clickResponse,parameters.pause)});
+		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea,function () {clickResponse(parameters.clickResponse)});
 		input = clickAreaResponse;
 	} else if (functionName=='clearVideoAreas') {
 		clearVideo();
@@ -28,6 +28,9 @@ function callFunction(task,clickAreaResponse) {
 		input = 'Found 0 out of ' + numAreas;
 		console.log('areasList:');
 		console.log(areasList);
+	} else if (functionName=='commentaryDrive') {
+		addMovingArea(parameters.movingAreas, function () {clickResponse(parameters.clickResponse,parameters.pause)});
+		input = clickAreaResponse;
 	}
 
 	if (functionName=='playVideoUntil' || functionName=='playAndCountTime') {
