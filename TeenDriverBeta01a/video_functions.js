@@ -79,11 +79,16 @@ function hideArea() {
 	};
 }
 
+function clearVideo(reset=true) {
+	$('#clickAreas').empty();
+	count_misses(reset);
+}
+
 function loadVideo(videoNumber)	{
 	document.getElementById('videoSourceWebm').setAttribute('src','videos/' + videoNumber + '.webm');
 	document.getElementById('videoSourceOgg').setAttribute('src','videos/' + videoNumber + '.ogg');
     document.getElementById("video").load();
-	$('#clickAreas').empty();
+	clearVideo();
 }
 
 function addMovingArea(areaObjects,fn) {
@@ -107,7 +112,7 @@ function addMovingArea(areaObjects,fn) {
 					upperLeft[k] = (upperLefts[1][k]*t + upperLefts[0][k]*(1-t));
 					lowerRight[k] = (lowerRights[1][k]*t + lowerRights[0][k]*(1-t));
 				}
-				$('#clickAreas').empty();
+				clearVideo(false);
 				addVideoArea(upperLeft,lowerRight,0);
 				// $(divBoxId).click(function() {temp_function(tVideo);});
 				$(divBoxId).click(fn);

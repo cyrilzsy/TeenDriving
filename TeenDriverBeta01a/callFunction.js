@@ -10,10 +10,10 @@ function callFunction(task,clickAreaResponse) {
 		console.log('videoNumber: ' + parameters.videoNumber);
 		loadVideo(parameters.videoNumber);
 	} else if (functionName=='addVideoArea') {
-		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea,function () {clickResponse(parameters.clickResponse)});
+		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea,function () {clickResponse(parameters.clickResponse,parameters.pause)});
 		input = clickAreaResponse;
 	} else if (functionName=='clearVideoAreas') {
-		$('#clickAreas').empty();
+		clearVideo();
 	} else if (functionName=='playVideoUntil') {
 	} else if (functionName=='playAndCountTime') {
 		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function () {countResponseTime(parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
@@ -55,7 +55,10 @@ function countResponseTime(clickResponseFast,clickResponseSlow,expertTime) {
 	send();
 }
 
-function clickResponse(clickResponse) {
+function clickResponse(clickResponse,pause) {
+	if (!!pause) {
+		video.pause();
+	}
 	$("#input").val(clickResponse);
 	send();		
 }
