@@ -60,6 +60,7 @@
 			lowerRightCoordinates: lowerRight,
 		};
 		var areaJSON = JSON.stringify(areaObj,null,2);
+		areaJSON += $('#textDialogFlow').val();
 		$('#textDialogFlow').val(areaJSON);
 	}
 
