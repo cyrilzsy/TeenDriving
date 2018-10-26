@@ -14,7 +14,7 @@ var pausing_function = function() {
     }
 };
 
-function addVideoArea(upperLeftCoords,lowerRightCoords,numArea,fn) {
+function addVideoArea(upperLeftCoords,lowerRightCoords,numArea=undefined,fn=function(){}) {
 // video_div
 //   video
 //     source
@@ -32,7 +32,7 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,numArea,fn) {
 	divBox.onclick = fn;
 
 	let divBoxId0 = 'clickArea';
-	if (!!numArea) {
+	if (numArea>=0) {
 		divBoxId0 += numArea;
 	} else {
 		divBoxId0 += n;
@@ -41,6 +41,10 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,numArea,fn) {
 	let divBoxId = '#' + divBoxId0;
 	$('#clickAreas').append(divBox); // use jQuery append() instead of HTML DOM appendChild()
 
+	show_box(divBoxId,upperLeftCoords,lowerRightCoords);
+}
+
+function show_box(divBoxId,upperLeftCoords,lowerRightCoords) {
 	$(divBoxId).offset({top:upperLeftCoords[1]*videoHeight/100,left:upperLeftCoords[0]*videoWidth/100});
 	$(divBoxId).height((lowerRightCoords[1] - upperLeftCoords[1])*videoHeight/100);
 	$(divBoxId).width((lowerRightCoords[0] - upperLeftCoords[0])*videoWidth/100);
