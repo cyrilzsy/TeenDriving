@@ -92,7 +92,7 @@ $db->close();
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			setTimeout(goBack,2000);
+			// setTimeout(goBack,2000);
 		})
 
 		function goBack() {
@@ -103,7 +103,7 @@ $db->close();
 
 <body>
 
-<h3 style="display:none">Welcome <?php echo $_POST["userName"]; ?><h3>
+<h3 style="display:none">Welcome <?php echo $_POST["userName"]; ?></h3>
 
 <div>
     <p>Login information</p>
@@ -134,6 +134,7 @@ $db->close();
 	  </div> -->
 	  <button type="submit" class="btn btn-default">Submit</button>
 	</form> 
+    <button type="button" class="btn btn-default" onclick="goBack()">Return</button>
 </div>
 
 </body>
