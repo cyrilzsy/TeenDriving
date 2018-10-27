@@ -101,7 +101,7 @@ function clickMe(element) {
 
 function RandomNumber() {
     var str = "";
-    var a = Math.floor(Math.random() * 3 ) + 1;
+    var a = Math.floor(Math.random() * 4 ) + 1;
 	if (a==1) {
 		str = "What happen next?";
 	}else if (a==2) {
