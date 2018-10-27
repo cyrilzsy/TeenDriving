@@ -21,6 +21,7 @@
 	$(window).resize(function () {
 		getwh();
 	})
+
 	$(document).ready(function() {
 	    var video = document.getElementById("video");
 		$('#video').on("loadeddata", function () {
@@ -44,7 +45,6 @@
 	});
 
 	var num_misses = 0;
-
 	function count_misses(reset=false) {
 		var text_misses = '';
 		if (reset) {
@@ -104,60 +104,16 @@
 					<br>
 					<span>If you need hints in finding the important areas, move the slider to the right:</span>
 				</div>
-				<div>
 					<span>Invisible &nbsp&nbsp</span>
 					<input type="range" min="0" max="10" value="0" style="width:100px; display:inline; color:black" id="hintLevel" oninput="hintLevelChange()">
 					<span>&nbsp&nbsp Clearly visible</span>
-				</div>
-
-				<div>
-					<br>
-					<span>Information: </span>
-					<button type="button" data-toggle="modal" data-target="#infoModal" target="_blank">Information</button>
-				</div>
-				<div>
-					<br>
-					<span>Login here: </span>
-					<button type="button" href="https://engineering.jhu.edu/tak/teendriver/login.php">Login</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="infoModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Login</h4>
-	      </div>
-	      <div class="modal-body">
-	        <h4>Scientific authors and contributors:</h4>
-	        <h4>Johnathon Ehsani, PhD</h4>
-	        <h4>Tak Igusa, PhD</h4>
-	        <h4>Siyao Zhu</h4>
-	        <br />
-	        <h5>App designers:</h5>
-	        <h5>Tak Igusa and Siyao Zhu</h5>
-	        <br />
-
-	        <h4>DISCLAIMER</h4>
-	        <p>
-	          The Authors provides the App and the services, information, content and/or data (collectively, “Information”) contained therein for informational purposes only.
-	        </p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-
-	<hr>
+	<hr><br>
 	<p>Response from Dialogflow (you can ignore this technical chatter): <span id="intentName"><b>Intent Name</b></span></p>
-	<span>Administrator link: <a href="https://engineering.jhu.edu/tak/teendriver/db.php">database</a></span>
-	<hr>
 
 	<!--<form autocomplete="on" onsubmit="return ajaxit();" id="myForm" target="the_iframe">-->
 		<!--<input type="text" style="width:100%" id="input" name="input" autocomplete="on"></input>-->
