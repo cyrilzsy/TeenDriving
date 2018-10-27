@@ -81,7 +81,9 @@ function hideArea() {
 
 function clearVideo(reset=true) {
 	$('#clickAreas').empty();
-	count_misses(reset);
+	if (reset) {
+		count_misses(true);
+	}
 }
 
 var videos_seen = [];
