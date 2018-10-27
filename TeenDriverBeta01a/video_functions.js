@@ -84,10 +84,13 @@ function clearVideo(reset=true) {
 	count_misses(reset);
 }
 
+var videos_seen = [];
+
 function loadVideo(videoNumber)	{
 	document.getElementById('videoSourceWebm').setAttribute('src','videos/' + videoNumber + '.webm');
 	document.getElementById('videoSourceOgg').setAttribute('src','videos/' + videoNumber + '.ogg');
     document.getElementById("video").load();
+    videos_seen.push(videoNumber);
 	clearVideo();
 }
 
