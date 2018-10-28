@@ -56,6 +56,7 @@ function sendToDialogFlow(text_in) {
 			var speechJSON = speechSplit.JSON.replace(/yyy/g,"{").replace(/zzz/g,"}");
 			document.getElementById('intentName').innerHTML = '<b>' + intentName + '</b>';
 			speech = makeList(speech);
+			speech = makeButton(speech);
 			if (speechJSON.length>0) {
 				try {
 					speechObj = JSON.parse(speechJSON);
@@ -156,6 +157,17 @@ function makeList(string) {
 			text += '<li><a onclick="clickMe(this)" value="' + object[i] + '">' + object[i] + '</a></li>';
 		}
 		text += '</ul>'; // not closing with </div> can be good!
+	}
+	return text;
+}
+
+function makeButton(string) {
+	var object = string.split("=====");
+	var text = object[0];
+	if (object.length>1) {
+		for (i=1; i<object.length; i++) {
+			text += '<button onclick="clickMe(this)" value="' + object[i] + '">' + object[i] + '</button></li>';
+		}
 	}
 	return text;
 }

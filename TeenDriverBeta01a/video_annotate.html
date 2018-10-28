@@ -53,12 +53,16 @@
 	function save_JSON() {
 		$('#textDialogFlow').val('');
 		var areaJSON = "[" + $('#JSONDialogFlow').val() + "]";
-		var spaces = '        '; // number of spaces for JSON
-		areaJSON = areaJSON.replace(/\n/g,'\n  '); // insert two spaces
+		var spaces = ''; // number of spaces for JSON
+//		areaJSON = areaJSON.replace(/\n/g,'\n  '); // insert two spaces
+		areaJSON = areaJSON.replace(/\n/g,'');
 		areaJSON = spaces + spaces + spaces + spaces + '"movingAreas":\n' + areaJSON;
-		areaJSON = areaJSON.replace(/\n/g,'\n' + spaces + spaces + spaces + spaces + spaces);
+//		areaJSON = areaJSON.replace(/\n/g,'\n' + spaces + spaces + spaces + spaces + spaces);
 		areaJSON = areaJSON.replace(/{/g,'yyy');
 		areaJSON = areaJSON.replace(/}/g,'zzz');
+		for (i=0; i<100; i++) {
+			areaJSON = areaJSON.replace(/  /g,'')
+		}
 		$('#textDialogFlow').val(areaJSON);
 	}
 
