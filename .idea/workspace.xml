@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0983d7e9-f3c5-48b7-8158-9dfdeac101c3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TeenDriverBeta01a/video_functions.js" afterPath="$PROJECT_DIR$/TeenDriverBeta01a/video_functions.js" />
-    </list>
+    <list default="true" id="0983d7e9-f3c5-48b7-8158-9dfdeac101c3" name="Default" comment="" />
     <ignored path="TeenDriving.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
