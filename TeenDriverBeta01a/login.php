@@ -35,11 +35,16 @@ if (isset($_GET['mosexp'])) {
   $mosexp = '';
 }
 
-
 if (isset($_GET['nummisses'])) {
   $nummisses = $_GET['nummisses'];
 } else {
   $nummisses = '';
+}
+
+if (isset($_GET['avatar'])) {
+  $avatar = $_GET['avatar'];
+} else {
+  $avatar = 'Girl';
 }
 
 if (!isset($_GET['userName'])) {
@@ -155,9 +160,9 @@ $db->close();
 	    <input type="text" class="form-control" id="age" name="age" value=<?echo '"' . $age . '"';?> >
 	  </div>
 	  <div class="form-group">
-	    <label for="age">Gender:</label>
-		<input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender=="male") echo "checked";?> > Male<br>
-		<input type="radio" name="gender" value="female" <?php if (isset($gender) && $gender=="female") echo "checked";?> > Female<br>
+	    <label for="age">Gender:&nbsp</label>
+		<input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender=="male") echo "checked";?> >&nbsp Male &nbsp 
+		<input type="radio" name="gender" value="female" <?php if (isset($gender) && $gender=="female") echo "checked";?> >&nbsp Female<br>
 	  </div>
 	  <div class="form-group">
 	    <label for="age">Years experience:</label>
@@ -167,9 +172,11 @@ $db->close();
 	    <label for="age">Months experience:</label>
 		<input type="number" name="mosexp" min="1" max="12" value=<?echo '"' . $mosexp . '"';?> >
 	  </div>
-<!-- 	  <div class="checkbox">
-	    <label><input type="checkbox"> Remember me</label>
-	  </div> -->
+    <div class="form-group">
+      <label for="avatar">Avatar:&nbsp</label>
+    <input type="radio" name="avatar" value="Girl" <?php if (isset($avatar) && $avatar=="Girl") echo "checked";?> >&nbsp<img src="images/Girl image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="Elder" <?php if (isset($avatar) && $avatar=="Elder") echo "checked";?> >&nbsp<img src="images/Elder image.png" class="media-object" style="width:40px; display:inline"><br>
+    </div>
 	  <button type="submit" class="btn btn-default">Submit</button>
 	 </form> 
    <div>

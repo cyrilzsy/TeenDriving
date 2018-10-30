@@ -33,7 +33,8 @@ if (isset($_POST['init'])) {
     GENDER          TEXT,
     YRSEXP          INT,
     MOSEXP          INT,
-    NUMMISSES       INT);
+    NUMMISSES       INT,
+    AVATAR          TEXT);
 EOF;
   $ret = $db->exec($sql);
   if (!$ret) {
@@ -44,10 +45,10 @@ EOF;
 // Create records
   echo "<br>Create records<br>";
   $sql =<<<EOF
-    INSERT INTO USERS (ID,USERNAME,AGE,GENDER,YRSEXP,MOSEXP,NUMMISSES)
-    VALUES (1, 'Mary', 17, 'female', 0, 2, 100);
-    INSERT INTO USERS (ID,USERNAME,AGE,GENDER,YRSEXP,MOSEXP,NUMMISSES)
-    VALUES (2, 'Joe', 18, 'male', 0, 8, 200);
+    INSERT INTO USERS (ID,USERNAME,AGE,GENDER,YRSEXP,MOSEXP,NUMMISSES,AVATAR)
+    VALUES (1, 'Mary', 17, 'female', 0, 2, 100, 'Girl');
+    INSERT INTO USERS (ID,USERNAME,AGE,GENDER,YRSEXP,MOSEXP,NUMMISSES,AVATAR)
+    VALUES (2, 'Joe', 18, 'male', 0, 8, 200, 'Girl');
 EOF;
   $ret = $db->exec($sql);
   if(!$ret) {
@@ -94,6 +95,7 @@ EOF;
           <th>Yrs exp</th>
           <th>Mos exp</th>
           <th>Misses</th>
+          <th>Avatar</th>
         </tr>
       </thead>
       <tbody>
@@ -112,6 +114,7 @@ while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
   echo "<td>". $row['YRSEXP']   ."</td>\n";
   echo "<td>". $row['MOSEXP']   ."</td>\n";
   echo "<td>". $row['NUMMISSES']."</td>\n";
+  echo "<td>". $row['AVATAR']   ."</td>\n";
   echo "</tr>\n";
 }
 $db->close();

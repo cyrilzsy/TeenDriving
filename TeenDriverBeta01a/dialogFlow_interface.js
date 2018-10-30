@@ -171,3 +171,38 @@ function makeButton(string) {
 	}
 	return text;
 }
+
+function makeCheckBoxes(string) {
+	var object = string.split("*****"); // format: dialog text ***** check box label 1 ***** true or false ***** check box label 2 ...
+	var text = object[0];
+	if (object.length>1) {
+		text += '<div class="dropdown"><button class="dropdown-toggle" data-toggle="dropdown">' +
+			'Select response<span class="caret"></span></button><ul id="dialogFlowCheckBoxes" class="dropdown-menu">';
+		for (i=1; i<object.length; i+=2) {
+			text += '<li><input type="checkbox" id="dialogFlowCheckBox' + i + '">' + object[i] + '</li>';
+		}
+		text += '<li><button type="button" onclick="countCheckBoxes(\'' + string + '\')">Submit answers</button></li></ul>'; // not closing with </div> can be good!
+	}
+	return text;
+}
+
+function countCheckBoxes(string) {
+	var object = string.split("*****"); // format: dialog text ***** check box label 1 ***** true or false ***** check box label 2 ...
+	var numBoxes = document.getElementById("dialogFlowCheckBoxes").childElementCount;
+	var numTrueChecked = 0, numFalseUnchecked = 0, numTrueTotal = 0, numFalseTotal = 0;
+	for (i=1; i<object.length; i+=2) {
+		if (object[i+1]=="true") {
+			numTrueTotal++;
+			if (document.getElementById("dialogFlowCheckBox" + i).checked) {
+				numTrueChecked++;
+			}
+		} else {
+			numFalseTotal++;
+			if (!document.getElementById("dialogFlowCheckBox" + i).checked) {
+				numFalseUnchecked++;
+			}
+		}
+	}
+	$("#input").val((numTrueChecked+numFalseUnchecked) + ' out of ' + (numTrueTotal+numFalseTotal) + ' are correct');
+	$('#dialogFlowCheckBoxes').remove();
+}

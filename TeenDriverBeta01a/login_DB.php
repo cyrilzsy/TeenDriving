@@ -138,18 +138,3 @@ if (!isset($_GET['userName'])) {
 }
 $db->close();
 ?>
-
-<?php if (isset($gender) && $gender=="male") echo "checked";?>
-<?php if (isset($gender) && $gender=="female") echo "checked";?>
-<?echo '"' . $yrsexp . '"';?>
-<?echo '"' . $mosexp . '"';?>
-
-<?
-echo '#####';
-echo '{';
-echo '  "username":"' . $username . '",'; // add commas except for last item
-echo '  "age":"' . $age . '",';
-echo '  "nummisses":"' . $nummisses . '",';
-echo '  "newuser":"' . $newuser . '"';
-echo '}';
-?>
