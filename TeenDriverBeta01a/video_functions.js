@@ -96,36 +96,47 @@ function loadVideo(videoNumber)	{
 	clearVideo();
 }
 
-function addMovingArea(areaObjects,fn) {
-	var divBoxId = '#clickArea0';
-	var upperLefts = [], lowerRights = [], areaObjs = [], times = [], iArea = 0;
+function addMovingArea(multipleAreaObjects,fn) {
 	video.play();
+	var iArea = [];
+	for (l=0; l<multipleAreaObjects.length; l++) {	
+		iArea.push(0);
+	}
 	var id = setInterval(show_moving_box,100);
+
 	function show_moving_box() {
-		for (j=0; j<2; j++) {
-			areaObjs[j] = areaObjects[iArea+j];
-			upperLefts[j] = areaObjs[j].upperLeftCoordinates;
-			lowerRights[j] = areaObjs[j].lowerRightCoordinates;
-			times[j] = areaObjs[j].time;
-		}
+		var divBoxId = [];
+		var upperLefts = [], lowerRights = [], areaObjs = {}, times = [];
 		var tVideo = video.currentTime;
-		if (tVideo>times[0]) {
-			if (tVideo<times[1]) {
-				var t = (video.currentTime - times[0])/(times[1] - times[0]);
-				var upperLeft = [], lowerRight = [];
-				for (k=0; k<2; k++) {
-					upperLeft[k] = (upperLefts[1][k]*t + upperLefts[0][k]*(1-t));
-					lowerRight[k] = (lowerRights[1][k]*t + lowerRights[0][k]*(1-t));
-				}
-				clearVideo(false);
-				addVideoArea(upperLeft,lowerRight,0);
-				// $(divBoxId).click(function() {temp_function(tVideo);});
-				$(divBoxId).click(fn);
-			} else { // tVideo>time[1] so need to go to the next time interval
-				iArea += 1;
-				if (iArea>areaObjects.length-2) {
-					clearInterval(id);
-					video.pause();
+		for (l=0; l<multipleAreaObjects.length; l++) {
+			upperLefts = [], lowerRights = [], areaObjs = {}, times = [];
+			divBoxId[l] = '#clickArea' + l;
+			for (j=0; j<2; j++) {
+				areaObjs = multipleAreaObjects[l][iArea[l]+j];
+				upperLefts[j] = areaObjs.upperLeftCoordinates;
+				lowerRights[j] = areaObjs.lowerRightCoordinates;
+				times[j] = areaObjs.time;
+			}
+			if (tVideo>times[0]) {
+				if (tVideo<times[1]) {
+					var t = (video.currentTime - times[0])/(times[1] - times[0]);
+					var upperLeft = [], lowerRight = [];
+					for (k=0; k<2; k++) {
+						upperLeft[k] = (upperLefts[1][k]*t + upperLefts[0][k]*(1-t));
+						lowerRight[k] = (lowerRights[1][k]*t + lowerRights[0][k]*(1-t));
+					}
+					if (l==0) {
+						clearVideo(false);
+					}
+					addVideoArea(upperLeft,lowerRight,l);
+					// $(divBoxId).click(function() {temp_function(tVideo);});
+					$(divBoxId[l]).click(fn);
+				} else { // tVideo>time[1] so need to go to the next time interval
+					iArea[l] += 1;
+					if (iArea[l]>multipleAreaObjects[l].length-2) {
+						clearInterval(id);
+						video.pause();
+					}
 				}
 			}
 		}
