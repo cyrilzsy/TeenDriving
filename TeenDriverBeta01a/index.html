@@ -40,6 +40,11 @@
 			}
 		});
 		$('#hintLevel').val(0);
+		$("#login").keypress(function(event) {
+			if (event.which == 13) {
+				userLoginAJAX();
+			}
+		});
 	});
 
 	var num_misses = 0;
@@ -86,10 +91,10 @@
 	        	console.log('onreadystatechange, conditions true, responseText = ' + this.responseText);
                 // alert(this.responseText);
                 // document.getElementById("loginResponse").innerHTML = this.responseText;
-                $('#loginResponseTextArea').val(this.responseText);
+                // $('#loginResponseTextArea').val(this.responseText);
             }
         };
-        xmlhttp.open("GET", "login.php?userName=" + userName, true);
+        xmlhttp.open("GET", "login_info.php?userName=" + userName, true);
         // xmlhttp.open("POST", "login.php", true);
         xmlhttp.setRequestHeader("Accept","text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8");
         // xmlhttp.setRequestHeader("Accept-Encoding","gzip,deflate,br");
@@ -107,18 +112,30 @@
 		var userName = $('#login').val();
 		$.ajax({
 			type:        "GET",
-			url:         "login.php?userName=Bob",
+			url:         "login_info.php?userName=" + userName + "&nummisses=" + num_misses,
 			contentType: "application/json; charset=utf-8",
 			// data:         jQuery.param({ userName: "Bob", }),
 			dataType:    "text",
 			headers: {
 				Accept:          "text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8",
-			   'Accept-Encoding': "gzip,deflate,br",
+			   // 'Accept-Encoding': "gzip,deflate,br",
 			   'Upgrade-Insecure-Requests': "1",
 			},
 	
 			success: function(data) {
 				console.log(data);
+				var dataSplit = splitStr(data);
+				var dataText = dataSplit.text;
+				var dataJSON = dataSplit.JSON;
+				console.log(dataText);
+				console.log(dataJSON);
+				dataObj = JSON.parse(dataJSON);
+				console.log(dataObj);
+				$('#userAge').text(dataObj.age);
+				$('#userMisses').text(dataObj.nummisses);
+				if (dataObj.newuser="true") {
+					// window.location.href = "login.php?userName=" + userName;
+				}
 			},
 			error: function(jqXHR) {
 				console.log('ERROR\n');
@@ -126,9 +143,6 @@
 			}
 		});
 		console.log("Loading...");
-    	// $.get("simple_test.php", function(data,status) {
-    	// 	alert("data: " + data + "\nStatus: " + status);
-    	// })
     }
 
 </script>
@@ -185,17 +199,18 @@
 				<div>
 					<br>
 					<!-- input will submit with CR if it is the only text field in the form -->
-					<!-- <form onsubmit="userLogin()"> -->
-					<form action="login.php" method="post">
+					<!-- <form onsubmit="userLoginAJAX()"> -->
+					<!-- <form action="login.php" method="post"> -->
 						<span>Login here: </span>
 						<input type="text" id="login" value="Bob" name="userName">
-						<button type="submit">Submit</button>
-					</form>
-					<button type="button" onclick="userLogin()">XMLHttpRequest</button>
-					<button type="button" onclick="userLoginAJAX()">XMLHttpRequestAJAX</button>
+						<!-- <button type="submit">Submit</button> -->
+					<!-- </form> -->
+					<!-- <button type="button" onclick="userLogin()">XMLHttpRequest</button> -->
+					<button type="button" onclick="userLoginAJAX()">Login</button>
 				</div>
-				<br>
-				<textarea rows="7" id="loginResponseTextArea"  style="width:100%"></textarea>
+				<br><p><b>Age: <span id="userAge"></span></b></p>
+				<br><p><b>Cumulative number of misses: <span id="userMisses"></span></b></p>
+				<!-- <textarea rows="7" id="loginResponseTextArea"  style="width:100%"></textarea> -->
 			</div>
 		</div>
 	</div>
