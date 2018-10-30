@@ -44,7 +44,7 @@ if (isset($_GET['nummisses'])) {
 if (isset($_GET['avatar'])) {
   $avatar = $_GET['avatar'];
 } else {
-  $avatar = 'Girl';
+  $avatar = '';
 }
 
 $newuser = "false";
@@ -60,7 +60,7 @@ if (!isset($_GET['userName'])) {
   if($row<1) {
     $newuser = "true";
     echo "  User name not found, creating new record:<br>";
-    $sql = "INSERT INTO USERS (ID,USERNAME) VALUES (NULL,'" . $username . "')";
+    $sql = "INSERT INTO USERS (ID,USERNAME,NUMMISSES,AVATAR) VALUES (NULL,'" . $username . "',0,'Girl')";
     $ret = $db->exec($sql);
     if(!$ret) {
 	   echo "<br>INSERT INTO USERS error<br>";

@@ -1,10 +1,13 @@
+var avatarName     = $('#userAvatar').text();
+if (!avatarName) {avatarName = 'Girl'}
+var avatarFile     = '"images/' + avatarName + ' image.png"';
 var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
 var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:black;"';
 var mediaEndForm   = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px" id="media-end-form"><div style="padding:15px; color:black;"';
 var mediaLeftAunt  = mediaStart + '30px"><img src="images/Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
-var mediaLeftMe    = mediaStart + ' 0px"><img src= "images/Girl image.png"' + mediaEnd + 'class="speech-bubble-me">';
+var mediaLeftMe    = mediaStart + ' 0px"><img src=' + avatarFile + mediaEnd + 'class="speech-bubble-me">';
 var chatBreak      = "</div></div><hr>";
-var mediaLeftForm  = mediaStart + ' 0px"><img src="images/Girl image.png" id="image-form"' + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
+var mediaLeftForm  = mediaStart + ' 0px"><img id="image-form" src=' + avatarFile + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
 var speechObj = "";
 
 var inputbox0 = '<form autocomplete="on" id="myForm" onsubmit="send()">' +
@@ -29,6 +32,14 @@ function initializeVideoParameters() {
 	areasList = [];
 }
 
+function initializeAvatar() {
+	avatarName     = $('#userAvatar').text();
+	if (!avatarName) {avatarName = 'Girl'}
+	avatarFile     = '"images/' + avatarName + ' image.png"';
+	mediaLeftMe    = mediaStart + ' 0px"><img src=' + avatarFile + mediaEnd + 'class="speech-bubble-me">';
+	mediaLeftForm  = mediaStart + ' 0px"><img id="image-form" src=' + avatarFile + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
+}
+
 function sendToDialogFlow(text_in) {
 	var input = "";
 	var clickAreaResponse = '';
@@ -49,6 +60,7 @@ function sendToDialogFlow(text_in) {
 		}),
 
 		success: function(data) {
+			initializeAvatar();
 	 		let data_speech = data.result.speech;
 	 		let intentName = data.result.metadata.intentName;
 			var speechSplit = splitStr(data_speech);

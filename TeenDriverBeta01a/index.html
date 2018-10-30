@@ -133,6 +133,7 @@
 				console.log(dataObj);
 				$('#userAge').text(dataObj.age);
 				$('#userMisses').text(dataObj.nummisses);
+				$('#userAvatar').text(dataObj.avatar);
 				if (dataObj.newuser=="true") {
 					gotoSignUp(userName);
 				}
@@ -214,6 +215,7 @@
 				</div>
 				<br><p><b>Age: <span id="userAge"></span></b></p>
 				<br><p><b>Cumulative number of misses: <span id="userMisses"></span></b></p>
+				<br><p><b>Avatar: <span id="userAvatar"></span></b></p>
 				<!-- <textarea rows="7" id="loginResponseTextArea"  style="width:100%"></textarea> -->
 			</div>
 		</div>
