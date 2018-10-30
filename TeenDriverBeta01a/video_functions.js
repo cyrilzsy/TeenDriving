@@ -29,7 +29,7 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,numArea=undefined,fn=func
 	divBox.setAttribute("class","clickArea");
 	divBox.setAttribute("position","absolute");
 	divBox.setAttribute("z-index","+1");
-	divBox.onclick = fn;
+	// divBox.onclick = fn;
 
 	let divBoxId0 = 'clickArea';
 	if (numArea>=0) {
@@ -40,6 +40,7 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,numArea=undefined,fn=func
 	divBox.setAttribute("id",divBoxId0);
 	let divBoxId = '#' + divBoxId0;
 	$('#clickAreas').append(divBox); // use jQuery append() instead of HTML DOM appendChild()
+	$(divBoxId).click(function(event) {fn(event)});
 
 	show_box(divBoxId,upperLeftCoords,lowerRightCoords);
 }
@@ -98,44 +99,46 @@ function loadVideo(videoNumber)	{
 
 function addMovingArea(multipleAreaObjects,fn) {
 	video.play();
-	var iArea = [];
+	var iArea = [], maxTime = 0, areaObjs = {}, divBoxId = [];
 	for (l=0; l<multipleAreaObjects.length; l++) {	
 		iArea.push(0);
+		areaObjs = multipleAreaObjects[l];
+		maxTime = Math.max(maxTime,areaObjs[areaObjs.length-1].time);
+		divBoxId[l] = '#clickArea' + l;
 	}
 	var id = setInterval(show_moving_box,100);
 
 	function show_moving_box() {
-		var divBoxId = [];
-		var upperLefts = [], lowerRights = [], areaObjs = {}, times = [];
 		var tVideo = video.currentTime;
-		for (l=0; l<multipleAreaObjects.length; l++) {
-			upperLefts = [], lowerRights = [], areaObjs = {}, times = [];
-			divBoxId[l] = '#clickArea' + l;
-			for (j=0; j<2; j++) {
-				areaObjs = multipleAreaObjects[l][iArea[l]+j];
-				upperLefts[j] = areaObjs.upperLeftCoordinates;
-				lowerRights[j] = areaObjs.lowerRightCoordinates;
-				times[j] = areaObjs.time;
-			}
-			if (tVideo>times[0]) {
-				if (tVideo<times[1]) {
-					var t = (video.currentTime - times[0])/(times[1] - times[0]);
-					var upperLeft = [], lowerRight = [];
-					for (k=0; k<2; k++) {
-						upperLeft[k] = (upperLefts[1][k]*t + upperLefts[0][k]*(1-t));
-						lowerRight[k] = (lowerRights[1][k]*t + lowerRights[0][k]*(1-t));
+		if (tVideo>maxTime) {
+			clearInterval(id);
+			video.pause();			
+		} else {
+			var upperLefts = [], lowerRights = [], times = [], upperLeft = [], lowerRight = [];
+			for (l=0; l<multipleAreaObjects.length; l++) {
+				if (!!divBoxId[l]) {
+					for (j=0; j<2; j++) {
+						areaObjs = multipleAreaObjects[l][iArea[l]+j];
+						upperLefts[j] = areaObjs.upperLeftCoordinates;
+						lowerRights[j] = areaObjs.lowerRightCoordinates;
+						times[j] = areaObjs.time;
 					}
-					if (l==0) {
-						clearVideo(false);
-					}
-					addVideoArea(upperLeft,lowerRight,l);
-					// $(divBoxId).click(function() {temp_function(tVideo);});
-					$(divBoxId[l]).click(fn);
-				} else { // tVideo>time[1] so need to go to the next time interval
-					iArea[l] += 1;
-					if (iArea[l]>multipleAreaObjects[l].length-2) {
-						clearInterval(id);
-						video.pause();
+					if (tVideo>times[0]) {
+						if (tVideo<times[1]) {
+							var t = (video.currentTime - times[0])/(times[1] - times[0]);
+							for (k=0; k<2; k++) {
+								upperLeft[k] = (upperLefts[1][k]*t + upperLefts[0][k]*(1-t));
+								lowerRight[k] = (lowerRights[1][k]*t + lowerRights[0][k]*(1-t));
+							}
+							$(divBoxId[l]).remove();
+							addVideoArea(upperLeft,lowerRight,l,fn);
+						} else { // tVideo>time[1] so need to go to the next time interval
+							iArea[l] += 1;
+							if (iArea[l]>multipleAreaObjects[l].length-2) {
+								$(divBoxId[l]).remove();
+								divBoxId[l] = '';
+							}
+						}
 					}
 				}
 			}

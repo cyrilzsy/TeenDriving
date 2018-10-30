@@ -10,26 +10,26 @@ function callFunction(task,clickAreaResponse) {
 		console.log('videoNumber: ' + parameters.videoNumber);
 		loadVideo(parameters.videoNumber);
 	} else if (functionName=='addVideoArea') {
-		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea,function () {clickResponse(parameters.clickResponse)});
+		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea,function (event) {clickResponse(event,parameters.clickResponse)});
 		input = clickAreaResponse;
 	} else if (functionName=='clearVideoAreas') {
 		clearVideo();
 	} else if (functionName=='playVideoUntil') {
 	} else if (functionName=='playAndCountTime') {
-		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function () {countResponseTime(parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
+		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function (event) {countResponseTime(event,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
 		input = clickAreaResponse; 
 	} else if (functionName=='countTime') {
-		addMovingArea(parameters.movingAreas, function () {countResponseTime(parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
+		addMovingArea(parameters.movingAreas, function (event) {countResponseTime(event,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
 		input = clickAreaResponse; 		
 	} else if (functionName=='countAreas') {
-		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function () {countAreas(parameters.numArea)});
+		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function (event) {countAreas(event,parameters.numArea)});
 		areasList.push(parameters.numArea);
 		numAreas += 1;
 		input = 'Found 0 out of ' + numAreas;
 		console.log('areasList:');
 		console.log(areasList);
 	} else if (functionName=='commentaryDrive') {
-		addMovingArea(parameters.movingAreas, function () {clickResponse(parameters.clickResponse,parameters.pause)});
+		addMovingArea(parameters.movingAreas, function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
 		input = clickAreaResponse;
 	}
 
@@ -47,7 +47,7 @@ function callFunction(task,clickAreaResponse) {
 	return input;
 }
 
-function countResponseTime(clickResponseFast,clickResponseSlow,expertTime) {
+function countResponseTime(event,clickResponseFast,clickResponseSlow,expertTime) {
 	var diff = video.currentTime;
 	console.log('countResponseTime, expert = ' + expertTime + ', user = ' + diff);
 	if (diff <= expertTime) {
@@ -55,10 +55,11 @@ function countResponseTime(clickResponseFast,clickResponseSlow,expertTime) {
 	} else {
 	    $("#input").val(clickResponseSlow);
 	}
+	event.currentTarget.remove();
 	send();
 }
 
-function clickResponse(clickResponse,pause) {
+function clickResponse(event,clickResponse,pause) {
 	if (!!pause) {
 		video.pause();
 	}
@@ -66,7 +67,7 @@ function clickResponse(clickResponse,pause) {
 	send();		
 }
 
-function countAreas(numArea) {
+function countAreas(event,numArea) {
 	let index = areasList.indexOf(numArea);
 	console.log('countAreas, numArea: '+ numArea + ', index: ' + index + ', areasList:');
 	console.log(areasList);
@@ -76,19 +77,20 @@ function countAreas(numArea) {
 	console.log('countAreas, areasList:');
 	console.log(areasList);
 	$("#input").val('Found ' + (numAreas - areasList.length) + ' out of ' + numAreas);
-	$('#clickArea' + numArea).click(function() {});
+	// $('#clickArea' + numArea).click(function() {});
+ 	event.currentTarget.remove();
 }
 
-function countFound() {
-	var rating = "";
-	if ((numAreas - areasList.length)/numAreas > 1/2) {
-		rating = 'Good! you found most of them';
-	} else {
-		rating = 'Fair, there are more areas here';
-	}
-	document.getElementById("input").value += '. ' + rating + '.';
-	send();	
-}
+// function countFound() {
+// 	var rating = "";
+// 	if ((numAreas - areasList.length)/numAreas > 1/2) {
+// 		rating = 'Good! you found most of them';
+// 	} else {
+// 		rating = 'Fair, there are more areas here';
+// 	}
+// 	document.getElementById("input").value += '. ' + rating + '.';
+// 	send();	
+// }
 
 function clickMe(element) {
 	if (!!element.value) {
