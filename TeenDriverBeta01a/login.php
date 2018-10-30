@@ -7,76 +7,96 @@ class MyDB extends SQLite3 {
 // Use open method to initialize the DB
 $db = new MyDB();
 if (!$db) {
-  echo "<br>Open DB error<br>";
+  echo "<br>OPEN DB error<br>";
   echo $db->lastErrorMsg();
 }
 
-if (isset($_POST['comments'])) {
-  $comments = $_POST['comments'];
+if (isset($_POST['yrsexp'])) {
+  $yrsexp = $_POST['yrsexp'];
 } else {
-  $comments = '';
+  $yrsexp = '';
 }
 
-if (!isset($_POST['userName'])) {
+if (isset($_POST['age'])) {
+  $age = $_POST['age'];
+} else {
+  $age = '';
+}
+
+if (isset($_POST['gender'])) {
+  $gender = $_POST['gender'];
+} else {
+  $gender = '';
+}
+
+if (isset($_POST['mosexp'])) {
+  $mosexp = $_POST['mosexp'];
+} else {
+  $mosexp = '';
+}
+
+
+if (!isset($_GET['userName'])) {
 //$username = '';
 } else {
-  $username = $_POST['userName'];
-  $sql =<<<EOF
-    SELECT * from USERS where USERNAME = '$username';
-EOF;
+  $username = $_GET['userName'];
+  echo "<br>User name: " . $username . "<br>";
+  $sql = 'SELECT * from USERS where USERNAME = "' . $username . '"';
   $ret = $db->query($sql);
   $row = $ret->fetchArray(SQLITE3_ASSOC);
 
   if($row<1) {
-    echo "  User name not found, creating new record:<br />\n";
-  $sql =<<<EOF
-    INSERT INTO USERS (ID,USERNAME) VALUES (NULL,'$username');
-EOF;
-    print_r($sql);
+    echo "  User name not found, creating new record:<br>";
+    $sql = "INSERT INTO USERS (ID,USERNAME) VALUES (NULL,'" . $username . "')";
     $ret = $db->exec($sql);
-    print_r($ret);
     if(!$ret) {
-	   echo "<br>Insert error<br>";
-       echo $db->lastErrorMsg();
+	   echo "<br>INSERT INTO USERS error<br>";
+     echo $db->lastErrorMsg();
     }
   } else {
 
-    if (strlen($email)<2) {
-      // echo "email:<br />";
-      // $sql = 'SELECT EMAIL from SURVEY where USERNAME = "' . $username . '"';
-      // $ret = $db->query($sql);
-      // $row = $ret->fetchArray(SQLITE3_ASSOC);
-      $email = print_r($row['EMAIL'], true);
-      print_r($email);
+    if (strlen($mosexp)===0) {
+      $mosexp = print_r($row['MOSEXP'], true);
     } else {
-      echo "update or resave email: $email<br />";
-      $sql = 'UPDATE SURVEY set EMAIL = "' . $email . '" where USERNAME = "' . $username . '"';
+//    echo "update or resave mosexp: $mosexp<br />";
+      $sql = 'UPDATE USERS set MOSEXP = "' . $mosexp . '" where USERNAME = "' . $username . '"';
       $ret = $db->exec($sql);
       if(!$ret) {
+        echo "<br>Update MOSEXP error<br>";
         echo $db->lastErrorMsg();
       }
     }
 
-    if (strlen($rating)===0) {
-      $rating = print_r($row['RATING'], true);
+    if (strlen($gender)===0) {
+      $gender = print_r($row['GENDER'], true);
     } else {
-      $sql = 'UPDATE SURVEY set RATING = "' . $rating . '" where USERNAME = "' . $username . '"';
+      $sql = 'UPDATE USERS set GENDER = "' . $gender . '" where USERNAME = "' . $username . '"';
       $ret = $db->exec($sql);
       if(!$ret) {
-         echo $db->lastErrorMsg();
+        echo "<br>Update GENDER error<br>";
+        echo $db->lastErrorMsg();
       }
     }
 
-    if (strlen($comments)<2) {
-      // $sql = 'SELECT COMMENTS from SURVEY where USERNAME = "' . $username . '"';
-      // $ret = $db->query($sql);
-      // $row = $ret->fetchArray(SQLITE3_ASSOC);
-      $comments = print_r($row['COMMENTS'], true);
+    if (strlen($yrsexp)===0) {
+      $yrsexp = print_r($row['YRSEXP'], true);
     } else {
-      $sql = 'UPDATE SURVEY set COMMENTS = "' . $comments . '" where USERNAME = "' . $username . '"';
+      $sql = 'UPDATE USERS set YRSEXP = "' . $yrsexp . '" where USERNAME = "' . $username . '"';
       $ret = $db->exec($sql);
       if(!$ret) {
-         echo $db->lastErrorMsg();
+        echo "<br>Update YRSEXP error<br>";
+        echo $db->lastErrorMsg();
+      }
+    }
+
+    if (strlen($age)===0) {
+      $age = print_r($row['AGE'], true);
+    } else {
+      $sql = 'UPDATE USERS set AGE = "' . $age . '" where USERNAME = "' . $username . '"';
+      $ret = $db->exec($sql);
+      if(!$ret) {
+        echo "<br>Update AGE error<br>";
+        echo $db->lastErrorMsg();
       }
     }
   }
@@ -96,7 +116,8 @@ $db->close();
 		})
 
 		function goBack() {
-			history.back();
+			// history.back();
+      history.go('https://engineering.jhu.edu/tak/teendriver/index.html'); // doesn't work
 		}
 	</script>
 </head>
@@ -106,36 +127,37 @@ $db->close();
 <h3 style="display:none">Welcome <?php echo $_POST["userName"]; ?></h3>
 
 <div>
-    <p>Login information</p>
+  <h3>Login information</h3>
 	 <form action="" method="post">
 	  <div class="form-group">
 	    <label for="userName">User name:</label>
-	    <input type="text" class="form-control" id="userName" name="userName">
+	    <input type="text" class="form-control" id="userName" name="userName" value=<?echo '"' . $username . '"';?> >
 	  </div>
 	  <div class="form-group">
 	    <label for="age">Age:</label>
-	    <input type="text" class="form-control" id="age" name="age">
+	    <input type="text" class="form-control" id="age" name="age" value=<?echo '"' . $age . '"';?> >
 	  </div>
 	  <div class="form-group">
 	    <label for="age">Gender:</label>
-		<input type="radio" name="gender" value="male"> Male<br>
-		<input type="radio" name="gender" value="female"> Female<br>
+		<input type="radio" name="gender" value="male" <?php if (isset($gender) && $gender=="male") echo "checked";?> > Male<br>
+		<input type="radio" name="gender" value="female" <?php if (isset($gender) && $gender=="female") echo "checked";?> > Female<br>
 	  </div>
 	  <div class="form-group">
 	    <label for="age">Years experience:</label>
-	    <input type="number" class="form-control" id="yrsexp" name="yrsexp">
+	    <input type="number" class="form-control" id="yrsexp" name="yrsexp" value=<?echo '"' . $yrsexp . '"';?> >
 	  </div>
 	  <div class="form-group">
 	    <label for="age">Months experience:</label>
-		<input type="number" name="mosexp" min="1" max="12">
+		<input type="number" name="mosexp" min="1" max="12" value=<?echo '"' . $mosexp . '"';?> >
 	  </div>
 <!-- 	  <div class="checkbox">
 	    <label><input type="checkbox"> Remember me</label>
 	  </div> -->
 	  <button type="submit" class="btn btn-default">Submit</button>
-	</form> 
-    <button type="button" class="btn btn-default" onclick="goBack()">Return</button>
-</div>
+	 </form> 
+   <!-- <button type="button" class="btn btn-default" onclick="goBack()">Return</button> -->
+  <a href="index.html">Return</a>
+  </div>
 
 </body>
 </html> 

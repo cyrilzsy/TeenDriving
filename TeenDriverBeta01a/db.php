@@ -12,6 +12,7 @@ if (!$db) {
 }
 
 if (isset($_POST['erase'])) {
+  echo "<br>Erase<br>";
   $sql =<<<EOF
     DROP            TABLE           USERS;
 EOF;
@@ -23,6 +24,7 @@ EOF;
 }
 
 if (isset($_POST['init'])) {
+  echo "<br>Initialize<br>";
   $sql =<<<EOF
     CREATE          TABLE           USERS
     (ID             INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,6 +41,7 @@ EOF;
    }
 
 // Create records
+  echo "<br>Create records<br>";
   $sql =<<<EOF
     INSERT INTO USERS (ID,USERNAME,AGE,GENDER,YRSEXP,MOSEXP)
     VALUES (1, 'Mary', 17, 'female', 0, 2);
@@ -51,8 +54,6 @@ EOF;
     echo $db->lastErrorMsg();
   }
 }
-
-$db->close();
 ?>
 
 <!DOCTYPE html>
@@ -73,13 +74,11 @@ $db->close();
     <h4 class="modal-title">Database</h4>
 	<form action="https://engineering.jhu.edu/tak/teendriver/db.php" method="post">
 	    <div class="form-group">
-<!-- 	    	<label for="userName">User name:</label>
-		    <input type="text" class="form-control" id="userName" name="userName">
-		    <br> -->
 	        <button type="submit" class="btn btn-sm" name="init">Initialize the database</button>
+      </div>
+      <div class="form-group">
 	        <button type="submit" class="btn btn-sm" name="erase">Erase the database</button>
 		 </div>
-		  <!-- <button type="submit" class="btn btn-default">Submit</button> -->
 	</form> 
   </div>
 

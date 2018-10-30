@@ -6,7 +6,6 @@
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.css">
-<link rel="stylesheet" href="styles.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -15,6 +14,8 @@
 <script src="tokens_and_IDs.js"></script>
 <script src="callFunction.js"></script>
 <script src="dialogFlow_interface.js"></script>
+
+<link rel="stylesheet" href="styles.css">
 
 <script>
 	$(window).resize(function () {
@@ -68,7 +69,6 @@
 	function userLogin() {
 		var userName = $('#login').val();
         var xmlhttp = new XMLHttpRequest();
-		// xmlhttp.overrideMimeType('text/xml');
 
     	if ("withCredentials" in xmlhttp) {
     		console.log('okay');
@@ -84,45 +84,40 @@
 		    // console.log(this.getAllResponseHeaders());
             if (this.readyState == 4 && this.status == 200) {
 	        	console.log('onreadystatechange, conditions true, responseText = ' + this.responseText);
-                // alert(this.responseText);
+                $('#loginResponse').text(this.responseText);
+                alert(this.responseText);
                 // document.getElementById("loginResponse").innerHTML = this.responseText;
                 $('#loginResponseTextArea').val(this.responseText);
             }
         };
-        xmlhttp.open("GET", "login.php?userName=" + userName, true);
-        // xmlhttp.open("POST", "login.php", true);
+        // xmlhttp.open("GET", "login.php?userName=" + userName, true);
+        xmlhttp.open("GET", "simple_test.php?userName=" + userName, true);
         xmlhttp.setRequestHeader("Accept","text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8");
-        // xmlhttp.setRequestHeader("Accept-Encoding","gzip,deflate,br");
-        xmlhttp.setRequestHeader("Upgrade-Insecure-Requests","1");
         // xmlhttp.setRequestHeader("Connection","keep-alive");
         // xmlhttp.setRequestHeader("Host","engineering.jhu.edu");
         // xmlhttp.setRequestHeader("TE","Trailers");
+        xmlhttp.setRequestHeader("Upgrade-Insecure-Requests","1");
         // xmlhttp.setRequestHeader("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:63.0) Gecko/20100101 Firefox/63.0");
-		// xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xmlhttp.send();
+		// xmlhttp.open("POST", "login.php", true);
+		// xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		// xmlhttp.send("userName=" + userName);
     }
 
     function userLoginAJAX() {
-		var userName = $('#login').val();
 		$.ajax({
 			type:        "GET",
-			url:         "login.php?userName=Bob",
+			url:         "simple_test.php",
 			contentType: "application/json; charset=utf-8",
-			// data:         jQuery.param({ userName: "Bob", }),
-			dataType:    "text",
+			dataType:    "json",
 			headers: {
-				Accept:          "text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8",
-			   'Accept-Encoding': "gzip,deflate,br",
-			   'Upgrade-Insecure-Requests': "1",
 			},
 	
 			success: function(data) {
-				console.log(data);
+		 		console.log(JSON.stringify(data, undefined, 2));
 			},
 			error: function(jqXHR) {
-				console.log('ERROR\n');
-				console.log(jqXHR);
+				console.log(JSON.stringify(jqXHR, undefined, 2));
 			}
 		});
 		console.log("Loading...");
@@ -185,17 +180,15 @@
 				<div>
 					<br>
 					<!-- input will submit with CR if it is the only text field in the form -->
-					<!-- <form onsubmit="userLogin()"> -->
-					<form action="login.php" method="post">
+					<form onsubmit="userLogin()">
 						<span>Login here: </span>
-						<input type="text" id="login" value="Bob" name="userName">
+						<input type="text" id="login" value="Bob">
 						<button type="submit">Submit</button>
 					</form>
-					<button type="button" onclick="userLogin()">XMLHttpRequest</button>
-					<button type="button" onclick="userLoginAJAX()">XMLHttpRequestAJAX</button>
 				</div>
 				<br>
-				<textarea rows="7" id="loginResponseTextArea"  style="width:100%"></textarea>
+				<div id="loginResponse"><b>Login info will appear here ...</b></div>
+				<textarea rows="5" id="loginResponseTextArea"  style="width:100%"></textarea>
 			</div>
 		</div>
 	</div>
