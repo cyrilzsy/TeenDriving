@@ -49,6 +49,21 @@ include 'login_DB.php';
 	  </div>
     <div class="form-group">
       <label for="avatar">Avatar:&nbsp</label>
+    <input type="radio" name="avatar" value="avatar_1" <?php if (isset($avatar) && $avatar=="avatar_1") echo "checked";?> >&nbsp<img src="images/avatar_1 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_2" <?php if (isset($avatar) && $avatar=="avatar_2") echo "checked";?> >&nbsp<img src="images/avatar_2 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_3" <?php if (isset($avatar) && $avatar=="avatar_3") echo "checked";?> >&nbsp<img src="images/avatar_3 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_4" <?php if (isset($avatar) && $avatar=="avatar_4") echo "checked";?> >&nbsp<img src="images/avatar_4 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_5" <?php if (isset($avatar) && $avatar=="avatar_5") echo "checked";?> >&nbsp<img src="images/avatar_5 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_6" <?php if (isset($avatar) && $avatar=="avatar_6") echo "checked";?> >&nbsp<img src="images/avatar_6 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_7" <?php if (isset($avatar) && $avatar=="avatar_7") echo "checked";?> >&nbsp<img src="images/avatar_7 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_8" <?php if (isset($avatar) && $avatar=="avatar_8") echo "checked";?> >&nbsp<img src="images/avatar_8 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_9" <?php if (isset($avatar) && $avatar=="avatar_9") echo "checked";?> >&nbsp<img src="images/avatar_9 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_10" <?php if (isset($avatar) && $avatar=="avatar_10") echo "checked";?> >&nbsp<img src="images/avatar_10 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_11" <?php if (isset($avatar) && $avatar=="avatar_11") echo "checked";?> >&nbsp<img src="images/avatar_11 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_12" <?php if (isset($avatar) && $avatar=="avatar_12") echo "checked";?> >&nbsp<img src="images/avatar_12 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_13" <?php if (isset($avatar) && $avatar=="avatar_13") echo "checked";?> >&nbsp<img src="images/avatar_13 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_14" <?php if (isset($avatar) && $avatar=="avatar_14") echo "checked";?> >&nbsp<img src="images/avatar_14 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
+    <input type="radio" name="avatar" value="avatar_15" <?php if (isset($avatar) && $avatar=="avatar_15") echo "checked";?> >&nbsp<img src="images/avatar_15 image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
     <input type="radio" name="avatar" value="Girl" <?php if (isset($avatar) && $avatar=="Girl") echo "checked";?> >&nbsp<img src="images/Girl image.png" class="media-object" style="width:40px; display:inline">&nbsp&nbsp&nbsp
     <input type="radio" name="avatar" value="Elder" <?php if (isset($avatar) && $avatar=="Elder") echo "checked";?> >&nbsp<img src="images/Elder image.png" class="media-object" style="width:40px; display:inline"><br>
     </div>

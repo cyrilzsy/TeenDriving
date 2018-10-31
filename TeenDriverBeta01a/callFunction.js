@@ -81,16 +81,16 @@ function countAreas(event,numArea) {
  	event.currentTarget.remove();
 }
 
-// function countFound() {
-// 	var rating = "";
-// 	if ((numAreas - areasList.length)/numAreas > 1/2) {
-// 		rating = 'Good! you found most of them';
-// 	} else {
-// 		rating = 'Fair, there are more areas here';
-// 	}
-// 	document.getElementById("input").value += '. ' + rating + '.';
-// 	send();	
-// }
+function countFound() {
+	var rating = "";
+	if ((numAreas - areasList.length)/numAreas > 1/2) {
+		rating = 'Good! you found most of them';
+	} else {
+		rating = 'Fair, there are more areas here';
+	}
+	document.getElementById("input").value += '. ' + rating + '.';
+	send();
+}
 
 function clickMe(element) {
 	if (!!element.value) {
