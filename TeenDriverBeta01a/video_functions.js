@@ -59,6 +59,7 @@ function addArrow(fn=function(){}) {
 	arrowUp.setAttribute("z-index", "+1");
 	arrowUp.setAttribute("src","Arrow/Up.png");
 	arrowUp.setAttribute("id","ArrowUp");
+	arrowUp.setAttribute("class","clickArea");
 	let arrowUpId = '#ArrowUp';
 
 
@@ -67,6 +68,7 @@ function addArrow(fn=function(){}) {
 	arrowDown.setAttribute("z-index", "+1");
 	arrowDown.setAttribute("src","Arrow/Down.png");
 	arrowDown.setAttribute("id","ArrowDown");
+	arrowDown.setAttribute("class","clickArea");
 	let arrowDownId = '#ArrowDown';
 
 
@@ -75,6 +77,7 @@ function addArrow(fn=function(){}) {
 	arrowLeft.setAttribute("z-index", "+1");
 	arrowLeft.setAttribute("src","Arrow/Left.png");
 	arrowLeft.setAttribute("id","ArrowLeft");
+	arrowLeft.setAttribute("class","clickArea");
 	let arrowLeftId = '#ArrowLeft';
 
 
@@ -83,12 +86,17 @@ function addArrow(fn=function(){}) {
 	arrowRight.setAttribute("z-index", "+1");
 	arrowRight.setAttribute("src","Arrow/Right.png");
 	arrowRight.setAttribute("id","ArrowRight");
+	arrowRight.setAttribute("class","clickArea");
 	let arrowRightId = '#ArrowRight';
 
 	$('#clickAreas').append(arrowUp);
 	$('#clickAreas').append(arrowDown);
 	$('#clickAreas').append(arrowLeft);
 	$('#clickAreas').append(arrowRight);
+	$(arrowUpId).click(function(event) {fn(event)});
+	$(arrowDownId).click(function(event) {fn(event)});
+	$(arrowLeftId).click(function(event) {fn(event)});
+	$(arrowRightId).click(function(event) {fn(event)});
 
 	show_arrow(arrowUpId,arrowDownId,arrowLeftId,arrowRightId);
 
