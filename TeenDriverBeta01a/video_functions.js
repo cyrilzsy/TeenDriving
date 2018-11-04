@@ -53,71 +53,75 @@ function show_box(divBoxId,upperLeftCoords,lowerRightCoords) {
 	hintLevelChange();
 }
 
-function addArrow(fn=function(){}) {
-	let arrowUp = document.createElement('img');
-	arrowUp.setAttribute("position", "absolute");
-	arrowUp.setAttribute("z-index", "+1");
-	arrowUp.setAttribute("src","Arrow/Up.png");
-	arrowUp.setAttribute("id","ArrowUp");
-	arrowUp.setAttribute("class","clickArea");
-	let arrowUpId = '#ArrowUp';
+function addArrow(arrowId,fn=function(){}) {
+	if (arrowId == 'Up') {
+        let arrowUp = document.createElement('img');
+        arrowUp.setAttribute("position", "absolute");
+        arrowUp.setAttribute("z-index", "+1");
+        arrowUp.setAttribute("src", "Arrow/Up.png");
+        arrowUp.setAttribute("id", "ArrowUp");
+        arrowUp.setAttribute("class", "clickArea");
+        let arrowUpId = '#ArrowUp';
+        $('#clickAreas').append(arrowUp);
+        $(arrowUpId).click(function(event) {fn(event)});
+    }else if (arrowId == 'Down') {
+        let arrowDown = document.createElement('img');
+        arrowDown.setAttribute("position", "absolute");
+        arrowDown.setAttribute("z-index", "+1");
+        arrowDown.setAttribute("src", "Arrow/Down.png");
+        arrowDown.setAttribute("id", "ArrowDown");
+        arrowDown.setAttribute("class", "clickArea");
+        let arrowDownId = '#ArrowDown';
+        $('#clickAreas').append(arrowDown);
+        $(arrowDownId).click(function(event) {fn(event)});
+    }else if (arrowId == 'Left') {
+        let arrowLeft = document.createElement('img');
+        arrowLeft.setAttribute("position", "absolute");
+        arrowLeft.setAttribute("z-index", "+1");
+        arrowLeft.setAttribute("src", "Arrow/Left.png");
+        arrowLeft.setAttribute("id", "ArrowLeft");
+        arrowLeft.setAttribute("class", "clickArea");
+        let arrowLeftId = '#ArrowLeft';
+        $('#clickAreas').append(arrowLeft);
+        $(arrowLeftId).click(function(event) {fn(event)});
+    }else if (arrowId == 'Right') {
+        let arrowRight = document.createElement('img');
+        arrowRight.setAttribute("position", "absolute");
+        arrowRight.setAttribute("z-index", "+1");
+        arrowRight.setAttribute("src", "Arrow/Right.png");
+        arrowRight.setAttribute("id", "ArrowRight");
+        arrowRight.setAttribute("class", "clickArea");
+        let arrowRightId = '#ArrowRight';
+        $('#clickAreas').append(arrowRight);
+        $(arrowRightId).click(function(event) {fn(event)});
+    }
 
-
-	let arrowDown = document.createElement('img');
-	arrowDown.setAttribute("position", "absolute");
-	arrowDown.setAttribute("z-index", "+1");
-	arrowDown.setAttribute("src","Arrow/Down.png");
-	arrowDown.setAttribute("id","ArrowDown");
-	arrowDown.setAttribute("class","clickArea");
-	let arrowDownId = '#ArrowDown';
-
-
-	let arrowLeft = document.createElement('img');
-	arrowLeft.setAttribute("position", "absolute");
-	arrowLeft.setAttribute("z-index", "+1");
-	arrowLeft.setAttribute("src","Arrow/Left.png");
-	arrowLeft.setAttribute("id","ArrowLeft");
-	arrowLeft.setAttribute("class","clickArea");
-	let arrowLeftId = '#ArrowLeft';
-
-
-	let arrowRight = document.createElement('img');
-	arrowRight.setAttribute("position", "absolute");
-	arrowRight.setAttribute("z-index", "+1");
-	arrowRight.setAttribute("src","Arrow/Right.png");
-	arrowRight.setAttribute("id","ArrowRight");
-	arrowRight.setAttribute("class","clickArea");
-	let arrowRightId = '#ArrowRight';
-
-	$('#clickAreas').append(arrowUp);
-	$('#clickAreas').append(arrowDown);
-	$('#clickAreas').append(arrowLeft);
-	$('#clickAreas').append(arrowRight);
-	$(arrowUpId).click(function(event) {fn(event)});
-	$(arrowDownId).click(function(event) {fn(event)});
-	$(arrowLeftId).click(function(event) {fn(event)});
-	$(arrowRightId).click(function(event) {fn(event)});
-
-	show_arrow(arrowUpId,arrowDownId,arrowLeftId,arrowRightId);
+	show_arrow(arrowId);
 
 }
 
-function show_arrow(UpId,DownId,LeftId,RightId){
-	$(UpId).offset({top:0.1*videoHeight, left:0.45*videoWidth});
-	$(UpId).height(0.2*videoHeight);
-	$(UpId).width(0.1*videoWidth);
-
-	$(DownId).offset({top:0.8*videoHeight, left:0.45*videoWidth});
-	$(DownId).height(0.2*videoHeight);
-	$(DownId).width(0.1*videoWidth);
-
-	$(LeftId).offset({top:0.5*videoHeight, left:0.1*videoWidth});
-	$(LeftId).height(0.1*videoHeight);
-	$(LeftId).width(0.2*videoWidth);
-
-	$(RightId).offset({top:0.5*videoHeight, left:0.7*videoWidth});
-	$(RightId).height(0.1*videoHeight);
-	$(RightId).width(0.2*videoWidth);
+function show_arrow(arrowId){
+	if (arrowId == 'Up') {
+		let UpId = '#ArrowUp';
+        $(UpId).offset({top: 0.1 * videoHeight, left: 0.45 * videoWidth});
+        $(UpId).height(0.2 * videoHeight);
+        $(UpId).width(0.1 * videoWidth);
+    }else if (arrowId == 'Down') {
+		let DownId = '#ArrowDown';
+        $(DownId).offset({top: 0.8 * videoHeight, left: 0.45 * videoWidth});
+        $(DownId).height(0.2 * videoHeight);
+        $(DownId).width(0.1 * videoWidth);
+    }else if (arrowId == 'Left') {
+		let LeftId = '#ArrowLeft';
+        $(LeftId).offset({top: 0.5 * videoHeight, left: 0.1 * videoWidth});
+        $(LeftId).height(0.1 * videoHeight);
+        $(LeftId).width(0.2 * videoWidth);
+    }else if (arrowId == 'Right') {
+		let RightId = '#ArrowRight';
+        $(RightId).offset({top: 0.5 * videoHeight, left: 0.7 * videoWidth});
+        $(RightId).height(0.1 * videoHeight);
+        $(RightId).width(0.2 * videoWidth);
+    }
 }
 
 function hintLevelChange() {

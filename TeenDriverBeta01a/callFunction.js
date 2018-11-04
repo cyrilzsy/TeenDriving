@@ -32,7 +32,7 @@ function callFunction(task,clickAreaResponse) {
 		addMovingArea(parameters.movingAreas, function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
 		input = clickAreaResponse;
 	} else if (functionName=='addArrow') {
-		addArrow(function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
+		addArrow(parameters.arrowId, function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
 		input = clickAreaResponse;
 	}
 
