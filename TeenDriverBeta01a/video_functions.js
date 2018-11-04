@@ -53,6 +53,65 @@ function show_box(divBoxId,upperLeftCoords,lowerRightCoords) {
 	hintLevelChange();
 }
 
+function addArrow(fn=function(){}) {
+	let arrowUp = document.createElement('img');
+	arrowUp.setAttribute("position", "absolute");
+	arrowUp.setAttribute("z-index", "+1");
+	arrowUp.setAttribute("src","Arrow/Up.png");
+	arrowUp.setAttribute("id","ArrowUp");
+	let arrowUpId = '#ArrowUp';
+
+
+	let arrowDown = document.createElement('img');
+	arrowDown.setAttribute("position", "absolute");
+	arrowDown.setAttribute("z-index", "+1");
+	arrowDown.setAttribute("src","Arrow/Down.png");
+	arrowDown.setAttribute("id","ArrowDown");
+	let arrowDownId = '#ArrowDown';
+
+
+	let arrowLeft = document.createElement('img');
+	arrowLeft.setAttribute("position", "absolute");
+	arrowLeft.setAttribute("z-index", "+1");
+	arrowLeft.setAttribute("src","Arrow/Left.png");
+	arrowLeft.setAttribute("id","ArrowLeft");
+	let arrowLeftId = '#ArrowLeft';
+
+
+	let arrowRight = document.createElement('img');
+	arrowRight.setAttribute("position", "absolute");
+	arrowRight.setAttribute("z-index", "+1");
+	arrowRight.setAttribute("src","Arrow/Right.png");
+	arrowRight.setAttribute("id","ArrowRight");
+	let arrowRightId = '#ArrowRight';
+
+	$('#clickAreas').append(arrowUp);
+	$('#clickAreas').append(arrowDown);
+	$('#clickAreas').append(arrowLeft);
+	$('#clickAreas').append(arrowRight);
+
+	show_arrow(arrowUpId,arrowDownId,arrowLeftId,arrowRightId);
+
+}
+
+function show_arrow(UpId,DownId,LeftId,RightId){
+	$(UpId).offset({top:0.1*videoHeight, left:0.45*videoWidth});
+	$(UpId).height(0.2*videoHeight);
+	$(UpId).width(0.1*videoWidth);
+
+	$(DownId).offset({top:0.8*videoHeight, left:0.45*videoWidth});
+	$(DownId).height(0.2*videoHeight);
+	$(DownId).width(0.1*videoWidth);
+
+	$(LeftId).offset({top:0.5*videoHeight, left:0.1*videoWidth});
+	$(LeftId).height(0.1*videoHeight);
+	$(LeftId).width(0.2*videoWidth);
+
+	$(RightId).offset({top:0.5*videoHeight, left:0.7*videoWidth});
+	$(RightId).height(0.1*videoHeight);
+	$(RightId).width(0.2*videoWidth);
+}
+
 function hintLevelChange() {
 	let x = document.getElementsByClassName("clickArea");
 	let hintLevel = document.getElementById("hintLevel").value;

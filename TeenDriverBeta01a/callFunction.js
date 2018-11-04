@@ -31,6 +31,9 @@ function callFunction(task,clickAreaResponse) {
 	} else if (functionName=='commentaryDrive') {
 		addMovingArea(parameters.movingAreas, function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
 		input = clickAreaResponse;
+	} else if (functionName=='addArrow') {
+		addArrow(function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
+		input = clickAreaResponse;
 	}
 
 	if (functionName=='playVideoUntil' || functionName=='playAndCountTime') {
