@@ -1,10 +1,12 @@
 var avatarName     = $('#userAvatar').text();
 if (!avatarName) {avatarName = 'Girl'}
+var teacherName    = 'avatar_4';
 var avatarFile     = '"images/' + avatarName + ' image.png"';
+var teacherFile    = '"images/' + teacherName + ' image.png"';
 var mediaStart     = '<div class="media-left media-middle" style="padding-left:';
 var mediaEnd       = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px"><div style="padding:15px; color:black;"';
 var mediaEndForm   = 'class="media-object" style="width:40px"></div><div class="media-body" style="padding-left:20px" id="media-end-form"><div style="padding:15px; color:black;"';
-var mediaLeftAunt  = mediaStart + '30px"><img src="images/Elder image.png"' + mediaEnd + 'class="speech-bubble-aunt">';
+var mediaLeftAunt  = mediaStart + '30px"><img src=' + teacherFile + mediaEnd + 'class="speech-bubble-aunt">';
 var mediaLeftMe    = mediaStart + ' 0px"><img src=' + avatarFile + mediaEnd + 'class="speech-bubble-me">';
 var chatBreak      = "</div></div><hr>";
 var mediaLeftForm  = mediaStart + ' 0px"><img id="image-form" src=' + avatarFile + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
