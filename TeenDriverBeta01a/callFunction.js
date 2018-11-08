@@ -81,7 +81,7 @@ function countAreas(event,numArea) {
 	console.log(areasList);
 	$("#input").val('Found ' + (numAreas - areasList.length) + ' out of ' + numAreas);
 	// $('#clickArea' + numArea).click(function() {});
- 	event.currentTarget.remove();
+ 	// event.currentTarget.remove();
 }
 
 function countFound() {
