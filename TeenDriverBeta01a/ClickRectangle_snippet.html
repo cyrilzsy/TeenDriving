@@ -36,6 +36,19 @@
 		numAreas += 1;
 	})
 
+	var num_misses = 0;
+
+	function count_misses(reset=false) {
+		var text_misses = '';
+		if (reset) {
+			num_misses = 0;
+		} else {
+			num_misses++;
+			text_misses = 'Number of misses: ' + num_misses;
+		}
+		$('#num_misses').text(text_misses);
+	}
+
 	function countAreas(event,numArea) {
 		let index = areasList.indexOf(numArea);
 		console.log('countAreas, numArea: '+ numArea + ', index: ' + index + ', areasList:');
@@ -118,7 +131,7 @@
 <div class="container-fluid">
     	<div class="row">
 	    	<div class="col-sm-6" style="padding: 0px" id="video_div">
-				<video id="video" width="100%">
+				<video id="video" width="100%" onclick="count_misses()">
 			    	<source type="video/webm" src="videos/28560.webm" id="videoSourceWebm">
 			    	<source type="video/ogg" src="videos/28560.ogg" id="videoSourceOgg">
 					Your browser does not support HTML video.
