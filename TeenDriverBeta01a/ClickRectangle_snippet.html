@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<script>
+    $(window).resize(function () {
+		getwh();
+	})
+	$(document).ready(function() {
+	    var video = document.getElementById("video");
+		$('#video').on("loadeddata", function () {
+			getwh();
+			console.log('loadeddata');
+		});
+		getwh();
+
+		$('#hintLevel').val(5);
+        initializeVideoParameters();
+        addVideoArea([20,30],[30,50],undefined,function (event) {countAreas(event,1)});
+        areasList.push(1);
+		numAreas += 1;
+        addVideoArea([50,40],[60,50],undefined,function (event) {countAreas(event,2)});
+        areasList.push(2);
+		numAreas += 1;
+        addVideoArea([30,80],[40,90],undefined,function (event) {countAreas(event,3)});
+        areasList.push(3);
+		numAreas += 1;
+	})
+
+	function countAreas(event,numArea) {
+		let index = areasList.indexOf(numArea);
+		console.log('countAreas, numArea: '+ numArea + ', index: ' + index + ', areasList:');
+		console.log(areasList);
+		if (index>=0) {
+			areasList.splice(index,1);
+		}
+		console.log('countAreas, areasList:');
+		console.log(areasList);
+		$("#input").val('Found ' + (numAreas - areasList.length) + ' out of ' + numAreas);
+		// $('#clickArea' + numArea).click(function() {});
+	 	// event.currentTarget.remove();
+	}
+
+	function addVideoArea(upperLeftCoords,lowerRightCoords,numArea=undefined,fn=function(){}) {
+	// video_div
+	//   video
+	//     source
+	//   div#clickAreas
+	//     div.clickArea#clickArea0
+	//     div.clickArea#clickArea1
+	// [don't use <a> because you can see the link]
+
+		let n = document.getElementsByClassName("clickArea").length; // number of areas
+
+		let divBox = document.createElement('div'); // new div.clickArea
+		divBox.setAttribute("class","clickArea");
+		divBox.setAttribute("position","absolute");
+		divBox.setAttribute("z-index","+1");
+		// divBox.onclick = fn;
+
+		let divBoxId0 = 'clickArea';
+		if (numArea>=0) {
+			divBoxId0 += numArea;
+		} else {
+			divBoxId0 += n;
+		}
+		divBox.setAttribute("id",divBoxId0);
+		let divBoxId = '#' + divBoxId0;
+		$('#clickAreas').append(divBox); // use jQuery append() instead of HTML DOM appendChild()
+		$(divBoxId).click(function(event) {fn(event)});
+
+		show_box(divBoxId,upperLeftCoords,lowerRightCoords);
+	}
+
+	function show_box(divBoxId,upperLeftCoords,lowerRightCoords) {
+		$(divBoxId).offset({top:upperLeftCoords[1]*videoHeight/100,left:upperLeftCoords[0]*videoWidth/100});
+		$(divBoxId).height((lowerRightCoords[1] - upperLeftCoords[1])*videoHeight/100);
+		$(divBoxId).width((lowerRightCoords[0] - upperLeftCoords[0])*videoWidth/100);
+
+		hintLevelChange();
+	}
+
+	function hintLevelChange() {
+		let x = document.getElementsByClassName("clickArea");
+		let hintLevel = document.getElementById("hintLevel").value;
+		let alpha = 0.5*hintLevel/10;
+		for (i=0; i<x.length; i++) {
+			x[i].style.background = "rgba(0,0,0," + alpha + ")";
+			x[i].style.color = "#f1f1f1";
+		};
+	}
+
+	function initializeVideoParameters() {
+		pauseVideoTime = 0.;
+		numAreas = 0;
+		startTime = 0;
+		areasList = [];
+	}
+
+	var videoWidth = 0, videoHeight = 0; // width and height of the video
+
+	function getwh() {
+		videoWidth = $('#video').width();
+		videoHeight = $('#video').height();
+		$('#dialog').height(videoHeight);
+	}
+</script>
+
+<div class="container-fluid">
+    	<div class="row">
+	    	<div class="col-sm-6" style="padding: 0px" id="video_div">
+				<video id="video" width="100%">
+			    	<source type="video/webm" src="videos/28560.webm" id="videoSourceWebm">
+			    	<source type="video/ogg" src="videos/28560.ogg" id="videoSourceOgg">
+					Your browser does not support HTML video.
+				</video>
+				<div id="clickAreas" style="position: absolute; left:0px; top:0px">
+
+				</div>
+			</div>
+			<div class="col-sm-6" style="padding: 0px">
+		    	<div class="col" id="dialog">
+				</div>
+			</div>
+		</div>
+    <div class="row">
+			<div class = "col-sm-6" style="padding: 0px">
+				<div>
+					<p id='num_misses'></p>
+				</div>
+			</div>
+			<div class="col-sm-6" style="padding: 0px">
+				<div>
+					<input id="input">
+				</div>
+				<div>
+					<span>Invisible &nbsp&nbsp</span>
+					<input type="range" min="0" max="10" value="0" style="width:100px; display:inline; color:black" id="hintLevel" oninput="hintLevelChange()">
+					<span>&nbsp&nbsp Clearly visible</span>
+				</div>
+            </div>
+        </div>
+</div>
+</body>
+</html>
