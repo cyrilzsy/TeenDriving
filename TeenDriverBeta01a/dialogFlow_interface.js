@@ -71,6 +71,7 @@ function sendToDialogFlow(text_in) {
 			document.getElementById('intentName').innerHTML = '<b>' + intentName + '</b>';
 			speech = makeList(speech);
 			speech = makeButton(speech);
+			speech = makeCheckBoxes(speech);
 			if (speechJSON.length>0) {
 				try {
 					speechObj = JSON.parse(speechJSON);
@@ -218,5 +219,6 @@ function countCheckBoxes(string) {
 		}
 	}
 	$("#input").val((numTrueChecked+numFalseUnchecked) + ' out of ' + (numTrueTotal+numFalseTotal) + ' are correct');
-	$('#dialogFlowCheckBoxes').remove();
+	send();
+	// $('#dialogFlowCheckBoxes').remove();
 }
