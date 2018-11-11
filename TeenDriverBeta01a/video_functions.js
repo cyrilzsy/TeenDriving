@@ -24,33 +24,36 @@ function addVideoArea(upperLeftCoords,lowerRightCoords,numArea=undefined,fn=func
 // [don't use <a> because you can see the link]
 
 	let n = document.getElementsByClassName("clickArea").length; // number of areas
-
-	let divBox = document.createElement('div'); // new div.clickArea
-	divBox.setAttribute("class","clickArea");
-	divBox.setAttribute("position","absolute");
-	divBox.setAttribute("z-index","+1");
-	// divBox.onclick = fn;
-
 	let divBoxId0 = 'clickArea';
 	if (numArea>=0) {
 		divBoxId0 += numArea;
 	} else {
 		divBoxId0 += n;
 	}
-	divBox.setAttribute("id",divBoxId0);
 	let divBoxId = '#' + divBoxId0;
-	$('#clickAreas').append(divBox); // use jQuery append() instead of HTML DOM appendChild()
-	$(divBoxId).click(function(event) {fn(event)});
+	var divBoxJQ = $(divBoxId);
 
-	show_box(divBoxId,upperLeftCoords,lowerRightCoords);
+	if (divBoxJQ.length==0) { // click area does not exist
+		let divBox = document.createElement('div'); // new div.clickArea
+		divBox.setAttribute("class","clickArea");
+		divBox.setAttribute("position","absolute");
+		divBox.setAttribute("z-index","+1");
+		// divBox.onclick = fn;
+		divBox.setAttribute("id",divBoxId0);
+		$('#clickAreas').append(divBox); // use jQuery append() instead of HTML DOM appendChild()
+		divBoxJQ = $(divBoxId);
+		divBoxJQ.click(function(event) {fn(event)});
+	}
+
+	show_box(divBoxId,divBoxJQ,upperLeftCoords,lowerRightCoords);
 }
 
-function show_box(divBoxId,upperLeftCoords,lowerRightCoords) {
-	$(divBoxId).offset({top:upperLeftCoords[1]*videoHeight/100,left:upperLeftCoords[0]*videoWidth/100});
-	$(divBoxId).height((lowerRightCoords[1] - upperLeftCoords[1])*videoHeight/100);
-	$(divBoxId).width((lowerRightCoords[0] - upperLeftCoords[0])*videoWidth/100);
+function show_box(divBoxId,divBoxJQ,upperLeftCoords,lowerRightCoords) {
+	divBoxJQ.offset({top:upperLeftCoords[1]*videoHeight/100,left:upperLeftCoords[0]*videoWidth/100});
+	divBoxJQ.height((lowerRightCoords[1] - upperLeftCoords[1])*videoHeight/100);
+	divBoxJQ.width((lowerRightCoords[0] - upperLeftCoords[0])*videoWidth/100);
 
-	hintLevelChange();
+	hintLevelChange(divBoxId);
 }
 
 function addArrow(arrowId,fn=function(){}) {
@@ -124,14 +127,18 @@ function show_arrow(arrowId){
     }
 }
 
-function hintLevelChange() {
-	let x = document.getElementsByClassName("clickArea");
-	let hintLevel = document.getElementById("hintLevel").value;
-	let alpha = 0.5*hintLevel/10;
-	for (i=0; i<x.length; i++) {
-		x[i].style.background = "rgba(0,0,0," + alpha + ")";
-		x[i].style.color = "#f1f1f1";
-	};
+function hintLevelChange(id='') {
+	var hintLevel = document.getElementById("hintLevel").value;
+	var alpha = 0.5*hintLevel/10;
+	if (!id) {
+		id = ".clickArea";
+	}
+	hintLevelCSS(id,alpha);
+}
+
+function hintLevelCSS(id,alpha) {
+	var x = $(id);
+	x.css({"background": "rgba(0,0,0," + alpha + ")", "color": "#f1f1f1"});
 }
 
 function showArea(alpha) {
@@ -201,7 +208,7 @@ function addMovingArea(multipleAreaObjects,fn) {
 								upperLeft[k] = (upperLefts[1][k]*t + upperLefts[0][k]*(1-t));
 								lowerRight[k] = (lowerRights[1][k]*t + lowerRights[0][k]*(1-t));
 							}
-							$(divBoxId[l]).remove();
+							// $(divBoxId[l]).remove();
 							addVideoArea(upperLeft,lowerRight,l,fn);
 						} else { // tVideo>time[1] so need to go to the next time interval
 							iArea[l] += 1;
