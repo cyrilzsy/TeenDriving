@@ -15,7 +15,7 @@
 <script src="tokens_and_IDs.js"></script>
 <script src="callFunction.js"></script>
 <script src="dialogFlow_interface.js"></script>
-<script src="hopscotchTour.js"></script>
+
 
 <script>
 	$(window).resize(function () {
@@ -28,7 +28,7 @@
 			console.log('loadeddata');
 		});
 		getwh();
-
+		$.getScript("hopscotchTour.js");
 		let initialMessage = "";
 		send(initialMessage,true);
 		
@@ -280,5 +280,7 @@
 		</div>
 	</div>
 
+
+<!--<script src="hopscotchTour.js"></script>-->
 </body>
 </html>
