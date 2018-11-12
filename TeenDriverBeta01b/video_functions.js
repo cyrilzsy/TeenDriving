@@ -105,19 +105,26 @@ function addArrow(arrowId,fn=function(){}) {
 
 function show_arrow(arrowId){
 	if (arrowId == 'Up') {
-		make_arrow('#ArrowUp',0.1,0.45,0.2,0.1);
+		let UpId = '#ArrowUp';
+        $(UpId).offset({top: 0.1 * videoHeight, left: 0.45 * videoWidth});
+        $(UpId).height(0.2 * videoHeight);
+        $(UpId).width(0.1 * videoWidth);
     }else if (arrowId == 'Down') {
-		make_arrow('#ArrowDown',0.8,0.45,0.2,0.1);
+		let DownId = '#ArrowDown';
+        $(DownId).offset({top: 0.8 * videoHeight, left: 0.45 * videoWidth});
+        $(DownId).height(0.2 * videoHeight);
+        $(DownId).width(0.1 * videoWidth);
     }else if (arrowId == 'Left') {
-		make_arrow('#ArrowLeft',0.5,0.1,0.1,0.2);
+		let LeftId = '#ArrowLeft';
+        $(LeftId).offset({top: 0.5 * videoHeight, left: 0.1 * videoWidth});
+        $(LeftId).height(0.1 * videoHeight);
+        $(LeftId).width(0.2 * videoWidth);
     }else if (arrowId == 'Right') {
-		make_arrow('#ArrowRight',0.5,0.7,0.1,0.2);
+		let RightId = '#ArrowRight';
+        $(RightId).offset({top: 0.5 * videoHeight, left: 0.7 * videoWidth});
+        $(RightId).height(0.1 * videoHeight);
+        $(RightId).width(0.2 * videoWidth);
     }
-    function make_arrow(Id='',top=0,left=0,height=0,width=0) {
-        $(Id).offset({top: top * videoHeight, left: left * videoWidth});
-        $(Id).height(height * videoHeight);
-        $(Id).width(width * videoWidth);
-	}
 }
 
 function hintLevelChange(id='') {
