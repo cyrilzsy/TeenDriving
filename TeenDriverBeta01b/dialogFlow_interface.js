@@ -58,7 +58,7 @@ function sendToDialogFlow(text_in) {
 			lang:    "en",
 			contexts:[
 			],
-			sessionId: "0123456789ti",
+			sessionId: "0123456789sz",
 		}),
 
 		success: function(data) {
