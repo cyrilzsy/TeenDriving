@@ -20,7 +20,8 @@ function callFunction(task,clickAreaResponse) {
 		input = clickAreaResponse; 
 	} else if (functionName=='countTime') {
 		addMovingArea(parameters.movingAreas, function (event) {countResponseTime(event,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
-		input = clickAreaResponse; 		
+		disableButtonUntil(parameters.expertTime);
+		input = clickAreaResponse;
 	} else if (functionName=='countAreas') {
 		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function (event) {countAreas(event,parameters.numArea)});
 		areasList.push(parameters.numArea);
@@ -34,6 +35,9 @@ function callFunction(task,clickAreaResponse) {
 	} else if (functionName=='addArrow') {
 		addArrow(parameters.arrowId, function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
 		input = clickAreaResponse;
+	} else if (functionName=='disableBtn') {
+		addMovingArea(parameters.movingAreas, function (event) {countResponseTime(event,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
+		input = clickAreaResponse;
 	}
 
 	if (functionName=='playVideoUntil' || functionName=='playAndCountTime') {
@@ -45,7 +49,7 @@ function callFunction(task,clickAreaResponse) {
 		pauseVideoTime = parameters.pauseTime;
 		video.play();
 		video.addEventListener("timeupdate", pausing_function);
-		document.getElementById("response").value = "";	
+		document.getElementById("response").value = "";
 	}
 	return input;
 }
@@ -122,5 +126,16 @@ function RandomNumber() {
     send();
 }
 
+function disableButtonAfterClick(element){
+    element.disabled = true;
+    // setTimeout(function() {
+    //     element.disabled = false;
+    // }, 5000);
+}
 
-
+function disableButtonUntil(time){
+	$(':button').prop('disabled', true);
+    setTimeout(function() {
+        $(':button').prop('disabled', false);
+    }, time);
+}

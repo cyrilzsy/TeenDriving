@@ -10,7 +10,7 @@ var tour = {
       target: "video_div",
       placement: "bottom",
       xOffset: videoWidth * 0.5,
-      yOffset: videoHeight * 0.5,
+      yOffset: videoHeight * -0.5,
       width: tourWidth - 10,
       delay: 30
     },
@@ -19,6 +19,8 @@ var tour = {
       content: "The chat window let you talk with the agent, select your answers and make the course continue",
       target: "dialog",
       placement: "bottom",
+      xOffset: videoWidth * 0.5,
+      yOffset: videoHeight * -0.5,
       showPrevButton: true,
       width: tourWidth,
       delay: scrollTime
@@ -33,7 +35,16 @@ var tour = {
       arrowOffset: "left",
       width: tourWidth,
       delay: scrollTime
-    }
+    },
+    {
+      title: "Login Here",
+      content: "You can regester and login here to save your training progress",
+      target: "login",
+      placement: "top",
+      showPrevButton: true,
+      width: tourWidth,
+      delay: scrollTime
+    },
   ]
 };
 
