@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script src="lib/filesaver.js"></script>
+
+	<script>
+		var fileList = [];
+		var fileStringArray = [];
+		var fileObjectArray = [];
+		var fileString = "";
+
+		function listFiles() {
+			for (i=0; i<fileList.length; i++) {
+				console.log(fileList[i].name);
+			}
+			$('#JSONtext').val(JSON.stringify(fileObjectArray,null,2));
+		}
+
+		function readConvertFiles() {
+			fileList = document.getElementById('myFile').files; // from <input>
+			for (i=0; i<fileList.length; i++) {
+				console.log(fileList[i].name);
+				readFile(i);
+			}			
+		}
+
+		function readFile(index) {
+		  var reader = new FileReader();
+		  reader.readAsText(fileList[index], "UTF-8");
+		  reader.onload = (function(evt) {
+		  	loaded(evt,index);
+		  });
+		  reader.onerror = errorHandler;
+		}
+
+		function loaded(evt,index) {
+		  // put all JSON into a string and an object array 
+		  fileString = evt.target.result;
+		  // Handle UTF-16 file dump
+		  // xhr.send(fileString)
+		  fileStringArray[index] = fileString; // put file contents into an array
+		  let fileObject = JSON.parse(fileString); // make it an object
+		  if (Array.isArray(fileObject)) { // if it is a _usersays_en.JSON file (which is an array)
+		  	fileObjectArray[index] = {
+		  		name: fileList[index].name, // save the name
+		  		array: fileObject, // and the original object (an array)
+		  	}
+		  } else {
+			fileObjectArray[index] = fileObject; // otherwise, just save the object
+		  }
+		  console.log('readFile: ' + fileObjectArray[index].name);
+		  console.log(fileString);
+		}
+
+		function errorHandler(evt) {
+		  if(evt.target.error.name == "NotReadableError") {
+		  }
+		}
+
+		function saveFile() {
+			let textStringAll = $('#JSONtext').val();
+			var blob = new Blob([textStringAll],{type: "text/plain;charset=utf-8"});
+			saveAs(blob,"all_intents.json");
+		}
+
+		function saveSeparateFiles() {
+			let textStringAll = $('#JSONtext').val();
+			let objArray = JSON.parse(textStringAll);
+			let name = '', textString = '', obj = [];
+			for (i=0; i<objArray.length; i++) {
+				obj = objArray[i];
+				name = obj.name;
+				if (!!obj.array) {
+					textString = JSON.stringify(obj.array,null,2);
+				} else {
+					textString = JSON.stringify(obj,null,2);
+					name += '.json'; // if not array, then need to add file suffix
+				}
+				var blob = new Blob([textString],{type: "text/plain;charset=utf-8"});
+				saveAs(blob,'intents/' + name);
+				console.log('Saved file: ' + name);
+			}
+		}
+	</script>
+
+	<style>
+		textarea {
+		    /*display: block;*/
+		    font-family: 'Lucida Console';
+		    white-space: pre;
+		    margin: 1em 0;
+		} 
+	</style>
+</head>
+
+<body>
+	<div>
+		<h2>Input controls</h2>
+		<input type="file" id="myFile" multiple>
+		<button type="button" onClick="readConvertFiles()">Read all files and convert</button>
+		<button type="button" onClick="listFiles()">List files and display below</button>
+		<button type="button" onClick="saveFile()">Read below, save in one file</button>
+		<button type="button" onClick="saveSeparateFiles()">Read below, save in separate files</button>
+	</div>
+	<div>
+		<textarea rows="20" cols="100" id="JSONtext">
+		</textarea>
+	</div>
+</body>
+</html>
