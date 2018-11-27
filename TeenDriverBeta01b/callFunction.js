@@ -15,12 +15,14 @@ function callFunction(task,clickAreaResponse) {
 	} else if (functionName=='clearVideoAreas') {
 		clearVideo();
 	} else if (functionName=='playVideoUntil') {
+	    // disableButtonUntil(parameters.pauseTime);
 	} else if (functionName=='playAndCountTime') {
 		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function (event) {countResponseTime(event,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
-		input = clickAreaResponse; 
+		// disableButtonUntil(parameters.expertTime);
+        input = clickAreaResponse;
 	} else if (functionName=='countTime') {
 		addMovingArea(parameters.movingAreas, function (event) {countResponseTime(event,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
-		disableButtonUntil(parameters.expertTime);
+		// disableButtonUntil(parameters.expertTime);
 		input = clickAreaResponse;
 	} else if (functionName=='countAreas') {
 		addVideoArea(parameters.upperLeftCoords,parameters.lowerRightCoords,parameters.numArea, function (event) {countAreas(event,parameters.numArea)});
@@ -35,12 +37,11 @@ function callFunction(task,clickAreaResponse) {
 	} else if (functionName=='addArrow') {
 		addArrow(parameters.arrowId, function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
 		input = clickAreaResponse;
-	} else if (functionName=='disableBtn') {
-		addMovingArea(parameters.movingAreas, function (event) {countResponseTime(event,parameters.clickResponseFast,parameters.clickResponseSlow,parameters.expertTime)});
-		input = clickAreaResponse;
+	}else if (functionName=='countProgress') {
+		progress(parameters.courseName);
 	}
 
-	if (functionName=='playVideoUntil' || functionName=='playAndCountTime') {
+	if (functionName=='playVideoUntil' || functionName=='playAndCountTime' || functionName=='countTime') {
 	    if (parameters.startTime===undefined) {
 			video.currentTime = 0.;
 		} else {
@@ -50,6 +51,7 @@ function callFunction(task,clickAreaResponse) {
 		video.play();
 		video.addEventListener("timeupdate", pausing_function);
 		document.getElementById("response").value = "";
+		// disableButtonUntil(parameters.pauseTime);
 	}
 	return input;
 }
@@ -99,13 +101,19 @@ function countFound() {
 	send();
 }
 
-function clickMe(element) {
-	if (!!element.value) {
-		$("#input").val(element.value);
-	} else if (!!element.text) {
-		$("#input").val(element.text);
-	}
-	send();
+function clickMe(element,time) {
+	var clickTime = video.currentTime;
+    if (time && clickTime <= time) {
+	    alert("Please finish watching the video and read all the instructions for this step before continue!");
+        disableButtonUntil(time);
+	}else {
+        if (!!element.value) {
+            $("#input").val(element.value);
+        } else if (!!element.text) {
+            $("#input").val(element.text);
+        }
+        send();
+    }
 }
 
 function RandomNumber() {
@@ -135,7 +143,47 @@ function disableButtonAfterClick(element){
 
 function disableButtonUntil(time){
 	$(':button').prop('disabled', true);
-    setTimeout(function() {
-        $(':button').prop('disabled', false);
-    }, time);
+    if (time) {
+        setTimeout(function () {
+            $(':button').prop('disabled', false);
+        }, time * 1000);
+    }
+}
+
+// function skipAlert(time) {
+//     var clickTime = video.currentTime;
+//     if (clickTime <= time) {
+// 	    alert("Please finish watching the video and read all the instructions for this step before continue!");
+//         disableButtonUntil(time);
+// 	}
+// }
+
+function Process(courseType) {
+    if (courseType == WN) {
+        wn = wn + 1;
+    }else if (courseType == AC) {
+        ac = ac + 1;
+    }else if (courseType == CD) {
+        cd = cd + 1;
+    }else if (courseType == HR) {
+        hr = hr + 1;
+    }else if (courseType == RT) {
+        rt = rt + 1;
+    }
+    var trace1 = {
+      x: ['WN', 'AC', 'CD', 'HR', 'RT'],
+      y: [wn, ac, cd, hr, rt],
+      marker:{
+        color: ['rgba(204,70,60,1)', 'rgba(222,45,38,0.8)', 'rgba(104,85,30,1)', 'rgba(155,50,80,1)', 'rgba(90,204,156,1)']
+      },
+      type: 'bar'
+    };
+
+    var data = [trace1];
+
+    var layout = {
+      title: 'Progress'
+    };
+
+    document.getElementById('process_plot').innerHTML = Plotly.newPlot('myDiv', data, layout);
 }
