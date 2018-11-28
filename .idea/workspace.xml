@@ -24,9 +24,11 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="179" column="39" selection-start-line="179" selection-start-column="27" selection-end-line="179" selection-end-column="39" />
-              <folding />
+            <state relative-caret-position="233">
+              <caret line="180" column="40" selection-start-line="180" selection-start-column="27" selection-end-line="180" selection-end-column="40" />
+              <folding>
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -34,14 +36,14 @@
       <file leaf-file-name="dialogFlow_interface.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/dialogFlow_interface.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+            <state relative-caret-position="512">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding>
-                <marker date="1543304709932" expanded="true" signature="424:441" ph="..." />
-                <marker date="1543304709932" expanded="true" signature="455:481" ph="..." />
-                <marker date="1543304709932" expanded="true" signature="584:601" ph="..." />
-                <marker date="1543304709932" expanded="true" signature="635:661" ph="..." />
-                <marker date="1543304709932" expanded="true" signature="1216:1226" ph="..." />
+                <marker date="1543441255258" expanded="true" signature="424:441" ph="..." />
+                <marker date="1543441255258" expanded="true" signature="455:481" ph="..." />
+                <marker date="1543441255258" expanded="true" signature="584:601" ph="..." />
+                <marker date="1543441255258" expanded="true" signature="635:661" ph="..." />
+                <marker date="1543441255258" expanded="true" signature="1236:1246" ph="..." />
               </folding>
             </state>
           </provider>
@@ -70,7 +72,7 @@
       <file leaf-file-name="video_functions.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/video_functions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1075">
+            <state relative-caret-position="25">
               <caret line="43" column="31" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
               <folding />
             </state>
@@ -80,8 +82,18 @@
       <file leaf-file-name="callFunction.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/callFunction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="40" column="38" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="38" />
+            <state relative-caret-position="686">
+              <caret line="186" column="4" selection-start-line="186" selection-start-column="4" selection-end-line="186" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/db.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="850">
+              <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -117,8 +129,8 @@
         <option value="$PROJECT_DIR$/TeenDriverBeta01b/tokens_and_IDs.js" />
         <option value="$PROJECT_DIR$/TeenDriverBeta01b/video_functions.js" />
         <option value="$PROJECT_DIR$/TeenDriverBeta01b/hopscotchTour.js" />
-        <option value="$PROJECT_DIR$/TeenDriverBeta01b/index.html" />
         <option value="$PROJECT_DIR$/TeenDriverBeta01b/dialogFlow_interface.js" />
+        <option value="$PROJECT_DIR$/TeenDriverBeta01b/index.html" />
         <option value="$PROJECT_DIR$/TeenDriverBeta01b/callFunction.js" />
       </list>
     </option>
@@ -160,7 +172,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -169,9 +181,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TeenDriving" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TeenDriving" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TeenDriving" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TeenDriving" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TeenDriverBeta01b" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -487,7 +523,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/snippet_Video_Input.html" />
     <entry file="file://$PROJECT_DIR$/TeenDriverBeta01a/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6954">
@@ -787,9 +822,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/db.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/video_functions.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1075">
+        <state relative-caret-position="25">
           <caret line="43" column="31" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
           <folding />
         </state>
@@ -797,30 +840,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/dialogFlow_interface.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+        <state relative-caret-position="512">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
-            <marker date="1543304709932" expanded="true" signature="424:441" ph="..." />
-            <marker date="1543304709932" expanded="true" signature="455:481" ph="..." />
-            <marker date="1543304709932" expanded="true" signature="584:601" ph="..." />
-            <marker date="1543304709932" expanded="true" signature="635:661" ph="..." />
-            <marker date="1543304709932" expanded="true" signature="1216:1226" ph="..." />
+            <marker date="1543441255258" expanded="true" signature="424:441" ph="..." />
+            <marker date="1543441255258" expanded="true" signature="455:481" ph="..." />
+            <marker date="1543441255258" expanded="true" signature="584:601" ph="..." />
+            <marker date="1543441255258" expanded="true" signature="635:661" ph="..." />
+            <marker date="1543441255258" expanded="true" signature="1236:1246" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="179" column="39" selection-start-line="179" selection-start-column="27" selection-end-line="179" selection-end-column="39" />
-          <folding />
+        <state relative-caret-position="233">
+          <caret line="180" column="40" selection-start-line="180" selection-start-column="27" selection-end-line="180" selection-end-column="40" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TeenDriverBeta01b/callFunction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="40" column="38" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="38" />
+        <state relative-caret-position="686">
+          <caret line="186" column="4" selection-start-line="186" selection-start-column="4" selection-end-line="186" selection-end-column="4" />
           <folding />
         </state>
       </provider>

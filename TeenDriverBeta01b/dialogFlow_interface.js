@@ -11,7 +11,7 @@ var mediaLeftMe    = mediaStart + ' 0px"><img src=' + avatarFile + mediaEnd + 'c
 var chatBreak      = "</div></div><hr>";
 var mediaLeftForm  = mediaStart + ' 0px"><img id="image-form" src=' + avatarFile + mediaEndForm + 'class="speech-bubble-me" id="speech-form">';
 var speechObj = "";
-var wn, ac, cd, hr, rt;
+var wn = 0, ac = 0, cd = 0, hr = 0, rt = 0;
 
 var inputbox0 = '<form autocomplete="on" id="myForm" onsubmit="send()">' +
 		'<input type="text" style="width:100%" id="input" name="input" autocomplete="on" autofocus>' +

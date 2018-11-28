@@ -38,7 +38,7 @@ function callFunction(task,clickAreaResponse) {
 		addArrow(parameters.arrowId, function (event) {clickResponse(event,parameters.clickResponse,parameters.pause)});
 		input = clickAreaResponse;
 	}else if (functionName=='countProgress') {
-		progress(parameters.courseName);
+		Progress(parameters.courseName);
 	}
 
 	if (functionName=='playVideoUntil' || functionName=='playAndCountTime' || functionName=='countTime') {
@@ -105,7 +105,7 @@ function clickMe(element,time) {
 	var clickTime = video.currentTime;
     if (time && clickTime <= time) {
 	    alert("Please finish watching the video and read all the instructions for this step before continue!");
-        disableButtonUntil(time);
+        disableButtonUntil((time-clickTime));
 	}else {
         if (!!element.value) {
             $("#input").val(element.value);
@@ -158,16 +158,16 @@ function disableButtonUntil(time){
 // 	}
 // }
 
-function Process(courseType) {
-    if (courseType == WN) {
+function Progress(courseType) {
+    if (courseType == "WN") {
         wn = wn + 1;
-    }else if (courseType == AC) {
+    }else if (courseType == "AC") {
         ac = ac + 1;
-    }else if (courseType == CD) {
+    }else if (courseType == "CD") {
         cd = cd + 1;
-    }else if (courseType == HR) {
+    }else if (courseType == "HR") {
         hr = hr + 1;
-    }else if (courseType == RT) {
+    }else if (courseType == "RT") {
         rt = rt + 1;
     }
     var trace1 = {
@@ -184,6 +184,6 @@ function Process(courseType) {
     var layout = {
       title: 'Progress'
     };
-
-    document.getElementById('process_plot').innerHTML = Plotly.newPlot('myDiv', data, layout);
+    
+    Plotly.newPlot('progress_plot', data, layout);
 }
